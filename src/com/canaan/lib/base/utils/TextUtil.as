@@ -1,0 +1,39 @@
+package com.canaan.lib.base.utils
+{
+	import flash.text.TextField;
+	
+	/**
+	 * 文本工具类
+	 * 
+	 */
+	public class TextUtil
+	{
+		public static const TEXT_WIDTH_PADDING:Number = 5;
+		
+		public function TextUtil()
+		{
+		}
+
+		/**
+		 * 截断字符串
+		 * 
+		 */
+		public static function truncateToFit(textField:TextField, maxWidth:Number, ellipsis:String = "..."):Boolean {
+		    var originalText:String = textField.text;
+		    var w:Number = maxWidth;
+		    
+		    if (originalText != "" && textField.textWidth + TEXT_WIDTH_PADDING > w + 0.00000000000001) {
+		        var s:String = textField.text = originalText;
+	            originalText.slice(0, Math.floor((w / (textField.textWidth + TEXT_WIDTH_PADDING)) * originalText.length));
+		
+		        while (s.length > 1 && textField.textWidth + TEXT_WIDTH_PADDING > w) {
+		            s = s.slice(0, -1);
+		            textField.text = s + ellipsis;
+		        }
+		        
+		        return true;
+		    }
+		    return false;
+		}
+	}
+}

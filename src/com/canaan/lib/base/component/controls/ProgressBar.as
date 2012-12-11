@@ -1,0 +1,102 @@
+package com.canaan.lib.base.component.controls
+{
+	import com.canaan.lib.base.component.Styles;
+	import com.canaan.lib.base.component.UIComponent;
+	
+	import flash.text.TextFormatAlign;
+	
+	public class ProgressBar extends UIComponent
+	{
+		private static const BAR_SKIN_SUFFIX:String = "$bar";
+		
+		protected var background:Image;
+		protected var bar:Image;
+		
+		protected var _skin:String;
+		protected var _value:Number = 0;
+		protected var _barLabel:Label;
+		
+		public function ProgressBar(skin:String = null)
+		{
+			this.skin = skin;
+		}
+		
+		override protected function createChildren():void {
+			background = new Image();
+			addChild(background);
+			bar = new Image();
+			addChild(bar);
+			_barLabel = new Label();
+			_barLabel.width = 100;
+			_barLabel.height = 18;
+			_barLabel.align = TextFormatAlign.CENTER;
+			_barLabel.color = Styles.progressBarLabelColor;
+			_barLabel.stroke = Styles.progressBarLabelStroke;
+			addChild(_barLabel);
+		}
+		
+		override public function set width(value:Number):void {
+			super.width = value;
+			background.width = _width;
+			_barLabel.x = (_width - _barLabel.width) * 0.5;
+			callLater(changeValue);
+		}
+		
+		override public function set height(value:Number):void {
+			super.height = value;
+			background.height = _height;
+			_barLabel.y = (_height - _barLabel.height) * 0.5;
+			callLater(changeValue);
+		}
+		
+		public function set skin(value:String):void {
+			if (_skin != value) {
+				_skin = value;
+				background.url = _skin;
+				bar.url = _skin + BAR_SKIN_SUFFIX;
+				width = _width || background.width;
+				height = _height || background.height;
+			}
+		}
+		
+		public function get skin():String {
+			return _skin;
+		}
+		
+		public function set value(value:Number):void {
+			if (_value != value) {
+				value = Math.min(1, Math.max(0, value));
+				_value = value;
+				callLater(changeValue);
+			}
+		}
+		
+		public function get value():Number {
+			return _value;
+		}
+		
+		protected function changeValue():void {
+			bar.width = _width * _value;
+		}
+		
+		public function set label(value:String):void {
+			_barLabel.text = value;
+		}
+		
+		public function get label():String {
+			return _barLabel.text;
+		}
+		
+		public function get barLabel():Label {
+			return _barLabel;
+		}
+		
+		public function set scale9(value:String):void {
+			background.scale9 = bar.scale9 = value;
+		}
+		
+		public function get scale9():String {
+			return background.scale9;
+		}
+	}
+}
