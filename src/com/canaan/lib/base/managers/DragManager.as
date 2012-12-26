@@ -66,14 +66,13 @@ package com.canaan.lib.base.managers
         }
         
         private function getDropTarget(value:DisplayObject):IDropObject {
-        	if (value != null) {
-        		if (value is IDropObject) {
-        			return value as IDropObject;
-        		} else {
-        			return getDropTarget(value.parent);
-        		}
-        	}
-        	return null;
+			while (value) {
+				if (value is IDropObject) {
+					return value as IDropObject;
+				}
+				value = value.parent;
+			}
+			return null;
         }
 	}
 }

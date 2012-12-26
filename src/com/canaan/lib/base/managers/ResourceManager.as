@@ -1,9 +1,8 @@
 package com.canaan.lib.base.managers
 {
-	import com.canaan.lib.base.core.GameSetting;
 	import com.canaan.lib.base.core.MethodElement;
-	import com.canaan.lib.base.core.ResourceItem;
 	import com.canaan.lib.base.core.ResourceLoader;
+	import com.canaan.lib.base.core.Setting;
 	import com.canaan.lib.base.debug.Log;
 	import com.canaan.lib.base.events.ResourceEvent;
 	import com.canaan.lib.base.utils.DisplayUtil;
@@ -26,7 +25,7 @@ package com.canaan.lib.base.managers
 		
 		private var bmdCache:Dictionary = new Dictionary();
 		private var tileCache:Dictionary = new Dictionary();
-		private var loadList:Array = [];
+		private var loadList:Vector.<ResourceItem> = new Vector.<ResourceItem>();
 		private var loader:ResourceLoader = new ResourceLoader();
 		private var _isLoading:Boolean;
 		private var _itemsTotal:int;
@@ -177,15 +176,17 @@ package com.canaan.lib.base.managers
 			return bmd;
 		}
 		
-		public function getTiles(name:String, x:int, y:int):Array {
-			var tiles:Array = tileCache[name];
+		public function getTiles(name:String, x:int, y:int, cache:Boolean = true):Vector.<BitmapData> {
+			var tiles:Vector.<BitmapData> = tileCache[name];
 			if (tiles == null) {
 				var bmd:BitmapData = getBitmapData(name);
 				if (bmd == null) {
 					return null;
 				}
 				tiles = DisplayUtil.createTiles(bmd, x, y);
-				tileCache[name] = tiles;
+				if (cache) {
+					tileCache[name] = tiles;
+				}
 			}
 			return tiles;
 		}
@@ -200,12 +201,27 @@ package com.canaan.lib.base.managers
 		
 		public static function formatUrl(url:String):String {
 			if (url.indexOf("http") == -1) {
-				url = GameSetting.assetHost + url;
+				url = Setting.assetHost + url;
 			}
 			if (url.indexOf("version") == -1) {
-				url += "?version=" + GameSetting.version;
+				url += "?version=" + Setting.version;
 			}
 			return url;
 		}
+	}
+}
+
+import com.canaan.lib.base.core.MethodElement;
+
+class ResourceItem
+{
+	public var url:String;
+	public var completeHandler:MethodElement;
+	public var progressHandler:MethodElement;
+	
+	public function ResourceItem(url:String, completeHandler:MethodElement = null, progressHandler:MethodElement = null) {
+		this.url = url;
+		this.completeHandler = completeHandler;
+		this.progressHandler = progressHandler;
 	}
 }

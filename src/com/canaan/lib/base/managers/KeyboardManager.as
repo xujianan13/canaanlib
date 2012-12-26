@@ -44,41 +44,32 @@ package com.canaan.lib.base.managers
 		
 		private function keyChangeHandler(event:KeyboardEvent):void {
 			var eventType:String = event.type;
-			
-			var eventData:Object = {};
-			eventData.keyCode = event.keyCode;
-			eventData.charCode = event.charCode;
-			eventData.keyLocation = event.keyLocation;
-			eventData.ctrlKey = event.ctrlKey;
-			eventData.shiftKey = event.shiftKey;
-			eventData.altKey = event.altKey;
-			
-			dispatchEvent(createEvent(eventType, eventData));
+			dispatch(eventType, event);
 			
 			var ctrlKey:Boolean = event.ctrlKey && event.keyCode != Keyboard.CONTROL;
 			if (ctrlKey) {
-				dispatchEvent(createEvent(eventType + CTRL, eventData));
+				dispatch(eventType + CTRL, event);
 			}
 			
 			var shiftKey:Boolean = event.shiftKey && event.keyCode != Keyboard.SHIFT;
 			if (shiftKey) {
-				dispatchEvent(createEvent(eventType + SHIFT, eventData));
+				dispatch(eventType + SHIFT, event);
 			}
 			
 			if (ctrlKey && shiftKey) {
-				dispatchEvent(createEvent(eventType + CTRL + SHIFT, eventData));
+				dispatch(eventType + CTRL + SHIFT, event);
 			}
 		}
-		
-		private function createEvent(type:String, eventData:Object):KeyEvent {
+
+		private function dispatch(type:String, keyBoardEvent:KeyboardEvent):void {
 			var event:KeyEvent = new KeyEvent(type);
-			event.keyCode = eventData.keyCode;
-			event.charCode = eventData.charCode;
-			event.keyLocation = eventData.keyLocation;
-			event.ctrlKey = eventData.ctrlKey;
-			event.shiftKey = eventData.shiftKey;
-			event.altKey = eventData.altKey;
-			return event;
+			event.keyCode = keyBoardEvent.keyCode;
+			event.charCode = keyBoardEvent.charCode;
+			event.keyLocation = keyBoardEvent.keyLocation;
+			event.ctrlKey = keyBoardEvent.ctrlKey;
+			event.shiftKey = keyBoardEvent.shiftKey;
+			event.altKey = keyBoardEvent.altKey;
+			dispatchEvent(event);
 		}
 		
 		public function set enabled(value:Boolean):void {

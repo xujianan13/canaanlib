@@ -36,7 +36,7 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		protected function onMouseClick(event:MouseEvent):void {
-			if (_selected || _disabled) {
+			if (_selected || !_enabled) {
 				return;
 			}
 			if (_mouseClickHandler != null) {

@@ -10,6 +10,11 @@ package com.canaan.lib.base.component.controls
 			super(skin, label);
 		}
 		
+		override protected function preinitialize():void {
+			super.preinitialize();
+			scale9Mode = false;
+		}
+		
 		override protected function initialize():void {
 			super.initialize();
 			_btnLabel.autoSize = TextFieldAutoSize.LEFT;

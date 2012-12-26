@@ -13,8 +13,9 @@ package com.canaan.lib.base.component.controls
 		
 		override protected function preinitialize():void {
 			super.preinitialize();
-			_labelColors = Styles.linkButtonLabelColors;
 			buttonMode = true;
+			scale9Mode = false;
+			_labelColors = Styles.linkButtonLabelColors;
 		}
 		
 		override protected function initialize():void {

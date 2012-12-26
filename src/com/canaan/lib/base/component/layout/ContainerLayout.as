@@ -3,20 +3,55 @@ package com.canaan.lib.base.component.layout
 	import com.canaan.lib.base.component.Layouts;
 	import com.canaan.lib.base.component.UIComponent;
 	
-	import flash.display.DisplayObjectContainer;
+	import flash.events.Event;
 	
 	public class ContainerLayout extends Layout
 	{
 		protected var _gap:Number = 0;
-		protected var _top:Number;
-		protected var _bottom:Number;
-		protected var _left:Number;
-		protected var _right:Number;
 		
 		public function ContainerLayout()
 		{
 			super();
 			_layout = Layouts.ABSOLUTE;
+		}
+		
+		override public function set target(value:UIComponent):void {
+			if (_target != value) {
+				super.target = value;
+				_target.addEventListener(Event.ADDED, onAdded);
+				_target.addEventListener(Event.REMOVED, onRemoved);
+			}
+		}
+		
+		override public function dispose():void {
+			if (_target != null) {
+				super.dispose();
+				_target.removeEventListener(Event.ADDED, onAdded);
+				_target.removeEventListener(Event.REMOVED, onRemoved);
+			}
+		}
+		
+		public function set layout(value:String):void {
+			if (_layout != value) {
+				_layout = value;
+				callLater(updateDisplayList);
+			}
+		}
+		
+		public function get layout():String {
+			return _layout;
+		}
+
+		protected function onAdded(event:Event):void {
+			if (event.currentTarget == event.target.parent) {
+				callLater(updateDisplayList);
+			}
+		}
+		
+		protected function onRemoved(event:Event):void {
+			if (event.currentTarget == event.target.parent) {
+				callLater(updateDisplayList);
+			}
 		}
 		
 		public function set gap(value:Number):void {
@@ -30,7 +65,7 @@ package com.canaan.lib.base.component.layout
 			return _gap;
 		}
 		
-		override public function updateDisplayList():void {
+		public function updateDisplayList():void {
 			if (_layout == Layouts.ABSOLUTE) {
 				return;
 			} else {
@@ -49,64 +84,6 @@ package com.canaan.lib.base.component.layout
 							num += child.height + _gap;
 						}
 					}
-				}
-			}
-		}
-		
-		public function set top(value:Number):void {
-			_top = value;
-			callLater(updatePosition);
-		}
-		
-		public function get top():Number {
-			return _top;
-		}
-		
-		public function set bottom(value:Number):void {
-			_bottom = value;
-			callLater(updatePosition);
-		}
-		
-		public function get bottom():Number {
-			return _bottom;
-		}
-		
-		public function set left(value:Number):void {
-			_left = value;
-			callLater(updatePosition);
-		}
-		
-		public function get left():Number {
-			return _left;
-		}
-		
-		public function set right(value:Number):void {
-			_right = value;
-			callLater(updatePosition);
-		}
-		
-		public function get right():Number {
-			return _right;
-		}
-		
-		protected function updatePosition():void {
-			var _targetParent:DisplayObjectContainer = _target.parent;
-			if (_targetParent != null) {
-				if (!isNaN(_left)) {
-					_target.x = _left;
-					if (!isNaN(_right)) {
-						_target.width = _targetParent.width - _left - _right;
-					}
-				} else if (!isNaN(_right)) {
-					_target.x = _targetParent.width - _target.width - _right;
-				}
-				if (!isNaN(_top)) {
-					_target.y = _top;
-					if (!isNaN(_bottom)) {
-						_target.height = _targetParent.height - _top - _bottom;
-					}
-				} else if (!isNaN(_bottom)) {
-					_target.y = _targetParent.height - _target.height - _bottom;
 				}
 			}
 		}

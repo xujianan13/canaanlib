@@ -5,12 +5,12 @@ package com.canaan.lib.base.astar
 	public class FloydAStar
 	{
 		private var _open:BinaryHeap;					// 待考察表
-		private var _closed:Array;						// 已考察表
+		private var _closed:Vector.<Node>;				// 已考察表
 		private var _grid:Grid;							// 网格
 		private var _startNode:Node;					// 开始节点
 		private var _endNode:Node;						// 终点节点
-		private var _path:Array;						// 路径（节点列表）
-		private var _floydPath:Array;					// 弗洛伊德路径
+		private var _path:Vector.<Node>;				// 路径（节点列表）
+		private var _floydPath:Vector.<Node>;			// 弗洛伊德路径
 		private var _heuristic:Function = diagonal;		// 估价方法(对角线估价法)
 		//private var _heuristic:Function = manhattan;	// 估价方法(曼哈顿估价法)
 		//private var _heuristic:Function = euclidian;	// 估价方法(几何估价法)
@@ -35,7 +35,7 @@ package com.canaan.lib.base.astar
 		public function findPath(grid:Grid):Boolean {
 			_grid = grid;
 			_open = new BinaryHeap(justMin);
-			_closed = [];
+			_closed = new Vector.<Point>();
 			_startNode = _grid.startNode;
 			_endNode = _grid.endNode;
 			_startNode.g = 0;
@@ -125,7 +125,7 @@ package com.canaan.lib.base.astar
 		 * 创建路径
 		 */
 		private function buildPath():void {
-			_path = [];
+			_path = new Vector.<Point>();
 			// 向路径中加入终点
 			var node:Node = _endNode;
 			_path.push(node);
@@ -194,28 +194,28 @@ package com.canaan.lib.base.astar
 		/**
 		 * 返回路径
 		 */
-		public function get path():Array {
+		public function get path():Vector.<Node> {
 			return _path;
 		}
 		
 		/**
 		 * 返回以考察点集合
 		 */
-		public function get openArray():Array {
+		public function get open():Vector.<Node> {
 			return _open.a;
 		}
 		
 		/**
 		 * 返回待考察点几何
 		 */
-		public function get closedArray():Array {
+		public function get closed():Vector.<Node> {
 			return _closed;
 		}
 		
 		/**
 		 * 返回所有被计算过的节点(辅助函数)
 		 */
-		public function get visited():Array {
+		public function get visited():Vector.<Node> {
 			return _closed.concat(_open);
 		}
 		
@@ -256,7 +256,7 @@ package com.canaan.lib.base.astar
 		}
 		
 		private function floydCrossAble(n1:Node, n2:Node):Boolean {
-			var ps:Array = bresenhamNodes(new Point(n1.x, n1.y), new Point(n2.x, n2.y));
+			var ps:Vector.<Point> = bresenhamNodes(new Point(n1.x, n1.y), new Point(n2.x, n2.y));
 			for (var i:int = ps.length - 2; i > 0; i--) {
 				if (ps[i].x >= 0 && ps[i].y >= 0&& ps[i].x < _grid.numCols&&ps[i].y < _grid.numRows && !_grid.getNode(ps[i].x, ps[i].y).walkable) {
 					return false;
@@ -265,7 +265,7 @@ package com.canaan.lib.base.astar
 			return true;
 		}
 		
-		private function bresenhamNodes(p1:Point, p2:Point):Array {
+		private function bresenhamNodes(p1:Point, p2:Point):Vector.<Point> {
 			var steep:Boolean = Math.abs(p2.y - p1.y) > Math.abs(p2.x - p1.x);
 			if (steep) {
 				var temp:int = p1.x;
@@ -277,7 +277,7 @@ package com.canaan.lib.base.astar
 			}
 			var stepX:int = p2.x > p1.x ? 1 :(p2.x < p1.x ? -1 : 0);
 			var deltay:Number = (p2.y - p1.y) / Math.abs(p2.x - p1.x);
-			var ret:Array = [];
+			var ret:Vector.<Point> = Vector.<Point>();
 			var nowX:Number = p1.x + stepX;
 			var nowY:Number = p1.y + deltay;
 			if (steep) {
@@ -340,15 +340,17 @@ package com.canaan.lib.base.astar
 			target.y = n1.y - n2.y;
 		}
 		
-		public function get floydPath():Array {
+		public function get floydPath():Vector.<Node> {
 			return _floydPath;
 		}
 	}
 }
 
+import com.canaan.lib.base.astar.Node;
+
 class BinaryHeap
 {
-	public var a:Array = [];
+	public var a:Vector.<Node> = new Vector.<Node>();
 	public var justMinFun:Function = function(x:Object, y:Object):Boolean {
 		return x < y;
 	};

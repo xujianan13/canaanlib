@@ -1,7 +1,7 @@
 package com.canaan.lib.base.interfaces
 {
-	public interface IRecyclable extends IDispose
+	public interface IRecyclable
 	{
-		function initialize():void;
+		function reinitialize():void;
 	}
 }

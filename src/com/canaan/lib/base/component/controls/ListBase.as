@@ -7,6 +7,8 @@ package com.canaan.lib.base.component.controls
 	import com.canaan.lib.base.events.UIEvent;
 	import com.canaan.lib.base.utils.ArrayUtil;
 	
+	[Event(name="change", type="com.canaan.lib.base.events.UIEvent")]
+	
 	public class ListBase extends Container implements IInitialItems, IList
 	{
 		protected var _items:Array = [];

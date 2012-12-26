@@ -1,10 +1,12 @@
 package com.canaan.lib.base.astar
 {
+	import flash.geom.Point;
+
 	public class Grid
 	{
 		private var _startNode:Node;
 		private var _endNode:Node;
-		private var _nodes:Array;
+		private var _nodes:Vector.<Point>;
 		private var _numCols:int;
 		private var _numRows:int;
 		

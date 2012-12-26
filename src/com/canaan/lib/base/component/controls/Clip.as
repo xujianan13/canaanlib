@@ -11,6 +11,9 @@ package com.canaan.lib.base.component.controls
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	
+	[Event(name="complete", type="com.canaan.lib.base.events.UIEvent")]
+	[Event(name="animationComplete", type="com.canaan.lib.base.events.UIEvent")]
+	
 	public class Clip extends Image implements IAnimation
 	{
 		protected var _tileX:int;
@@ -20,7 +23,7 @@ package com.canaan.lib.base.component.controls
 		protected var _isPlaying:Boolean;
 		protected var _autoRemoved:Boolean;
 		
-		protected var tiles:Array;
+		protected var tiles:Vector.<BitmapData>;
 		protected var from:int;
 		protected var to:int;
 		protected var completeCallback:MethodElement;

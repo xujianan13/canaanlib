@@ -24,9 +24,10 @@ package com.canaan.lib.base.component.controls
 			selected:2
 		};
 		protected var bitmap:Bitmap;
-		protected var tiles:Array;
+		protected var tiles:Vector.<BitmapData>;
 		protected var skinW:int = Styles.buttonSkinW;
 		protected var skinH:int = Styles.buttonSkinH;
+		protected var scale9Mode:Boolean = true;
 		
 		protected var _skin:String;
 		protected var _btnLabel:Label;
@@ -36,11 +37,17 @@ package com.canaan.lib.base.component.controls
 		protected var _labelMargin:Array = Styles.buttonLabelMargin;
 		protected var _selected:Boolean;
 		protected var _mouseClickHandler:MethodElement;
+		protected var _scale9:Array;
 		
 		public function Button(skin:String = null, label:String = "")
 		{
 			this.skin = skin;
 			this.label = label;
+		}
+		
+		override protected function preinitialize():void {
+			super.preinitialize();
+			_scale9 = Styles.buttonScale9Grid;
 		}
 		
 		override protected function createChildren():void {
@@ -51,6 +58,7 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		override protected function initialize():void {
+			super.initialize();
 			_btnLabel.align = TextFormatAlign.CENTER;
 			addEventListener(MouseEvent.CLICK, mouseHandler);
 			addEventListener(MouseEvent.MOUSE_DOWN, mouseHandler);
@@ -69,7 +77,7 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		protected function mouseHandler(event:MouseEvent):void {
-			if (!_toggle && _selected || _disabled) {
+			if (!_toggle && _selected || !_enabled) {
 				return;
 			}
 			if (event.type == MouseEvent.CLICK) {
@@ -89,6 +97,18 @@ package com.canaan.lib.base.component.controls
 		protected function set state(value:int):void {
 			_state = value;
 			callLater(changeState);
+		}
+		
+		protected function changeTiles():void {
+			tiles = ResourceManager.getInstance().getTiles(_skin, skinW, skinH, false);
+			if (tiles != null && scale9Mode) {
+				_width = _width || tiles[0].width;
+				_height = _height || tiles[0].height;
+				var length:int = tiles.length;
+				for (var i:int = 0; i < length; i++) {
+					tiles[i] = DisplayUtil.scale9Bmd(tiles[i], _scale9, _width, _height);
+				}
+			}
 		}
 		
 		protected function changeState():void {
@@ -111,12 +131,9 @@ package com.canaan.lib.base.component.controls
 		public function set skin(value:String):void {
 			if (_skin != value) {
 				_skin = value;
-				var bmd:BitmapData = ResourceManager.getInstance().getBitmapData(_skin);
-				if (bmd != null) {
-					tiles = ResourceManager.getInstance().getTiles(_skin, skinW, skinH);
-					callLater(changeState);
-					callLater(changeLabelSize);
-				}
+				callLater(changeTiles);
+				callLater(changeState);
+				callLater(changeLabelSize);
 			}
 		}
 		
@@ -145,12 +162,36 @@ package com.canaan.lib.base.component.controls
 			return _toggle;
 		}
 		
-		override public function set disabled(value:Boolean):void {
-			if (_disabled != value) {
-				super.disabled = value;
+		override public function set enabled(value:Boolean):void {
+			if (_enabled != value) {
+				super.enabled = value;
 				state = states["rollOut"];
-				DisplayUtil.gray(this, _disabled);
+				DisplayUtil.gray(this, !_enabled);
 			}
+		}
+		
+		override public function set width(value:Number):void {
+			super.width = value;
+			callLater(changeTiles);
+			callLater(changeState);
+			callLater(changeLabelSize);
+		}
+		
+		override public function set height(value:Number):void {
+			super.height = value;
+			callLater(changeTiles);
+			callLater(changeState);
+			callLater(changeLabelSize);
+		}
+		
+		public function get scale9():String {
+			return _scale9.toString();
+		}
+		
+		public function set scale9(value:String):void {
+			_scale9 = ArrayUtil.copyAndFill(_scale9, value);
+			callLater(changeTiles);
+			callLater(changeState);
 		}
 		
 		public function set labelColors(value:String):void {
@@ -200,11 +241,7 @@ package com.canaan.lib.base.component.controls
 		public function set selected(value:Boolean):void {
 			if (_selected != value) {
 				_selected = value;
-				if (_selected) {
-					state = states["selected"];
-				} else {
-					state = states["rollOut"];
-				}
+				state = _selected ? states["selected"] : states["rollOut"];
 			}
 		}
 		

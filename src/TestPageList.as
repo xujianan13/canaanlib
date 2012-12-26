@@ -28,13 +28,13 @@ package
 			list = new PageList("TestListItem", 2, 3);
 			list.horizontalGap = 5;
 			list.verticalGap = 5;
-			list.left = 5;
-			list.top = 5;
 			list.showBorder();
 			list.data = ["shit1", "shit2", "shit3", "shit4", "shit5", "shit6", "shit7", "shit8"];
 			list.addEventListener(UIEvent.CHANGE, onChange);
 			list.layout = Layouts.HORIZONTAL;
 			addChild(list);
+			list.left = 5;
+			list.top = 5;
 			
 			var button:Button = new Button("png.comp.btn_blue", "change");
 			button.mouseClickHandler = new MethodElement(mouseClick);

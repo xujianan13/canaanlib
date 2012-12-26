@@ -27,12 +27,12 @@ package
 			list = new List("TestListItem", 2, 3);
 			list.horizontalGap = 5;
 			list.verticalGap = 5;
-			list.left = 5;
-			list.top = 5;
 			list.showBorder();
 			list.data = ["shit1", "shit2", "shit3"];
 			list.addEventListener(UIEvent.CHANGE, onChange);
 			addChild(list);
+			list.left = 5;
+			list.top = 5;
 			
 			var button:Button = new Button("png.comp.btn_blue", "change");
 			button.mouseClickHandler = new MethodElement(mouseClick);

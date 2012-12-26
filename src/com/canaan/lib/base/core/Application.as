@@ -33,7 +33,7 @@ package com.canaan.lib.base.core
 				}
 				
 				// initial
-				stage.frameRate = GameSetting.fps;
+				stage.frameRate = Setting.fps;
 			}
 		}
 	}

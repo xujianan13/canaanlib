@@ -2,6 +2,15 @@ package com.canaan.lib.base.component
 {
 	public class Styles
 	{
+		//------------- DialogManager default setting --------------
+		public static var dialogModalColor:uint = 0x000000;
+		public static var dialogModalAlpha:Number = 0.3;
+		
+		//------------- TooltipManager default setting --------------
+		public static var toolTipShowDelay:Number = 300;
+		public static var toolTipHideDelay:Number = 10000;
+		public static var toolTipScrubDelay:Number = 100;
+
 		//------------- Text default setting --------------
 		public static var fontName:String = "宋体,Arial";
 		public static var fontSize:int = 12;
@@ -10,6 +19,7 @@ package com.canaan.lib.base.component
 		public static var labelColor:uint = 0x000000;
 		public static var labelStroke:Array = [0x170702, 0.8, 2, 2, 10, 1];
 		public static var labelHeight:int = 18;
+		public static var labelScale9Grid:Array = [2, 2, 2, 2];
 		
 		//------------- TextInput default setting -------------
 		public static var textInputWidth:int = 128;
@@ -25,6 +35,7 @@ package com.canaan.lib.base.component
 		public static var buttonLabelMargin:Array = [0, 0, 0, 0];
 		public static var buttonSkinW:int = 1;
 		public static var buttonSkinH:int = 3;
+		public static var buttonScale9Grid:Array = [4, 4, 4, 4];
 		
 		//------------- CheckBox default setting -------------
 		public static var checkBoxSkinW:int = 2;
@@ -48,5 +59,9 @@ package com.canaan.lib.base.component
 		
 		//------------- Clip default setting -------------
 		public static var clipInterval:int = 50;
+		
+		//------------- Panel default setting -------------
+		public static var panelWidth:int = 100;
+		public static var panelHeight:int = 100;
 	}
 }

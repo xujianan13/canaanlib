@@ -59,7 +59,7 @@ package com.canaan.lib.base.utils
 	    	var object:Object;
 	    	for (var key:Object in source) {
 	    		if (addKey) {
-	    			object = new {};
+	    			object = {};
 	    			object[keyStr] = key;
 	    			object[valueStr] = source[key];
 	    		} else {
@@ -69,6 +69,25 @@ package com.canaan.lib.base.utils
 	    	}
 	    	return result;
 	    }
+		
+		public static function objectToVector(source:Object, addKey:Boolean = false, keyStr:String = "key", valueStr:String = "value"):Vector.<Object> {
+			if (source == null) {
+				return null;
+			}
+			var result:Vector.<Object> = new Vector.<Object>();
+			var object:Object;
+			for (var key:Object in source) {
+				if (addKey) {
+					object = {};
+					object[keyStr] = key;
+					object[valueStr] = source[key];
+				} else {
+					object = source[key];
+				}
+				result.push(object);
+			}
+			return result;
+		}
 		
 		public static function dispose(source:*):void {
 			if (source == null) {

@@ -32,7 +32,7 @@ package
 			textArea.scrollBarSkin = "png.comp.vscroll";
 //			textArea.stroke = null;
 			textArea.width = 200;
-			textArea.height = 100;
+			textArea.height = 200;
 		}
 	}
 }

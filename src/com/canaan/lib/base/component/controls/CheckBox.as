@@ -15,6 +15,7 @@ package com.canaan.lib.base.component.controls
 		override protected function preinitialize():void {
 			super.preinitialize();
 			skinW = Styles.checkBoxSkinW;
+			scale9Mode = false;
 			_toggle = true;
 		}
 		
@@ -24,7 +25,7 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		override protected function mouseHandler(event:MouseEvent):void {
-			if (!_toggle && _selected || _disabled) {
+			if (!_toggle && _selected || !_enabled) {
 				return;
 			}
 			if (event.type == MouseEvent.CLICK) {

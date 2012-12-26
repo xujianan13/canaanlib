@@ -2,12 +2,12 @@ package com.canaan.lib.base.astar
 {
 	public class AStar
 	{
-		private var _open:Array;						// 待考察表
-		private var _closed:Array;						// 已考察表
+		private var _open:Vector.<Node>;				// 待考察表
+		private var _closed:Vector.<Node>;				// 已考察表
 		private var _grid:Grid;							// 网格
 		private var _startNode:Node;					// 开始节点
 		private var _endNode:Node;						// 终点节点
-		private var _path:Array;						// 路径（节点列表）
+		private var _path:Vector.<Node>;				// 路径（节点列表）
 		private var _heuristic:Function = diagonal;		// 估价方法(对角线估价法)
 		//private var _heuristic:Function = manhattan;	// 估价方法(曼哈顿估价法)
 		//private var _heuristic:Function = euclidian;	// 估价方法(几何估价法)
@@ -27,8 +27,8 @@ package com.canaan.lib.base.astar
 		 */
 		public function findPath(grid:Grid):Boolean {
 			_grid = grid;
-			_open = [];
-			_closed = [];
+			_open = new Vector.<Node>();
+			_closed = new Vector.<Node>();
 			_startNode = _grid.startNode;
 			_endNode = _grid.endNode;
 			_startNode.g = 0;
@@ -107,18 +107,28 @@ package com.canaan.lib.base.astar
 					return false;
 				}
 				// 选择待考察表里代价最小的点作为新的起点
-				_open.sortOn("f", Array.NUMERIC);
+//				_open.sortOn("f", Array.NUMERIC);
+				_open.sort(sortFunc);
 				node = _open.shift() as Node;
 			}
 			buildPath();
 			return true;
 		}
 		
+		private function sortFunc(nodeA:Node, nodeB:Node):int {
+			if (nodeA.f > nodeB.f) {
+				return 1;
+			} else if (nodeA.f < nodeB.f) {
+				return -1;
+			}
+			return 0;
+		}
+		
 		/**
 		 * 创建路径
 		 */
 		private function buildPath():void {
-			_path = [];
+			_path = new Vector.<Node>();
 			// 向路径中加入终点
 			var node:Node = _endNode;
 			_path.push(node);
@@ -186,28 +196,28 @@ package com.canaan.lib.base.astar
 		/**
 		 * 返回路径
 		 */
-		public function get path():Array {
+		public function get path():Vector.<Node> {
 			return _path;
 		}
 		
 		/**
 		 * 返回以考察点集合
 		 */
-		public function get openArray():Array {
+		public function get open():Vector.<Node> {
 			return _open;
 		}
 		
 		/**
 		 * 返回待考察点几何
 		 */
-		public function get closedArray():Array {
+		public function get closed():Vector.<Node> {
 			return _closed;
 		}
 		
 		/**
 		 * 返回所有被计算过的节点(辅助函数)
 		 */
-		public function get visited():Array {
+		public function get visited():Vector.<Node> {
 			return _closed.concat(_open);
 		}
 	}
