@@ -9,6 +9,8 @@ package com.canaan.lib.base.component.controls
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	
+	[Event(name="change", type="com.canaan.lib.base.events.UIEvent")]
+	
 	public class Slider extends UIComponent
 	{
 		private static const BUTTON_SKIN_SUFFIX:String = "$bar";
@@ -44,6 +46,7 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		override protected function initialize():void {
+			super.initialize();
 			background.scale9 = Styles.sliderBackgroundScale9Grid;
 			background.addEventListener(MouseEvent.MOUSE_DOWN, onBackgroundMouseDown);
 			button.addEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown);

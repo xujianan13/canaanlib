@@ -25,7 +25,11 @@ package com.canaan.lib.base.component
 			"Container":Container,
 			"RadioGroup":RadioGroup,
 			"Tab":Tab,
-			"ViewStack":ViewStack
+			"ViewStack":ViewStack,
+			"List":List,
+			"PageList":PageList,
+			"ScrollList":ScrollList,
+			"Canvas":Canvas
 		};
 		
 		private static var UserClassMap:Object = {};

@@ -1,6 +1,7 @@
 package com.canaan.lib.rpg.core.map
 {
 	import com.canaan.lib.base.core.DLoader;
+	import com.canaan.lib.base.core.ObjectPool;
 	import com.canaan.lib.base.utils.ObjectUtil;
 	
 	import flash.display.Bitmap;
@@ -55,7 +56,7 @@ package com.canaan.lib.rpg.core.map
 		/**
 		 * 当前绘制的tile数组
 		 */
-		protected var drawTiles:Array;
+		protected var drawTiles:Vector.<Point>;
 
 		/**
 		 * 地图数据
@@ -83,7 +84,7 @@ package com.canaan.lib.rpg.core.map
 			_center = new Point();
 //			_drawBuffer = new Shape();
 			_drawBuffer = new Bitmap();
-			drawTiles = [];
+			drawTiles = new Vector.<Point>();
 		}
 		
 		/**
@@ -120,7 +121,7 @@ package com.canaan.lib.rpg.core.map
 					buffer.copyPixels(cache[tilePath], cache[tilePath].rect, new Point(int((point.x - currentStartX) * _mapData.tileWidth), int((point.y - currentStartY) * _mapData.tileHeight)));
 					drawTiles.splice(i, 1);
 				} else {
-					loader = new DLoader();
+					loader = ObjectPool.getObject(DLoader) as DLoader;
 					loader.data = point;
 					loader.contentLoaderInfo.addEventListener(Event.COMPLETE, tileComplete);
 					loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
@@ -153,6 +154,9 @@ package com.canaan.lib.rpg.core.map
 		 */
 		protected function tileComplete(event:Event):void {
 			var loaderInfo:LoaderInfo = event.target as LoaderInfo;
+			loaderInfo.removeEventListener(Event.COMPLETE, tileComplete);
+			loaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
+			
 			var loader:DLoader = loaderInfo.loader as DLoader;
 			var point:Point = loader.data as Point;
 			var key:String = _mapData.getTilePath(point.x, point.y);
@@ -164,10 +168,8 @@ package com.canaan.lib.rpg.core.map
 //					_drawBuffer.cacheAsBitmap = true;
 //				}
 			}
-			loaderInfo.removeEventListener(Event.COMPLETE, tileComplete);
-			loaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
-			loader.unloadAndStop();
-			loaderInfo = null;
+			
+			ObjectPool.disposeObject(loader);
 		}
 		
 		/**

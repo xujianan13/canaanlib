@@ -27,8 +27,6 @@ package
 			list = new ScrollList("TestListItem", "png.comp.vscroll");
 			list.horizontalGap = 5;
 			list.verticalGap = 5;
-			list.left = 5;
-			list.top = 5;
 			list.row = 10;
 			list.column = 1;
 //			list.layout = Layouts.VERTICAL;
@@ -41,6 +39,8 @@ package
 			list.data = data;
 			list.currentPage = 4;
 			addChild(list);
+			list.left = 5;
+			list.top = 5;
 			
 			var button:Button = new Button("png.comp.btn_blue", "change");
 			button.mouseClickHandler = new MethodElement(mouseClick);

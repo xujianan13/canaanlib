@@ -4,6 +4,8 @@ package com.canaan.lib.base.component.controls
 	import com.canaan.lib.base.component.Layouts;
 	import com.canaan.lib.base.component.layout.ScrollListLayout;
 	import com.canaan.lib.base.events.UIEvent;
+	
+	import flash.events.MouseEvent;
 
 	public class ScrollList extends List
 	{
@@ -25,6 +27,7 @@ package com.canaan.lib.base.component.controls
 			_items = [];
 			layoutObject = new ScrollListLayout();
 			layoutObject.target = this;
+			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
 			scrollBar.addEventListener(UIEvent.CHANGE, onSrollBarChange);
 			resetScrollBarDirection();
 			scrollBar.visible = false;
@@ -111,6 +114,10 @@ package com.canaan.lib.base.component.controls
 			resetScrollBarSize();
 		}
 		
+		protected function onMouseWheel(event:MouseEvent):void {
+			scrollBar.value -= event.delta;
+		}
+		
 		protected function onSrollBarChange(event:UIEvent):void {
 			currentPage = scrollBar.value;
 		}
@@ -145,6 +152,7 @@ package com.canaan.lib.base.component.controls
 
 		override public function dispose():void {
 			super.dispose();
+			removeEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
 			scrollBar.removeEventListener(UIEvent.CHANGE, onSrollBarChange);
 		}
 	}

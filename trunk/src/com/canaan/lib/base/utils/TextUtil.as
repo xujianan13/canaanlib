@@ -2,17 +2,9 @@ package com.canaan.lib.base.utils
 {
 	import flash.text.TextField;
 	
-	/**
-	 * 文本工具类
-	 * 
-	 */
 	public class TextUtil
 	{
 		public static const TEXT_WIDTH_PADDING:Number = 5;
-		
-		public function TextUtil()
-		{
-		}
 
 		/**
 		 * 截断字符串

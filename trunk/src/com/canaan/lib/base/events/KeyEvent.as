@@ -24,6 +24,5 @@ package com.canaan.lib.base.events
 		{
 			super(type, bubbles, cancelable);
 		}
-		
 	}
 }

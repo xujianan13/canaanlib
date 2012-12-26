@@ -2,6 +2,7 @@ package com.canaan.lib.base.display
 {
 	import com.canaan.lib.base.utils.DisplayUtil;
 	
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	
 	public class BaseSprite extends Sprite
@@ -28,6 +29,14 @@ package com.canaan.lib.base.display
 		public function setScale(scaleX:Number, scaleY:Number = NaN):void {
 			this.scaleX = scaleX;
 			this.scaleY = scaleY || scaleX;
+		}
+		
+		public function removeChildByName(name:String):DisplayObject {
+			var child:DisplayObject = getChildByName(name);
+			if (child) {
+				return removeChild(child);
+			}
+			return null;
 		}
 		
 		public function remove():void {

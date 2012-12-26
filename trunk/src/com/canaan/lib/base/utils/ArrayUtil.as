@@ -1,11 +1,14 @@
 package com.canaan.lib.base.utils
 {
+	/**
+	 * 为兼容Vector，所有Array使用弱无类型*
+	 * 
+	 */
 	public class ArrayUtil
 	{
-		public function ArrayUtil()
-		{
-		}
-		
+		/**
+		 * 获取Array或Vector中匹配的元素
+		 */
 		public static function find(source:*, key:*, value:*):* {
 			if (source != null) {
 				var item:Object;
@@ -18,6 +21,9 @@ package com.canaan.lib.base.utils
 			return null;
 		}
 
+		/**
+		 * 获取Array或Vector中多项匹配的元素
+		 */
 		public static function findElement(source:*, keys:Array, value:*):* {
 			if (source != null && keys != null && keys.length > 0) {
 				var item:Object;
@@ -33,7 +39,10 @@ package com.canaan.lib.base.utils
 			return null;
 		}
 		
-		public static function findElements(source:*, keys:Array, value:*):Array {
+		/**
+		 * 获取Array中所有匹配的元素数组
+		 */
+		public static function findElementsArray(source:*, keys:Array, value:*):Array {
 			var result:Array = [];
 			if (source != null && keys != null && keys.length > 0) {
 				var item:Object;
@@ -50,6 +59,29 @@ package com.canaan.lib.base.utils
 			return result;
 		}
 		
+		/**
+		 * 获取Array中所有匹配的元素Vector
+		 */
+		public static function findElementsVector(source:*, keys:Array, value:*):Vector.<Object> {
+			var result:Vector.<Object> = new Vector.<Object>();
+			if (source != null && keys != null && keys.length > 0) {
+				var item:Object;
+				var key:String;
+				for each (item in source) {
+					for each (key in keys) {
+						if (item[key] == value) {
+							result.push(item);
+							break;
+						}
+					}
+				}
+			}
+			return result;
+		}
+		
+		/**
+		 * 获取Array或Vector中配对匹配的元素
+		 */
 		public static function findElement2(source:*, keys:Array, values:Array):* {
 			if (source == null || keys == null || values == null) {
 				return null;
@@ -73,7 +105,7 @@ package com.canaan.lib.base.utils
 			return null;
 		}
 		
-		public static function getRandomItem(source:Array):* {
+		public static function getRandomItem(source:*):* {
 			if (source == null || source.length == 0) {
 				return null;
 			}
@@ -81,7 +113,7 @@ package com.canaan.lib.base.utils
 			return source[randomNum];
 		}
 		
-		public static function arrayToObject(source:Array, key:String):Object {
+		public static function arrayToObject(source:*, key:String):Object {
 			if (source == null) {
 				return null;
 			}
@@ -93,7 +125,7 @@ package com.canaan.lib.base.utils
 			return result;
 		}
 		
-		public static function arrayToObjectMultiKey(source:Array, keys:Array, separator:String = "_"):Object {
+		public static function arrayToObjectMultiKey(source:*, keys:Array, separator:String = "_"):Object {
 			if (source == null) {
 				return null;
 			}
@@ -116,7 +148,7 @@ package com.canaan.lib.base.utils
 			return result;
 		}
 		
-		public static function dispose(source:Array):void {
+		public static function dispose(source:*):void {
 			if (source == null || source.length == 0) {
 				return;
 			}
@@ -124,7 +156,7 @@ package com.canaan.lib.base.utils
 //			source.splice(0, source.length);
 		}
 		
-		public static function remove(source:Array, ...args):void {
+		public static function remove(source:*, ...args):void {
 			if (source == null || source.length == 0) {
 				return;
 			}
@@ -143,14 +175,14 @@ package com.canaan.lib.base.utils
 			}
 		}
 		
-		public static function copyAndFill(source:Array, elementStr:String, separator:String = ","):Array {
-			var result:Array = source.concat();
+		public static function copyAndFill(source:*, elementStr:String, separator:String = ","):* {
+			var result:* = source.concat();
 			var elements:Array = elementStr.split(separator);
 			var index:int;
 			var length:int = Math.min(result.length, elements.length);
 			for (var i:int = 0; i < length; i++) {
-				var value:String = elements[index];
-				result[index] = (value == "true" ? true : (value == "false" ? false : value));
+				var value:String = elements[i];
+				result[i] = (value == "true" ? true : (value == "false" ? false : value));
 			}
 			return result;
 		}

@@ -1,10 +1,10 @@
 package com.canaan.lib.rpg.core
 {
-	import com.canaan.lib.base.core.GameSetting;
+	import com.canaan.lib.base.core.Setting;
 
 	public class Resources
 	{
-		public static const root:String = GameSetting.assetHost + "res/" + GameSetting.locale + "/assets/";
+		public static const root:String = Setting.assetHost + "res/" + Setting.locale + "/assets/";
 		
 		public static const DIR_MAP:String = root + "map/";
 	}

@@ -117,5 +117,4 @@ internal class LogEntity
 		this.owner = owner;
 		this.logLevel = logLevel;
 	}
-
 }

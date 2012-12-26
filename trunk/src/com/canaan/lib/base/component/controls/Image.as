@@ -3,6 +3,7 @@ package com.canaan.lib.base.component.controls
 	import com.canaan.lib.base.component.Styles;
 	import com.canaan.lib.base.component.UIComponent;
 	import com.canaan.lib.base.core.DLoader;
+	import com.canaan.lib.base.core.ObjectPool;
 	import com.canaan.lib.base.events.UIEvent;
 	import com.canaan.lib.base.managers.ResourceManager;
 	import com.canaan.lib.base.utils.ArrayUtil;
@@ -17,12 +18,12 @@ package com.canaan.lib.base.component.controls
 	import flash.net.URLRequest;
 	import flash.utils.Dictionary;
 	
+	[Event(name="complete", type="com.canaan.lib.base.events.UIEvent")]
+	
 	public class Image extends UIComponent
 	{
 		public static var cache:Dictionary = new Dictionary(true);
-		
-		protected var loader:DLoader;
-		
+
 		protected var _bitmap:Bitmap;
 		protected var _url:String;
 		protected var _scale9:Array;
@@ -38,6 +39,7 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		public function set url(value:String):void {
+			removeCache();
 			if (_url != value) {
 				_url = value;
 				if (_url) {
@@ -53,12 +55,11 @@ package com.canaan.lib.base.component.controls
 								obj.push(this);
 							}
 						} else {
-							cache[_url] = [this];
-							if (loader == null) {
-								loader = new DLoader();
-								loader.contentLoaderInfo.addEventListener(Event.COMPLETE, completeHandler);
-								loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
-							}
+							cache[_url] = new Vector.<Image>();
+							cache[_url].push(this);
+							var loader:DLoader = ObjectPool.getObject(DLoader) as DLoader;
+							loader.contentLoaderInfo.addEventListener(Event.COMPLETE, completeHandler);
+							loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 							loader.data = _url;
 							loader.load(new URLRequest(_url));
 						}
@@ -106,24 +107,27 @@ package com.canaan.lib.base.component.controls
 		public function get bitmap():Bitmap {
 			return _bitmap;
 		}
-
-		override public function dispose():void {
-			super.dispose();
-			if (loader != null) {
-				loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, completeHandler);
-				loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
-				loader.unloadAndStop();
-				loader.data = null;
-				loader = null;
+		
+		protected function removeCache():void {
+			if (_url) {
+				var images:Vector.<Image> = cache[_url] as Vector.<Image>;
+				if (images) {
+					images.splice(images.indexOf(this), 1);
+				}
 			}
 		}
-		
+
 		protected function completeHandler(event:Event):void {
 			var loaderInfo:LoaderInfo = event.target as LoaderInfo;
+			loaderInfo.removeEventListener(Event.COMPLETE, completeHandler);
+			loaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
+			
 			var loader:DLoader = loaderInfo.loader as DLoader;
 			var bmpd:BitmapData = Bitmap(loaderInfo.content).bitmapData;
-			var list:Array = cache[loader.data];
+			var list:Vector.<Image> = cache[loader.data];
 			cache[loader.data] = bmpd;
+			ObjectPool.disposeObject(loader);
+			
 			var image:Image;
 			for each (image in list) {
 				image.setBitmapData(bmpd);

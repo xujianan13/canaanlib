@@ -70,17 +70,42 @@ package com.canaan.lib.base.utils
 			return result;
 		}
 		
+		public static function CSVToVector(csv:String):Vector.<String> {
+			var result:Vector.<String> = new Vector.<String>();
+			var lines:Array = csv.split(wrap);
+			// remove the last line ""
+			if (lines.length > 0) {
+				lines.pop();
+			}
+			// remove the first line title
+			var keys:Array = lines.shift().split(splitReg);
+			keys.forEach(eacapeForEach);
+			var line:String;
+			var values:Array;
+			var object:Object;
+			for each (line in lines) {
+				values = line.split(splitReg);
+				values.forEach(eacapeForEach);
+				object = {};
+				for (var i:int = 0; i < keys.length; i++) {
+					object[keys[i]] = values[i];
+				}
+				result.push(object);
+			}
+			return result;
+		}
+		
 		public static function CSVToObject(csv:String, key:* = null):Object {
-			var csvArray:Array = CSVToArray(csv);
+			var csvVector:Vector.<String> = CSVToVector(csv);
 			if (key != null) {
 				if (key is Array) {
-					return ArrayUtil.arrayToObjectMultiKey(csvArray, key);
+					return ArrayUtil.arrayToObjectMultiKey(csvVector, key);
 				} else if (key is String) {
-					return ArrayUtil.arrayToObject(csvArray, key);
+					return ArrayUtil.arrayToObject(csvVector, key);
 				}
 			} else {
 				var titles:Array = getTitles(csv);
-				return ArrayUtil.arrayToObject(csvArray, titles[0]);
+				return ArrayUtil.arrayToObject(csvVector, titles[0]);
 			}
 			return null;
 		}

@@ -3,6 +3,8 @@ package com.canaan.lib.base.component.controls
 	import com.canaan.lib.base.component.ViewCreater;
 	import com.canaan.lib.base.events.UIEvent;
 	
+	[Event(name="viewCreated", type="com.canaan.lib.base.events.UIEvent")]
+	
 	public class View extends Container
 	{
 		public function View()

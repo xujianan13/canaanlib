@@ -4,12 +4,10 @@ package com.canaan.lib.base.utils
 	import com.canaan.lib.base.display.Effect;
 	import com.canaan.lib.base.interfaces.IDispose;
 	
-	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
-	import flash.display.Shape;
 	import flash.display.StageDisplayState;
 	import flash.filters.BitmapFilter;
 	import flash.filters.ColorMatrixFilter;
@@ -21,6 +19,8 @@ package com.canaan.lib.base.utils
 	{
 		private static var matrixArray:Array = [];
 		private static var matrix:Matrix = new Matrix();
+		private static var rect:Rectangle = new Rectangle();
+		private static var point:Point = new Point();
 		
 		public static function gray(target:DisplayObject, isGray:Boolean = true):void {
 			if (isGray) {
@@ -120,76 +120,12 @@ package com.canaan.lib.base.utils
         	}
         }
         
-		/**
-		 * This method may has problems.
-		 */
-        public static function alignContainer(container:DisplayObjectContainer, layout:String, align:String = "leftTop", gap:Number = 0, paddingLeft:Number = 0, paddingTop:Number = 0, childSize:Number = NaN, ignoreList:Array = null):void {
-        	var size:Number = 0;
-        	var child:DisplayObject;
-        	var index:int;
-        	var i:int;
-			for (i = 0; i < container.numChildren; i++) {
-        		child = container.getChildAt(i);
-        		if (!(child is Shape) && (!ignoreList || ignoreList.indexOf(child) == -1)) {
-        			if (isNaN(childSize)) {
-	        			if (layout == "vertical") {
-	        				size += child.height;
-	        			} else if (layout == "horizontal") {
-	        				size += child.width;
-	        			}
-        			} else {
-        				size += childSize;
-        			}
-        			index++;
-        		}
-        	}
-        	size += (index - 1) & gap;
-        	var startPos:Number;
-        	switch (align) {
-        		case "leftTop":
-        			startPos = 0;
-        			break;
-        		case "rightBottom":
-        			if (layout == "vertical") {
-        				startPos = container.height - size;
-        			} else if (layout == "horizontal") {
-        				startPos = container.width - size;
-        			}
-        			break;
-        		case "center":
-        			if (layout == "vertical") {
-        				startPos = (container.height - size) * 0.5;
-        			} else if (layout == "horizontal") {
-        				startPos = (container.width - size) * 0.5;
-        			}
-        			break;
-        	}
-        	var tmpSize:Number = 0;
-			for (i = 0; i < container.numChildren; i++) {
-        		child = container.getChildAt(i);
-        		if (!(child is Shape) && (!ignoreList || ignoreList.indexOf(child) == -1)) {
-        			if (layout == "vertical") {
-        				child.y = startPos;
-        				tmpSize = child.height;
-        			} else if (layout == "horizontal") {
-        				child.x = startPos;
-        				tmpSize = child.width;
-        			}
-        			child.x += paddingLeft;
-        			child.y += paddingTop;
-        			startPos += (isNaN(childSize) ? tmpSize : childSize) + gap;
-        		}
-        	}
-        }
-		
 		public static function horizontalFlip(source:BitmapData, target:BitmapData):BitmapData {
 			if (target == null) {
 				target = new BitmapData(source.width, source.height, true, 0x00FFFFFF);
 			}
+			matrix.identity();
 			matrix.a = -1;
-			matrix.b = 0;
-			matrix.c = 0;
-			matrix.d = 1;
 			matrix.tx = source.width;
 			target.draw(source, matrix);
 			return target;
@@ -199,11 +135,8 @@ package com.canaan.lib.base.utils
 			if (target == null) {
 				target = new BitmapData(source.width, source.height, true, 0x00FFFFFF);
 			}
-			matrix.a = 1;
-			matrix.b = 0;
-			matrix.c = 0;
+			matrix.identity();
 			matrix.d = -1;
-			matrix.tx = 0;
 			matrix.ty = source.width;
 			target.draw(source, matrix);
 			return target;
@@ -234,16 +167,18 @@ package com.canaan.lib.base.utils
 		/**
 		 * yungzhu的创建切片方法
 		 */
-		public static function createTiles(source:BitmapData, x:int, y:int):Array {
-			var tiles:Array = [];
+		public static function createTiles(source:BitmapData, x:int, y:int):Vector.<BitmapData> {
+			var tiles:Vector.<BitmapData> = new Vector.<BitmapData>();
 			var width:int = Math.max(source.width / x, 1);
 			var height:int = Math.max(source.height / y, 1);
-			var point:Point = new Point();
 			var bmd:BitmapData;
+			point.x = 0;
+			point.y = 0;
 			for (var i:int = 0; i < x; i++) {
 				for (var j:int = 0; j < y; j++) {
 					bmd = new BitmapData(width, height);
-					bmd.copyPixels(source, new Rectangle(i * width, j * height, width, height), point);
+					rect.setTo(i * width, j * height, width, height);
+					bmd.copyPixels(source, rect, point);
 					tiles.push(bmd);
 				}
 			}
@@ -258,42 +193,48 @@ package com.canaan.lib.base.utils
 			if (bmd.width == width && bmd.height == height) {
 				return bmd;
 			}
-			var grid:Rectangle = new Rectangle(sizeGrid[0], sizeGrid[1], bmd.width - sizeGrid[0] - sizeGrid[2], bmd.height - sizeGrid[1] - sizeGrid[3]);
-			width = Math.max(width, bmd.width - grid.width);
-			height = Math.max(height, bmd.height - grid.height);
+			if (width == 0 || height == 0) {
+				return null;
+			}
 			
+			var gw:int = int(sizeGrid[0]) + int(sizeGrid[2]);
+			var gh:int = int(sizeGrid[1]) + int(sizeGrid[3]);
 			var newBmd:BitmapData = new BitmapData(width, height, bmd.transparent, 0x00000000);
-			var rows:Array = [0, grid.top, grid.bottom, bmd.height];
-			var cols:Array = [0, grid.left, grid.right, bmd.width];
-			var newRows:Array = [0, grid.top, height - (bmd.height - grid.bottom), height];
-			var newCols:Array = [0, grid.left, width - (bmd.width - grid.right), width];
-			var newRect:Rectangle;
-			var clipRect:Rectangle;
-			var m:Matrix = new Matrix();
-			for (var i:int = 0; i < 3; i++) {
-				for (var j:int = 0; j < 3; j++) {
-					newRect = new Rectangle(cols[i], rows[j], cols[i + 1] - cols[i], rows[j + 1] - rows[j]);
-					clipRect = new Rectangle(newCols[i], newRows[j], newCols[i + 1] - newCols[i], newRows[j + 1] - newRows[j]);
-					m.identity();
-					m.a = clipRect.width / newRect.width;
-					m.d = clipRect.height / newRect.height;
-					m.tx = clipRect.x - newRect.x * m.a;
-					m.ty = clipRect.y - newRect.y * m.d;
-					newBmd.draw(bmd, m, null, null, clipRect, true);
+			
+			if (width > gw && height > gh) {
+				rect.setTo(sizeGrid[0], sizeGrid[1], bmd.width - sizeGrid[0] - sizeGrid[2], bmd.height - sizeGrid[1] - sizeGrid[3]);
+				var rows:Array = [0, rect.top, rect.bottom, bmd.height];
+				var cols:Array = [0, rect.left, rect.right, bmd.width];
+				var newRows:Array = [0, rect.top, height - (bmd.height - rect.bottom), height];
+				var newCols:Array = [0, rect.left, width - (bmd.width - rect.right), width];
+				var newRectWidth:Number;
+				var newRectHeight:Number;
+				var newRectX:Number;
+				var newRectY:Number;
+				for (var i:int = 0; i < 3; i++) {
+					for (var j:int = 0; j < 3; j++) {
+						rect.setTo(cols[i], rows[j], cols[i + 1] - cols[i], rows[j + 1] - rows[j]);
+						newRectWidth = rect.width;
+						newRectHeight = rect.height;
+						newRectX = rect.x;
+						newRectY = rect.y;
+						rect.setTo(newCols[i], newRows[j], newCols[i + 1] - newCols[i], newRows[j + 1] - newRows[j]);
+						matrix.identity();
+						matrix.a = rect.width / newRectWidth;
+						matrix.d = rect.height / newRectHeight;
+						matrix.tx = rect.x - newRectX * matrix.a;
+						matrix.ty = rect.y - newRectY * matrix.d;
+						newBmd.draw(bmd, matrix, null, null, rect, true);
+					}
 				}
+			} else {
+				matrix.identity();
+				matrix.a = width / bmd.width;
+				matrix.d = height / bmd.height;
+				rect.setTo(0, 0, width, height);
+				newBmd.draw(bmd, matrix, null, null, rect, true);
 			}
 			return newBmd;
-		}
-		
-		/**
-		 * 创建单色不透明位图 多用于遮罩
-		 */
-		public static function createBitmap(width:int, height:int, color:uint = 0, alpha:Number = 1):Bitmap {
-			var bitmap:Bitmap = new Bitmap(new BitmapData(1, 1, false, color));
-			bitmap.alpha = alpha;
-			bitmap.width = width;
-			bitmap.height = height;
-			return bitmap;
 		}
 	}
 }

@@ -4,12 +4,16 @@ package com.canaan.lib.base.events
 	
 	public class UIEvent extends Event
 	{
-		public static const RENDER_COMPLETE:String = "renderComplete";
+		public static const RENDER_COMPLETED:String = "renderCompleted";
 		public static const RESIZE:String = "resize";
 		public static const COMPLETE:String = "complete";
 		public static const ANIMATION_COMPLETE:String = "animationComplete";
 		public static const VIEW_CREATED:String = "viewCreated";
 		public static const CHANGE:String = "change";
+		public static const TOOL_TIP_CHANGED:String = "toolTipChanged";
+		public static const TOOL_TIP_START:String = "toolTipStart";
+		public static const TOOL_TIP_SHOW:String = "toolTipShow";
+		public static const TOOL_TIP_HIDE:String = "toolTipHide";
 		
 		protected var _data:Object;
 		
@@ -25,10 +29,6 @@ package com.canaan.lib.base.events
 		
 		public function get data():Object {
 			return _data;
-		}
-		
-		override public function clone():Event {
-			return new UIEvent(type, _data, bubbles, cancelable);
 		}
 	}
 }

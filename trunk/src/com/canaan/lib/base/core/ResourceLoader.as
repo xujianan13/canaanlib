@@ -62,6 +62,9 @@ package com.canaan.lib.base.core
 			
 			urlRequest = new URLRequest();
 			loaderContext = new LoaderContext(false, ApplicationDomain.currentDomain);
+			if (loaderContext.hasOwnProperty("imageDecodingPolicy")) {
+				loaderContext["imageDecodingPolicy"] = "onLoad";
+			}
 		}
 		
 		public function load(url:String, completeHandler:MethodElement, progressHandler:MethodElement):void {

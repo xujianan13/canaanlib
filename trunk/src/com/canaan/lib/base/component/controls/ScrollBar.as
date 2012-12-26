@@ -9,6 +9,8 @@ package com.canaan.lib.base.component.controls
 	
 	import flash.events.MouseEvent;
 	
+	[Event(name="change", type="com.canaan.lib.base.events.UIEvent")]
+	
 	public class ScrollBar extends UIComponent
 	{
 		private static const UP_BUTTON_SKIN_SUFFIX:String = "$up";
@@ -40,6 +42,7 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		override protected function initialize():void {
+			super.initialize();
 			upButton.addEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown);
 			downButton.addEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown);
 			slider.showLabel = false;

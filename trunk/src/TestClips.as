@@ -3,7 +3,7 @@ package
 	import com.canaan.lib.base.component.controls.Clip;
 	import com.canaan.lib.base.core.Application;
 	import com.canaan.lib.base.core.Config;
-	import com.canaan.lib.base.core.GameSetting;
+	import com.canaan.lib.base.core.Setting;
 	import com.canaan.lib.base.core.MethodElement;
 	import com.canaan.lib.base.managers.ResourceManager;
 	import com.canaan.lib.base.managers.TimerManager;
@@ -20,7 +20,7 @@ package
 		
 		public function TestClips()
 		{
-			GameSetting.fps = 2;
+			Setting.fps = 2;
 			
 			Application.initialize(this);
 			
@@ -34,6 +34,7 @@ package
 			clip.tileX = 10;
 			clip.tileY = 1;
 			clip.interval = 200;
+			clip.left = 5;
 //			clip.url = "png.comp.clip_num";
 			clip.url = "assets/clip_num.png";
 			addChild(clip);

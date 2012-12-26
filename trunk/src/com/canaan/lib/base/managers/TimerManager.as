@@ -15,7 +15,7 @@ package com.canaan.lib.base.managers
 		
 		private var shape:Shape;
 		private var handlers:Dictionary;
-		private var pool:Array;
+		private var pool:Vector.<TimerHandler>;
 		private var currFrame:int;
 		private var currTime:int;
 		private var lastTime:int;
@@ -28,7 +28,7 @@ package com.canaan.lib.base.managers
 			shape = new Shape();
 			shape.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 			handlers = new Dictionary();
-			pool = [];
+			pool = new Vector.<TimerHandler>();
 			currTime = getTimer();
 		}
 		
@@ -101,6 +101,10 @@ package com.canaan.lib.base.managers
 				pool.push(handler);
 				_count--;
 			}
+		}
+		
+		public function running(method:Function):Boolean {
+			return handlers[method];
 		}
 		
 		public function get count():int {
