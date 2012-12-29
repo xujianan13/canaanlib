@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties analytics="false" mainApplicationPath="TestPanel.as" projectUUID="bbe9de15-229b-4304-a9da-6b5f32612600" version="10">
+<actionScriptProperties analytics="false" mainApplicationPath="test/util/TestMathUtil.as" projectUUID="bbe9de15-229b-4304-a9da-6b5f32612600" version="10">
   <compiler additionalCompilerArguments="-locale en_US" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
     <compilerSourcePath/>
     <libraryPath defaultLinkType="0">
@@ -46,37 +46,38 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="TestPanel.as"/>
-    <application path="TestKeyBoardManager.as"/>
-    <application path="TestMap.as"/>
-    <application path="TestCRCUtil.as"/>
-    <application path="TestRadioButton.as"/>
-    <application path="TestViewCreater.as"/>
-    <application path="TestDragManager.as"/>
-    <application path="TestButton.as"/>
-    <application path="TestProgressBar.as"/>
-    <application path="TestDialogManager.as"/>
-    <application path="TestPageList.as"/>
-    <application path="TestCheckBox.as"/>
-    <application path="TestTab.as"/>
-    <application path="TestScrollBar.as"/>
-    <application path="TestCursorManager.as"/>
-    <application path="TestViewStack.as"/>
-    <application path="TestCsvUtil.as"/>
-    <application path="TestImage.as"/>
-    <application path="TestTimerManager.as"/>
-    <application path="TestLinkButton.as"/>
-    <application path="TestTextArea.as"/>
-    <application path="TestRadioGroup.as"/>
-    <application path="TestList.as"/>
-    <application path="TestTextInput.as"/>
-    <application path="TestSlider.as"/>
-    <application path="TestClips.as"/>
-    <application path="TestFrameClip.as"/>
-    <application path="TestResource.as"/>
-    <application path="TestLabel.as"/>
-    <application path="TestContainer.as"/>
-    <application path="TestScrollList.as"/>
+    <application path="test/component/TestList.as"/>
+    <application path="test/component/TestCheckBox.as"/>
+    <application path="test/component/TestRadioButton.as"/>
+    <application path="test/component/TestTextInput.as"/>
+    <application path="test/component/TestFrameClip.as"/>
+    <application path="test/component/TestTab.as"/>
+    <application path="test/component/TestLinkButton.as"/>
+    <application path="test/managers/TestDialogManager.as"/>
+    <application path="test/component/TestProgressBar.as"/>
+    <application path="test/util/TestCRCUtil.as"/>
+    <application path="test/util/TestCsvUtil.as"/>
+    <application path="test/component/TestScrollList.as"/>
+    <application path="test/component/TestClips.as"/>
+    <application path="test/component/TestRadioGroup.as"/>
+    <application path="test/component/TestViewCreater.as"/>
+    <application path="test/component/TestLabel.as"/>
+    <application path="test/rpg/TestMap.as"/>
+    <application path="test/component/TestViewStack.as"/>
+    <application path="test/managers/TestResourceManager.as"/>
+    <application path="test/managers/TestKeyBoardManager.as"/>
+    <application path="test/component/TestContainer.as"/>
+    <application path="test/managers/TestCursorManager.as"/>
+    <application path="test/component/TestImage.as"/>
+    <application path="test/component/TestPanel.as"/>
+    <application path="test/component/TestSlider.as"/>
+    <application path="test/managers/TestDragManager.as"/>
+    <application path="test/managers/TestTimerManager.as"/>
+    <application path="test/component/TestPageList.as"/>
+    <application path="test/component/TestButton.as"/>
+    <application path="test/component/TestScrollBar.as"/>
+    <application path="test/component/TestTextArea.as"/>
+    <application path="test/util/TestMathUtil.as"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

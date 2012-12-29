@@ -16,6 +16,8 @@ package com.canaan.lib.base.utils
 		public static var LOCAL_PATH:String = "/";
 		public static var SHAREDOBJECT_PREFIX:String = "";
 		
+		private static var regExp:RegExp = /[\\\/:\*\?\"<>|,]/g;
+		
 		public function SharedObjectUtil()
 		{
 			
@@ -26,8 +28,7 @@ package com.canaan.lib.base.utils
 		}
 		
 		public static function replacePathString(sharedObjectName:String, replacement:String = ""):String {
-			var reg:RegExp = new RegExp("[\\\/:\*\?\"<>|,]", "g");
-			return sharedObjectName.replace(reg, replacement);
+			return sharedObjectName.replace(regExp, replacement);
 		}
 
 		public static function addSharedObject(name:String, value:*):void {

@@ -2,8 +2,29 @@ package com.canaan.lib.base.utils
 {
 	public class MathUtil
 	{
-		public function MathUtil()
-		{
+		private static var sinCache:Vector.<Number> = new Vector.<Number>(360);
+		private static var cosCache:Vector.<Number> = new Vector.<Number>(360);
+		
+		public static function sin(angle:int):Number {
+			if (!sinCache[angle]) {
+				sinCache[angle] = Math.sin(angleToRadian(angle));
+			}
+			return sinCache[angle];
+		}
+		
+		public static function cos(angle:int):Number {
+			if (!cosCache[angle]) {
+				cosCache[angle] = Math.cos(angleToRadian(angle));
+			}
+			return cosCache[angle];
+		}
+		
+		public static function angleToRadian(angle:int):Number {
+			return angle * Math.PI / 180;
+		}
+		
+		public static function radianToAngle(radian:Number):int {
+			return Math.round(radian * 180 / Math.PI);
 		}
 
 		public static function randRange(min:int, max:int):int {
@@ -22,16 +43,39 @@ package com.canaan.lib.base.utils
 			return int(value * num) / num;
 		}
 		
-		public static function getAngle(x:Number, y:Number):Number {
+		public static function getRadian(x:Number, y:Number):Number {
 			return Math.atan2(y, x);
 		}
 		
-		public static function angleToRotation(angle:Number):Number {
-			return angle * 180 / Math.PI;
+		public static function getAngle(x:Number, y:Number):int {
+			return radianToAngle(getRadian(x, y));
 		}
 		
-		public static function rotationToAngle(rotation:Number):Number {
-			return rotation & Math.PI / 180;
+		public static function toUAngle(angle:int):int {
+			if (angle > -1 && angle < 360) {
+				return angle;
+			}
+			angle %= 360;
+			if (angle < 0) {
+				angle += 360;
+			}
+			return angle;
+		}
+		
+		public static function getTwoPointRadian(x1:Number, y1:Number, x2:Number, y2:Number):Number {
+			var dx:Number = x2 - x1;
+			var dy:Number = y2 - y1;
+			return getRadian(dx, dy);
+		}
+		
+		public static function getTwoPointAngle(x1:Number, y1:Number, x2:Number, y2:Number):int {
+			return radianToAngle(getTwoPointRadian(x1, y1, x2, y2));
+		}
+		
+		public static function getDistance(x1:Number, y1:Number, x2:Number, y2:Number):Number {
+			var dx:Number = x2 - x1;
+			var dy:Number = y2 - y1;
+			return Math.sqrt(dx * dx + dy * dy);
 		}
 	}
 }

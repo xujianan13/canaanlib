@@ -11,17 +11,29 @@ package com.canaan.lib.base.utils
 		}
 
 		public static function addCallback(functionName:String, closure:Function):void {
-			if (!ExternalInterface.available) {
+			if (!available) {
 				Log.getInstance().error("ExternalInterface is not available!");
+				return;
 			}
 			ExternalInterface.addCallback(functionName, closure);
 		}
 		
 		public static function call(functionName:String, ...args):* {
-			if (!ExternalInterface.available) {
+			if (!available) {
 				Log.getInstance().error("ExternalInterface is not available!");
+				return;
 			}
 			ExternalInterface.call(functionName, args);
+		}
+		
+		public static function get available():Boolean {
+			if (!ExternalInterface.available) {
+				return false;
+			}
+			if (!ExternalInterface.marshallExceptions) {
+				ExternalInterface.marshallExceptions = true;
+			}
+			return true;
 		}
 	}
 }
