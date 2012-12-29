@@ -7,10 +7,6 @@ package com.canaan.lib.base.utils
 	
 	public class ObjectUtil
 	{
-		public function ObjectUtil()
-		{
-		}
-
 		public static function clone(source:Object):Object {
 	        var result:Object = {};
 	        var prop:String;
