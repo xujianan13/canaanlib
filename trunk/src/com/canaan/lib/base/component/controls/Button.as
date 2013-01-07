@@ -3,7 +3,7 @@ package com.canaan.lib.base.component.controls
 	import com.canaan.lib.base.component.IListItem;
 	import com.canaan.lib.base.component.Styles;
 	import com.canaan.lib.base.component.UIComponent;
-	import com.canaan.lib.base.core.MethodElement;
+	import com.canaan.lib.base.core.Method;
 	import com.canaan.lib.base.managers.ResourceManager;
 	import com.canaan.lib.base.utils.ArrayUtil;
 	import com.canaan.lib.base.utils.DisplayUtil;
@@ -36,7 +36,7 @@ package com.canaan.lib.base.component.controls
 		protected var _labelColors:Array = Styles.buttonLabelColors;
 		protected var _labelMargin:Array = Styles.buttonLabelMargin;
 		protected var _selected:Boolean;
-		protected var _mouseClickHandler:MethodElement;
+		protected var _mouseClickHandler:Method;
 		protected var _scale9:Array;
 		
 		public function Button(skin:String = null, label:String = "")
@@ -145,6 +145,7 @@ package com.canaan.lib.base.component.controls
 			if (_btnLabel.text != value) {
 				_btnLabel.text = value;
 				callLater(changeState);
+				callLater(changeLabelSize);
 			}
 		}
 		
@@ -249,13 +250,13 @@ package com.canaan.lib.base.component.controls
 			return _selected;
 		}
 		
-		public function set mouseClickHandler(value:MethodElement):void {
+		public function set mouseClickHandler(value:Method):void {
 			if (_mouseClickHandler != value) {
 				_mouseClickHandler = value;
 			}
 		}
 		
-		public function get mouseClickHandler():MethodElement {
+		public function get mouseClickHandler():Method {
 			return _mouseClickHandler;
 		}
 		

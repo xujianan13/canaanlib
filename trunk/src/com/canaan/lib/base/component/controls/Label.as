@@ -50,7 +50,7 @@ package com.canaan.lib.base.component.controls
 			super.initialize();
 			_textField.selectable = false;
 			_textField.autoSize = TextFieldAutoSize.LEFT;
-			stroke = Styles.labelStroke.toString();
+//			stroke = Styles.labelStroke.toString();
 		}
 		
 		protected function changeText():void {
@@ -208,6 +208,42 @@ package com.canaan.lib.base.component.controls
 				_format.color = value;
 				callLater(changeText);
 			}
+		}
+		
+		public function get background():Boolean {
+			return _textField.background;
+		}
+		
+		public function set background(value:Boolean):void {
+			if (_textField.background != value) {
+				_textField.background = value;
+			}
+		}
+		
+		public function get backgroundColor():uint {
+			return _textField.backgroundColor;
+		}
+		
+		public function set backgroundColor(value:uint):void {
+			_textField.backgroundColor = value;
+		}
+		
+		public function get border():Boolean {
+			return _textField.border;
+		}
+		
+		public function set border(value:Boolean):void {
+			if (_textField.border != value) {
+				_textField.border = value;
+			}
+		}
+		
+		public function get borderColor():uint {
+			return _textField.borderColor;
+		}
+		
+		public function set borderColor(value:uint):void {
+			_textField.borderColor = value;
 		}
 		
 		public function get font():String {

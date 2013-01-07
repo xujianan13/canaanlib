@@ -2,6 +2,7 @@ package com.canaan.lib.base.managers
 {
 	import com.canaan.lib.base.component.Styles;
 	import com.canaan.lib.base.component.controls.Dialog;
+	import com.canaan.lib.base.utils.ArrayUtil;
 	import com.canaan.lib.base.utils.DisplayUtil;
 	
 	import flash.display.Sprite;
@@ -38,13 +39,13 @@ package com.canaan.lib.base.managers
 		
 		private function onAddedToStage(event:Event):void {
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			stage.addEventListener(Event.RESIZE, onResize);
-			onResize(null);
+			StageManager.getInstance().resizeMethods.register(onResize);
+			onResize();
 		}
 		
-		private function onResize(event:Event):void {
-			modalMask.width = stage.stageWidth;
-			modalMask.height = stage.stageHeight;
+		private function onResize():void {
+			modalMask.width = StageManager.getInstance().stage.stageWidth;
+			modalMask.height = StageManager.getInstance().stage.stageHeight;
 			var dialog:Dialog;
 			for each (dialog in dialogs) {
 				dialog.center();
@@ -57,19 +58,11 @@ package com.canaan.lib.base.managers
 		}
 		
 		public function popup(dialog:Dialog, modal:Boolean = false, x:Number = NaN, y:Number = NaN):void {
-			var index:int;
 			if (modal) {
 				addChild(modalMask);
-				index = modals.indexOf(dialog);
-				if (index != -1) {
-					modals.splice(index, 1);
-				}
-				modals.push(dialog);
+				ArrayUtil.addElements(modals, dialog);
 			}
-			index = dialogs.indexOf(dialog);
-			if (index != -1) {
-				dialogs.splice(index, 1);
-			}
+			ArrayUtil.removeElements(dialogs, dialog);
 			dialogs.push(dialog);
 			addChild(dialog);
 			dialog.isPopup = true;

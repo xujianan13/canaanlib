@@ -1,6 +1,6 @@
 package com.canaan.lib.base.component
 {
-	import com.canaan.lib.base.core.MethodElement;
+	import com.canaan.lib.base.core.Method;
 
 	public interface IListItem
 	{
@@ -8,7 +8,7 @@ package com.canaan.lib.base.component
 		function get data():Object;
 		function set selected(value:Boolean):void;
 		function get selected():Boolean;
-		function set mouseClickHandler(value:MethodElement):void;
-		function get mouseClickHandler():MethodElement;
+		function set mouseClickHandler(value:Method):void;
+		function get mouseClickHandler():Method;
 	}
 }

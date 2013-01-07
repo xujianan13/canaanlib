@@ -1,6 +1,6 @@
 package com.canaan.lib.base.managers
 {
-	import com.canaan.lib.base.core.MethodElement;
+	import com.canaan.lib.base.core.Method;
 	import com.canaan.lib.base.core.ResourceLoader;
 	import com.canaan.lib.base.core.Setting;
 	import com.canaan.lib.base.debug.Log;
@@ -47,7 +47,7 @@ package com.canaan.lib.base.managers
 			return instance;
 		}
 		
-		public function add(url:String, completeHandler:MethodElement = null, progressHandler:MethodElement = null):void {
+		public function add(url:String, completeHandler:Method = null, progressHandler:Method = null):void {
 			url = formatUrl(url);
 			var resourceItem:ResourceItem = new ResourceItem(url, completeHandler, progressHandler);
 			loadList.push(resourceItem);
@@ -85,11 +85,11 @@ package com.canaan.lib.base.managers
 		}
 		
 		private function startLoad(resourceItem:ResourceItem):void {
-			loader.load(resourceItem.url, new MethodElement(onComplete, [resourceItem]), new MethodElement(onProgress, [resourceItem]));
+			loader.load(resourceItem.url, new Method(onComplete, [resourceItem]), new Method(onProgress, [resourceItem]));
 		}
 		
 		private function endLoad(resourceItem:ResourceItem, content:*):void {
-			var completeHandler:MethodElement = resourceItem.completeHandler;
+			var completeHandler:Method = resourceItem.completeHandler;
 			if (completeHandler != null) {
 				completeHandler.applyWith([content]);
 			}
@@ -102,7 +102,7 @@ package com.canaan.lib.base.managers
 		}
 		
 		private function onProgress(resourceItem:ResourceItem, percent:Number):void {
-			var progressHandler:MethodElement = resourceItem.progressHandler;
+			var progressHandler:Method = resourceItem.progressHandler;
 			if (progressHandler != null) {
 				progressHandler.applyWith([percent]);
 			}
@@ -211,15 +211,15 @@ package com.canaan.lib.base.managers
 	}
 }
 
-import com.canaan.lib.base.core.MethodElement;
+import com.canaan.lib.base.core.Method;
 
 class ResourceItem
 {
 	public var url:String;
-	public var completeHandler:MethodElement;
-	public var progressHandler:MethodElement;
+	public var completeHandler:Method;
+	public var progressHandler:Method;
 	
-	public function ResourceItem(url:String, completeHandler:MethodElement = null, progressHandler:MethodElement = null) {
+	public function ResourceItem(url:String, completeHandler:Method = null, progressHandler:Method = null) {
 		this.url = url;
 		this.completeHandler = completeHandler;
 		this.progressHandler = progressHandler;

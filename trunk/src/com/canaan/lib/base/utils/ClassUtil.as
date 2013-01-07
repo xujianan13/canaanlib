@@ -30,7 +30,7 @@ package com.canaan.lib.base.utils
 		 * @param params the parameters to pass to the constructor of the class
 		 * @return the new instance
 		 */
-		public static function createNewInstance (type:Class, params:Array):Object {
+		public static function createNewInstance (type:Class, params:Array = null):Object {
 			if (params == null) {
 				return new type();
 			}

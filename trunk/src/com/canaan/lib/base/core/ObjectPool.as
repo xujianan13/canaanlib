@@ -26,11 +26,11 @@ package com.canaan.lib.base.core
 		/**
 		 * 初始化对象池
 		 */
-		public static function initialize(maxPoolSize:uint, growthValue:uint, clazz:Class, args:Array = null):void {
+		public static function initialize(maxPoolSize:uint, growthValue:uint, clazz:Class):void {
 			var newPool:PoolItem = new PoolItem(maxPoolSize, growthValue, clazz);
 			var i:uint = maxPoolSize;
 			while (--i > -1) {
-				newPool.pool[i] = ClassUtil.createNewInstance(clazz, args) as IRecyclable;
+				newPool.pool[i] = ClassUtil.createNewInstance(clazz) as IRecyclable;
 			}
 			
 			var className:String = getQualifiedClassName(clazz);
@@ -40,10 +40,10 @@ package com.canaan.lib.base.core
 		/**
 		 * 根据类名获取对象
 		 */
-		public static function getObject(clazz:Class, args:Array = null):IRecyclable {
+		public static function getObject(clazz:Class):IRecyclable {
 			var className:String = getQualifiedClassName(clazz);
 			if (!pools[className]) {
-				initialize(DEFAULT_MAX_POOL_SIZE, DEFAULT_GROWTH_VALUE, clazz, args);
+				initialize(DEFAULT_MAX_POOL_SIZE, DEFAULT_GROWTH_VALUE, clazz);
 			}
 			
 			var poolItem:PoolItem = pools[className];
@@ -53,7 +53,7 @@ package com.canaan.lib.base.core
 			
 			var i:uint = poolItem.growthValue;
 			while (--i > -1) {
-				poolItem.pool.unshift(ClassUtil.createNewInstance(clazz, args));
+				poolItem.pool.unshift(ClassUtil.createNewInstance(clazz));
 			}
 			poolItem.counter = poolItem.growthValue;
 			return getObject(clazz);

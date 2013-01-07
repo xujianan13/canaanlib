@@ -40,8 +40,8 @@ package com.canaan.lib.base.core
 		
 		private var _url:String;
 		private var _fileType:uint;
-		private var _completeHandler:MethodElement;
-		private var _progressHandler:MethodElement;
+		private var _completeHandler:Method;
+		private var _progressHandler:Method;
 		private var _bytesLoaded:int;
 		private var _bytesTotal:int;
 		
@@ -67,7 +67,7 @@ package com.canaan.lib.base.core
 			}
 		}
 		
-		public function load(url:String, completeHandler:MethodElement, progressHandler:MethodElement):void {
+		public function load(url:String, completeHandler:Method, progressHandler:Method):void {
 			_url = url;
 			_fileType = getFileType(url);
 			_completeHandler = completeHandler;

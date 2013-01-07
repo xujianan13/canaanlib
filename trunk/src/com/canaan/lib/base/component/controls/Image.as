@@ -3,7 +3,6 @@ package com.canaan.lib.base.component.controls
 	import com.canaan.lib.base.component.Styles;
 	import com.canaan.lib.base.component.UIComponent;
 	import com.canaan.lib.base.core.DLoader;
-	import com.canaan.lib.base.core.ObjectPool;
 	import com.canaan.lib.base.events.UIEvent;
 	import com.canaan.lib.base.managers.ResourceManager;
 	import com.canaan.lib.base.utils.ArrayUtil;
@@ -55,9 +54,8 @@ package com.canaan.lib.base.component.controls
 								obj.push(this);
 							}
 						} else {
-							cache[_url] = new Vector.<Image>();
-							cache[_url].push(this);
-							var loader:DLoader = ObjectPool.getObject(DLoader) as DLoader;
+							cache[_url] = new <Image>[this];
+							var loader:DLoader = DLoader.fromPool();
 							loader.contentLoaderInfo.addEventListener(Event.COMPLETE, completeHandler);
 							loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 							loader.data = _url;
@@ -126,7 +124,7 @@ package com.canaan.lib.base.component.controls
 			var bmpd:BitmapData = Bitmap(loaderInfo.content).bitmapData;
 			var list:Vector.<Image> = cache[loader.data];
 			cache[loader.data] = bmpd;
-			ObjectPool.disposeObject(loader);
+			DLoader.toPool(loader);
 			
 			var image:Image;
 			for each (image in list) {

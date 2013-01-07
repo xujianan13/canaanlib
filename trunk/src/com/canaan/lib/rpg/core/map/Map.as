@@ -1,7 +1,6 @@
 package com.canaan.lib.rpg.core.map
 {
 	import com.canaan.lib.base.core.DLoader;
-	import com.canaan.lib.base.core.ObjectPool;
 	import com.canaan.lib.base.utils.ObjectUtil;
 	
 	import flash.display.Bitmap;
@@ -121,7 +120,7 @@ package com.canaan.lib.rpg.core.map
 					buffer.copyPixels(cache[tilePath], cache[tilePath].rect, new Point(int((point.x - currentStartX) * _mapData.tileWidth), int((point.y - currentStartY) * _mapData.tileHeight)));
 					drawTiles.splice(i, 1);
 				} else {
-					loader = ObjectPool.getObject(DLoader) as DLoader;
+					loader = DLoader.fromPool();
 					loader.data = point;
 					loader.contentLoaderInfo.addEventListener(Event.COMPLETE, tileComplete);
 					loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
@@ -169,7 +168,7 @@ package com.canaan.lib.rpg.core.map
 //				}
 			}
 			
-			ObjectPool.disposeObject(loader);
+			DLoader.toPool(loader);
 		}
 		
 		/**

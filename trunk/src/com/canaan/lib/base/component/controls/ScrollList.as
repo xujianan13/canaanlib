@@ -5,12 +5,14 @@ package com.canaan.lib.base.component.controls
 	import com.canaan.lib.base.component.layout.ScrollListLayout;
 	import com.canaan.lib.base.events.UIEvent;
 	
+	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
 
 	public class ScrollList extends List
 	{
 		protected var _currentPage:int;
-		protected var scrollBar:ScrollBar;
+		protected var _container:Container;
+		protected var _scrollBar:ScrollBar;
 		
 		public function ScrollList(skin:String=null, scrollSkin:String = null, row:int=0, column:int=0)
 		{
@@ -19,8 +21,10 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		override protected function createChildren():void {
-			scrollBar = new ScrollBar();
-			addChild(scrollBar);
+			_container = new Container();
+			super.addChild(_container);
+			_scrollBar = new ScrollBar();
+			super.addChild(_scrollBar);
 		}
 		
 		override protected function initialize():void {
@@ -28,9 +32,9 @@ package com.canaan.lib.base.component.controls
 			layoutObject = new ScrollListLayout();
 			layoutObject.target = this;
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
-			scrollBar.addEventListener(UIEvent.CHANGE, onSrollBarChange);
+			_scrollBar.addEventListener(UIEvent.CHANGE, onSrollBarChange);
 			resetScrollBarDirection();
-			scrollBar.visible = false;
+			_scrollBar.visible = false;
 		}
 		
 		override public function set layout(value:String):void {
@@ -60,17 +64,21 @@ package com.canaan.lib.base.component.controls
 						item.selected = false;
 					}
 				}
-				scrollBar.visible = _data.length > size;
-				scrollBar.value = _currentPage;
+				_scrollBar.visible = _data.length > size;
+				_scrollBar.value = _currentPage;
 			}
 		}
 		
+		override public function addChild(child:DisplayObject):DisplayObject {
+			return _container.addChild(child);
+		}
+		
 		public function set scrollSkin(value:String):void {
-			scrollBar.skin = value;
+			_scrollBar.skin = value;
 		}
 		
 		public function get scrollSkin():String {
-			return scrollBar.skin;
+			return _scrollBar.skin;
 		}
 		
 		public function set currentPage(value:int):void {
@@ -86,7 +94,7 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		public function get maxPage():int {
-			return scrollBar.maxValue;
+			return _scrollBar.maxValue;
 		}
 		
 		override public function set data(value:Object):void {
@@ -115,15 +123,17 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		protected function onMouseWheel(event:MouseEvent):void {
-			scrollBar.value -= event.delta;
+			if (scrollBarVisible) {
+				_scrollBar.value -= event.delta;
+			}
 		}
 		
 		protected function onSrollBarChange(event:UIEvent):void {
-			currentPage = scrollBar.value;
+			currentPage = _scrollBar.value;
 		}
 		
 		protected function resetScrollBarDirection():void {
-			scrollBar.direction = layout == Layouts.HORIZONTAL ? Direction.VERTICAL : Direction.HORIZONTAL;
+			_scrollBar.direction = layout == Layouts.HORIZONTAL ? Direction.VERTICAL : Direction.HORIZONTAL;
 		}
 		
 		protected function resetScrollBarSize():void {
@@ -131,29 +141,40 @@ package com.canaan.lib.base.component.controls
 				return;
 			}
 			var num:int = _data.length - size;
-			if (scrollBar.direction == Direction.HORIZONTAL) {
-				scrollBar.maxValue = Math.ceil(num / _row);
+			if (_scrollBar.direction == Direction.HORIZONTAL) {
+				_scrollBar.maxValue = Math.ceil(num / _row);
 			} else {
-				scrollBar.maxValue = Math.ceil(num / _column);
+				_scrollBar.maxValue = Math.ceil(num / _column);
 			}
 		}
 		
 		public function resetSrollBarPosition():void {
 			if (layout == Layouts.HORIZONTAL) {
-				scrollBar.x = realWidth;
-				scrollBar.y = 0;
-				scrollBar.height = realHeight;
+				_scrollBar.x = _container.width;
+				_scrollBar.y = 0;
+				_scrollBar.height = height;
 			} else {
-				scrollBar.x = 0;
-				scrollBar.y = realHeight;
-				scrollBar.width = realWidth;
+				_scrollBar.x = 0;
+				_scrollBar.y = _container.height;
+				_scrollBar.width = width;
 			}
+		}
+		
+		public function get scrollBar():ScrollBar {
+			return _scrollBar;
 		}
 
 		override public function dispose():void {
 			super.dispose();
 			removeEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
-			scrollBar.removeEventListener(UIEvent.CHANGE, onSrollBarChange);
+			_scrollBar.removeEventListener(UIEvent.CHANGE, onSrollBarChange);
+		}
+		
+		public function get scrollBarVisible():Boolean {
+			if (_data == null) {
+				return false;
+			}
+			return _data.length > size;
 		}
 	}
 }

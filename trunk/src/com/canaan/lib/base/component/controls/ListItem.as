@@ -1,14 +1,14 @@
 package com.canaan.lib.base.component.controls
 {
 	import com.canaan.lib.base.component.IListItem;
-	import com.canaan.lib.base.core.MethodElement;
+	import com.canaan.lib.base.core.Method;
 	
 	import flash.events.MouseEvent;
 	
 	public class ListItem extends Container implements IListItem
 	{
 		protected var _selected:Boolean;
-		protected var _mouseClickHandler:MethodElement;
+		protected var _mouseClickHandler:Method;
 		
 		public function ListItem()
 		{
@@ -83,13 +83,13 @@ package com.canaan.lib.base.component.controls
 			return _selected;
 		}
 		
-		public function set mouseClickHandler(value:MethodElement):void {
+		public function set mouseClickHandler(value:Method):void {
 			if (_mouseClickHandler != value) {
 				_mouseClickHandler = value;
 			}
 		}
 		
-		public function get mouseClickHandler():MethodElement {
+		public function get mouseClickHandler():Method {
 			return _mouseClickHandler;
 		}
 	}

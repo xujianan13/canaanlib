@@ -3,7 +3,7 @@ package com.canaan.lib.base.component.controls
 	import com.canaan.lib.base.component.IInitialItems;
 	import com.canaan.lib.base.component.IList;
 	import com.canaan.lib.base.component.IListItem;
-	import com.canaan.lib.base.core.MethodElement;
+	import com.canaan.lib.base.core.Method;
 	import com.canaan.lib.base.events.UIEvent;
 	import com.canaan.lib.base.utils.ArrayUtil;
 	
@@ -14,7 +14,7 @@ package com.canaan.lib.base.component.controls
 		protected var _items:Array = [];
 		protected var _selectedValue:Object;
 //		protected var _selectedItem:IListItem;
-		protected var _changeCallback:MethodElement;
+		protected var _changeCallback:Method;
 		
 		public function ListBase()
 		{
@@ -28,7 +28,7 @@ package com.canaan.lib.base.component.controls
 				if (item != null) {
 					_items.push(item);
 					item.selected = false;
-					item.mouseClickHandler = new MethodElement(itemClickHandler, [item]);
+					item.mouseClickHandler = new Method(itemClickHandler, [item]);
 				}
 			}
 		}
@@ -128,14 +128,22 @@ package com.canaan.lib.base.component.controls
 			sendEvent(UIEvent.CHANGE);
 		}
 		
-		public function set changeCallback(value:MethodElement):void {
+		public function set changeCallback(value:Method):void {
 			if (_changeCallback != value) {
 				_changeCallback = value;
 			}
 		}
 		
-		public function get changeCallback():MethodElement {
+		public function get changeCallback():Method {
 			return _changeCallback;
+		}
+		
+		public function forEach(func:Function, value:Object = null):void {
+			var iListItem:IListItem;
+			for (var i:int = 0; i < _items.length; i++) {
+				iListItem = _items[i];
+				func.apply(null, [iListItem, value]);
+			}
 		}
 	}
 }
