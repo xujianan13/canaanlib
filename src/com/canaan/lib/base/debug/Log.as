@@ -43,26 +43,26 @@ package com.canaan.lib.base.debug
 			return instance;
 		}
 		
-		public function initialLog(owner:String = "default", logLevel:int = 0):void {
+		public function initialLog(owner:String = "System", logLevel:int = 0):void {
 			if (logEntities[owner] == null) {
 				var logEntity:LogEntity = new LogEntity(owner, logLevel);
 				logEntities[owner] = logEntity;
 			}
 		}
 
-		public function info(value:*, owner:String = "default"):void {
+		public function info(value:*, owner:String = "System"):void {
 			log(owner, INFO, value);
 		}
 		
-		public function warn(value:*, owner:String = "default"):void {
+		public function warn(value:*, owner:String = "System"):void {
 			log(owner, WARN, value);
 		}
 		
-		public function error(value:*, owner:String = "default"):void {
+		public function error(value:*, owner:String = "System"):void {
 			log(owner, ERROR, value);
 		}
 		
-		public function fatal(value:*, owner:String = "default"):void {
+		public function fatal(value:*, owner:String = "System"):void {
 			log(owner, FATAL, value);
 		}
 		

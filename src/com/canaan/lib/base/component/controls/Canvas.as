@@ -22,8 +22,8 @@ package com.canaan.lib.base.component.controls
 		
 		override protected function preinitialize():void {
 			super.preinitialize();
-			width = Styles.panelWidth;
-			height = Styles.panelHeight;
+			width = Styles.canvasWidth;
+			height = Styles.canvasHeight;
 		}
 		
 		override protected function createChildren():void {
@@ -84,12 +84,12 @@ package com.canaan.lib.base.component.controls
 			_mask.width = _width;
 			_mask.height = _height;
 			if (_scrollBar.direction == Direction.VERTICAL) {
-				_scrollBar.x = _width - _scrollBar.width;
+				_scrollBar.x = _width;
 				_scrollBar.y = 0;
 				_scrollBar.height = _height;
 			} else {
 				_scrollBar.x = 0;
-				_scrollBar.y = _height - _scrollBar.height;
+				_scrollBar.y = _height;
 				_scrollBar.width = _width;
 			}
 			super.changeSize();

@@ -156,21 +156,30 @@ package com.canaan.lib.base.utils
 //			source.splice(0, source.length);
 		}
 		
-		public static function remove(source:*, ...args):void {
-			if (source == null || source.length == 0) {
+		public static function addElements(source:*, ...args):void {
+			if (source == null || args.length == 0) {
 				return;
 			}
 			var item:Object;
 			var searchIndex:int;
-			for (var i:int = source.length - 1; i >=0; i--) {
-				if (args.length == 0) {
-					return;
+			for each (item in args) {
+				searchIndex = source.indexOf(item);
+				if (searchIndex == -1) {
+					source.push(item);
 				}
-				item = source[i];
-				searchIndex = args.indexOf(item);
+			}
+		}
+		
+		public static function removeElements(source:*, ...args):void {
+			if (source == null || source.length == 0 || args.length == 0) {
+				return;
+			}
+			var item:Object;
+			var searchIndex:int;
+			for each (item in args) {
+				searchIndex = source.indexOf(item);
 				if (searchIndex != -1) {
-					source.splice(i, 1);
-					args.splice(searchIndex, 1);
+					source.splice(searchIndex, 1);
 				}
 			}
 		}

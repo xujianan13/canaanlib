@@ -1,5 +1,7 @@
 package com.canaan.lib.base.component
 {
+	import flash.text.TextFormatAlign;
+
 	public class Styles
 	{
 		//------------- DialogManager default setting --------------
@@ -31,7 +33,7 @@ package com.canaan.lib.base.component
 		public static var textAreaTextOffsetX:int = 0;
 		
 		//------------- Button default setting -------------
-		public static var buttonLabelColors:Array = [0xFFFFFF, 0xFFFF68, 0xFFFFFF, 0xC0C0C0];
+		public static var buttonLabelColors:Array = [0x32556B, 0x32556B, 0x32556B, 0xC0C0C0];
 		public static var buttonLabelMargin:Array = [0, 0, 0, 0];
 		public static var buttonSkinW:int = 1;
 		public static var buttonSkinH:int = 3;
@@ -60,8 +62,17 @@ package com.canaan.lib.base.component
 		//------------- Clip default setting -------------
 		public static var clipInterval:int = 50;
 		
-		//------------- Panel default setting -------------
-		public static var panelWidth:int = 100;
-		public static var panelHeight:int = 100;
+		//------------- Canvas default setting -------------
+		public static var canvasWidth:int = 100;
+		public static var canvasHeight:int = 100;
+		
+		//------------- ComboBox default setting -------------
+		public static var comboBoxMaxRows:int = 5;
+		public static var comboBoxLabelAlign:String = TextFormatAlign.LEFT;
+		public static var comboBoxLabelMargin:String = "2";
+		public static var comboBoxListColors:Array = [0x8FA4B1, 0xFFFFFF];
+		public static var comboBoxItemWidth:int = 50;
+		public static var comboBoxItemHeight:int = 22;
+		public static var comboBoxItemColors:Array = [0x5E95B6, 0xFFFFFF, 0x000000];
 	}
 }

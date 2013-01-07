@@ -23,11 +23,28 @@ package com.canaan.lib.base.utils
 	    		className = className.split("::")[1];
 	    	}
 	    	registerClassAlias(className, clazz);
-	    	var bytes:ByteArray = new ByteArray();
-	    	bytes.writeObject(value);
-	    	bytes.position = 0;
-	    	return bytes.readObject();
+	    	var bytes:ByteArray = objectToBytes(value);
+	    	return bytesToObject(bytes);
 	    }
+		
+		public static function objectToBytes(value:Object, compress:Boolean = false):ByteArray {
+			var bytes:ByteArray = new ByteArray();
+			bytes.writeObject(value);
+			if (compress) {
+				bytes.compress();
+			}
+			return bytes;
+		}
+		
+		public static function bytesToObject(bytes:ByteArray, uncompress:Boolean = false):Object {
+			var clone:ByteArray = new ByteArray();
+			clone.writeBytes(bytes);
+			if (uncompress) {
+				clone.uncompress();
+			}
+			clone.position = 0;
+			return clone.readObject();
+		}
 	    
 	    public static function count(source:Object):int {
 	    	var count:int;

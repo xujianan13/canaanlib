@@ -1,6 +1,6 @@
 package com.canaan.lib.base.component
 {
-	import com.canaan.lib.base.core.MethodElement;
+	import com.canaan.lib.base.core.Method;
 
 	public interface IAnimation
 	{
@@ -10,7 +10,7 @@ package com.canaan.lib.base.component
 		function gotoAndPlay(value:int):void;
 		function prevFrame():void;
 		function nextFrame():void;
-		function fromTo(from:Object = null, to:Object = null, onComplete:MethodElement = null, loop:Boolean = false):void
+		function fromTo(from:Object = null, to:Object = null, onComplete:Method = null, loop:Boolean = false):void
 		function set autoRemoved(value:Boolean):void;
 		function get autoRemoved():Boolean;
 		function set interval(value:int):void;

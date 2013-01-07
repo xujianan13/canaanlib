@@ -29,7 +29,9 @@ package com.canaan.lib.base.component
 			"List":List,
 			"PageList":PageList,
 			"ScrollList":ScrollList,
-			"Canvas":Canvas
+			"Canvas":Canvas,
+			"ComboBox":ComboBox,
+			"ComboBoxItem":ComboBoxItem
 		};
 		
 		private static var UserClassMap:Object = {};

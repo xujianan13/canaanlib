@@ -3,8 +3,8 @@ package com.canaan.lib.base.component.controls
 	import com.canaan.lib.base.component.Direction;
 	import com.canaan.lib.base.component.Styles;
 	import com.canaan.lib.base.component.UIComponent;
-	import com.canaan.lib.base.core.Application;
 	import com.canaan.lib.base.events.UIEvent;
+	import com.canaan.lib.base.managers.StageManager;
 	import com.canaan.lib.base.managers.TimerManager;
 	
 	import flash.events.MouseEvent;
@@ -53,7 +53,7 @@ package com.canaan.lib.base.component.controls
 			var isUp:Boolean = event.currentTarget == upButton;
 			slide(isUp);
 			TimerManager.getInstance().doOnce(Styles.scrollBarDelay, startLoop, [isUp]);
-			Application.stage.addEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
+			StageManager.getInstance().mouseUpMethods.register(onStageMouseUp);
 		}
 		
 		protected function startLoop(isUp:Boolean):void {
@@ -64,8 +64,8 @@ package com.canaan.lib.base.component.controls
 			sendEvent(UIEvent.CHANGE);
 		}
 		
-		protected function onStageMouseUp(event:MouseEvent):void {
-			Application.stage.removeEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
+		protected function onStageMouseUp():void {
+			StageManager.getInstance().mouseUpMethods.del(onStageMouseUp);
 			TimerManager.getInstance().clear(startLoop);
 			TimerManager.getInstance().clear(slide);
 		}
@@ -173,7 +173,7 @@ package com.canaan.lib.base.component.controls
 			upButton.removeEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown);
 			downButton.removeEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown);
 			slider.removeEventListener(UIEvent.CHANGE, onSliderChange);
-			onStageMouseUp(null);
+			onStageMouseUp();
 		}
 	}
 }

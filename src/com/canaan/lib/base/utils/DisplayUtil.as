@@ -1,8 +1,8 @@
 package com.canaan.lib.base.utils
 {
-	import com.canaan.lib.base.core.Application;
 	import com.canaan.lib.base.display.Effect;
 	import com.canaan.lib.base.interfaces.IDispose;
+	import com.canaan.lib.base.managers.StageManager;
 	
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
@@ -17,10 +17,10 @@ package com.canaan.lib.base.utils
 	
 	public class DisplayUtil
 	{
-		private static var matrixArray:Array = [];
-		private static var matrix:Matrix = new Matrix();
-		private static var rect:Rectangle = new Rectangle();
-		private static var point:Point = new Point();
+		public static var matrixArray:Array = [];
+		public static var matrix:Matrix = new Matrix();
+		public static var rect:Rectangle = new Rectangle();
+		public static var point:Point = new Point();
 		
 		public static function gray(target:DisplayObject, isGray:Boolean = true):void {
 			if (isGray) {
@@ -65,6 +65,15 @@ package com.canaan.lib.base.utils
 		}
 		
 		public static function center(target:DisplayObject, offsetX:Number = 0, offsetY:Number = 0):void {
+			var x:Number = (StageManager.getInstance().stage.stageWidth - target.width) * 0.5;
+			var y:Number = (StageManager.getInstance().stage.stageHeight - target.height) * 0.5;
+			x += offsetX;
+			y += offsetY;
+			target.x = x;
+			target.y = y;
+		}
+		
+		public static function centerToParent(target:DisplayObject, offsetX:Number = 0, offsetY:Number = 0):void {
 			var parent:DisplayObjectContainer = target.parent;
 			if (parent != null) {
 				var x:Number = (parent.width - target.width) * 0.5;
@@ -78,12 +87,12 @@ package com.canaan.lib.base.utils
 		
 		public static function fullScreen(value:Boolean):void {
 			if (value) {
-				if (Application.stage.displayState == StageDisplayState.NORMAL) {
-					Application.stage.displayState = StageDisplayState.FULL_SCREEN;
+				if (StageManager.getInstance().stage.displayState == StageDisplayState.NORMAL) {
+					StageManager.getInstance().stage.displayState = StageDisplayState.FULL_SCREEN;
 				}
 			} else {
-				if (Application.stage.displayState == StageDisplayState.FULL_SCREEN) {
-					Application.stage.displayState = StageDisplayState.NORMAL;
+				if (StageManager.getInstance().stage.displayState == StageDisplayState.FULL_SCREEN) {
+					StageManager.getInstance().stage.displayState = StageDisplayState.NORMAL;
 				}
 			}
         }

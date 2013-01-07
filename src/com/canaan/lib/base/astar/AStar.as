@@ -128,10 +128,9 @@ package com.canaan.lib.base.astar
 		 * 创建路径
 		 */
 		private function buildPath():void {
-			_path = new Vector.<Node>();
-			// 向路径中加入终点
 			var node:Node = _endNode;
-			_path.push(node);
+			// 向路径中加入终点
+			_path = new <Node>[node];
 			// 循环加入所有父节点
 			while (node != _startNode) {
 				node = node.parent;

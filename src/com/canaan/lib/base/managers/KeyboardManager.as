@@ -1,6 +1,5 @@
 package com.canaan.lib.base.managers
 {
-	import com.canaan.lib.base.core.Application;
 	import com.canaan.lib.base.events.KeyEvent;
 	
 	import flash.events.EventDispatcher;
@@ -76,11 +75,11 @@ package com.canaan.lib.base.managers
 			if (_enabled != value) {
 				_enabled = value;
 				if (value) {
-					Application.stage.addEventListener(KeyboardEvent.KEY_DOWN, keyChangeHandler);
-					Application.stage.addEventListener(KeyboardEvent.KEY_UP, keyChangeHandler);
+					StageManager.getInstance().stage.addEventListener(KeyboardEvent.KEY_DOWN, keyChangeHandler);
+					StageManager.getInstance().stage.addEventListener(KeyboardEvent.KEY_UP, keyChangeHandler);
 				} else {
-					Application.stage.removeEventListener(KeyboardEvent.KEY_DOWN, keyChangeHandler);
-					Application.stage.removeEventListener(KeyboardEvent.KEY_UP, keyChangeHandler);
+					StageManager.getInstance().stage.removeEventListener(KeyboardEvent.KEY_DOWN, keyChangeHandler);
+					StageManager.getInstance().stage.removeEventListener(KeyboardEvent.KEY_UP, keyChangeHandler);
 				}
 			}
 		}

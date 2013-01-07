@@ -27,5 +27,14 @@ package com.canaan.lib.base.utils
 		    }
 		    return false;
 		}
+		
+		public static function getHtmlText(text:String, color:String = "#FFFFFF", underLine:Boolean = false):String {
+			var htmlText:String = text;
+			if (underLine) {
+				htmlText = "<u>" + text + "</u>";
+			}
+			htmlText = "<font color=\"" + color + "\">" + htmlText + "</font>";
+			return htmlText;
+		}
 	}
 }

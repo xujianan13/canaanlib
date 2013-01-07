@@ -2,7 +2,6 @@ package com.canaan.lib.base.managers
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
-	import flash.events.MouseEvent;
 	import flash.ui.Mouse;
 	import flash.utils.Dictionary;
 	
@@ -56,7 +55,7 @@ package com.canaan.lib.base.managers
         	currentCursorDisplayObject.x = parent.mouseX;
         	currentCursorDisplayObject.y = parent.mouseY;
 			addChild(currentCursorDisplayObject);
-			stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMoveHandler, false, 0, true);
+			StageManager.getInstance().mouseMoveMethods.register(mouseMoveHandler);
         }
         
         public function showSystemCursor():void {
@@ -67,13 +66,13 @@ package com.canaan.lib.base.managers
         public function removeCursor():void {
         	if (_currentCursor != CURSOR_DEFAULT) {
 				removeChild(currentCursorDisplayObject);
-				stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMoveHandler);
+				StageManager.getInstance().mouseMoveMethods.del(mouseMoveHandler);
         		_currentCursor = CURSOR_DEFAULT;
         	}
 			Mouse.hide();
         }
         
-        private function mouseMoveHandler(event:MouseEvent):void {
+        private function mouseMoveHandler():void {
         	currentCursorDisplayObject.x = mouseX;
         	currentCursorDisplayObject.y = mouseY;
         }

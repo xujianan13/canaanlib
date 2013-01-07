@@ -3,8 +3,8 @@ package com.canaan.lib.base.component.controls
 	import com.canaan.lib.base.component.Direction;
 	import com.canaan.lib.base.component.Styles;
 	import com.canaan.lib.base.component.UIComponent;
-	import com.canaan.lib.base.core.Application;
 	import com.canaan.lib.base.events.UIEvent;
+	import com.canaan.lib.base.managers.StageManager;
 	
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
@@ -61,8 +61,8 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		protected function onButtonMouseDown(event:MouseEvent):void {
-			Application.stage.addEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
-			Application.stage.addEventListener(MouseEvent.MOUSE_MOVE, onStageMouseMove);
+			StageManager.getInstance().mouseUpMethods.register(onStageMouseUp);
+			StageManager.getInstance().mouseMoveMethods.register(onStageMouseMove);
 			if (_direction == Direction.HORIZONTAL) {
 				button.startDrag(false, new Rectangle(0, button.y, background.width - button.width, 0));
 			} else {
@@ -71,14 +71,14 @@ package com.canaan.lib.base.component.controls
 			updateValue();
 		}
 		
-		protected function onStageMouseUp(event:MouseEvent):void {
-			Application.stage.removeEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
-			Application.stage.removeEventListener(MouseEvent.MOUSE_MOVE, onStageMouseMove);
+		protected function onStageMouseUp():void {
+			StageManager.getInstance().mouseUpMethods.del(onStageMouseUp);
+			StageManager.getInstance().mouseMoveMethods.del(onStageMouseMove);
 			button.stopDrag();
 			hideValueText();
 		}
 		
-		protected function onStageMouseMove(event:MouseEvent):void {
+		protected function onStageMouseMove():void {
 			var lastValue:Number = _value;
 			if (_direction == Direction.HORIZONTAL) {
 				_value = button.realX / (background.width - button.width) * (_maxValue - _minValue) + _minValue;
@@ -227,8 +227,8 @@ package com.canaan.lib.base.component.controls
 			super.dispose();
 			background.removeEventListener(MouseEvent.MOUSE_DOWN, onBackgroundMouseDown);
 			button.removeEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown);
-			Application.stage.removeEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
-			Application.stage.removeEventListener(MouseEvent.MOUSE_MOVE, onStageMouseMove);
+			StageManager.getInstance().stage.removeEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
+			StageManager.getInstance().stage.removeEventListener(MouseEvent.MOUSE_MOVE, onStageMouseMove);
 		}
 	}
 }

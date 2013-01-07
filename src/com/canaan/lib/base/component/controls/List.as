@@ -2,7 +2,7 @@ package com.canaan.lib.base.component.controls
 {
 	import com.canaan.lib.base.component.ViewCreater;
 	import com.canaan.lib.base.component.layout.ListLayout;
-	import com.canaan.lib.base.core.MethodElement;
+	import com.canaan.lib.base.core.Method;
 
 	public class List extends ListBase
 	{
@@ -43,8 +43,8 @@ package com.canaan.lib.base.component.controls
 						item.visible = false;
 					}
 					item.selected = false;
-					item.mouseClickHandler = new MethodElement(itemClickHandler, [item]);
-					_items[i] = addChild(item);
+					item.mouseClickHandler = new Method(itemClickHandler, [item]);
+					_items.push(addChild(item));
 				}
 			} else {
 				length = _items.length - l;

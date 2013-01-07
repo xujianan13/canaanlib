@@ -16,6 +16,10 @@ package com.canaan.lib.base.display
 			DisplayUtil.center(this, offsetX, offsetY);
 		}
 		
+		public function centerToParent(offsetX:Number = 0, offsetY:Number = 0):void {
+			DisplayUtil.centerToParent(this, offsetX, offsetY);
+		}
+		
 		public function moveTo(x:Number, y:Number):void {
 			this.x = x;
 			this.y = y;

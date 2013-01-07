@@ -1,6 +1,6 @@
 package com.canaan.lib.base.component.controls
 {
-	import com.canaan.lib.base.core.MethodElement;
+	import com.canaan.lib.base.core.Method;
 
 	public class Tab extends ListBase
 	{
@@ -22,7 +22,7 @@ package com.canaan.lib.base.component.controls
 					_data.push(item.label);
 					item.data = item.label;
 					item.selected = false;
-					item.mouseClickHandler = new MethodElement(itemClickHandler, [item]);
+					item.mouseClickHandler = new Method(itemClickHandler, [item]);
 					_items.push(item);
 				}
 			}
@@ -63,7 +63,7 @@ package com.canaan.lib.base.component.controls
 				item = _skin ? new Button(_skin, _data[i]) : new LinkButton(_data[i]);
 				item.data = _data[i];
 				item.selected = false;
-				item.mouseClickHandler = new MethodElement(itemClickHandler, [item]);
+				item.mouseClickHandler = new Method(itemClickHandler, [item]);
 				_items[i] = addChild(item);
 			}
 			if (_data.length > 0) {

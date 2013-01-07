@@ -1,7 +1,6 @@
 package com.canaan.lib.base.managers
 {
 	import com.canaan.lib.base.debug.Log;
-	import com.canaan.lib.base.utils.SharedObjectUtil;
 	
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
@@ -58,12 +57,12 @@ package com.canaan.lib.base.managers
 		
 		public function set musicOn(value:Boolean):void {
 			this._musicOn = value;
-			SharedObjectUtil.addSharedObject(MUSIC_SHAREDOBJECT_NAME, this._musicOn);
+			SharedObjectManager.getInstance().putPrivate(MUSIC_SHAREDOBJECT_NAME, this._musicOn);
 		}
 		
 		public function set soundOn(value:Boolean):void {
 			this._soundOn = value;
-			SharedObjectUtil.addSharedObject(SOUND_SHAREDOBJECT_NAME, this._soundOn);
+			SharedObjectManager.getInstance().putPrivate(SOUND_SHAREDOBJECT_NAME, this._soundOn);
 		}
 		
 		public function addSound(path:String, name:String, type:int, buffer:Number = 1000, checkPolicyFile:Boolean = false):Boolean {

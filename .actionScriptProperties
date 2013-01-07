@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties analytics="false" mainApplicationPath="test/util/TestMathUtil.as" projectUUID="bbe9de15-229b-4304-a9da-6b5f32612600" version="10">
+<actionScriptProperties analytics="false" mainApplicationPath="testPackage/managers/TestDoubleClickManager.as" projectUUID="bbe9de15-229b-4304-a9da-6b5f32612600" version="10">
   <compiler additionalCompilerArguments="-locale en_US" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
     <compilerSourcePath/>
     <libraryPath defaultLinkType="0">
@@ -8,8 +8,8 @@
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/automation_charts.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="1" linkType="1" path="${PROJECT_FRAMEWORKS}/locale/{locale}"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/advancedgrids.swc" useDefaultLinkType="false"/>
-          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/automation_air.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/charts.swc" useDefaultLinkType="false"/>
+          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/automation_air.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/netmon.swc" useDefaultLinkType="false"/>
           <libraryPathEntry applicationDomain="default" forceLoad="false" index="1" kind="3" linkType="4" path="${PROJECT_FRAMEWORKS}/libs/osmf.swc" useDefaultLinkType="true">
             <crossDomainRsls>
@@ -20,8 +20,8 @@
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/spark.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/sparkskins.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/rpc.swc" useDefaultLinkType="false"/>
-          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/qtp_air.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/videoPlayer.swc" useDefaultLinkType="false"/>
+          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/qtp_air.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/flash-integration.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/authoringsupport.swc" useDefaultLinkType="false"/>
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/qtp.swc" useDefaultLinkType="false"/>
@@ -46,38 +46,43 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="test/component/TestList.as"/>
-    <application path="test/component/TestCheckBox.as"/>
-    <application path="test/component/TestRadioButton.as"/>
-    <application path="test/component/TestTextInput.as"/>
-    <application path="test/component/TestFrameClip.as"/>
-    <application path="test/component/TestTab.as"/>
-    <application path="test/component/TestLinkButton.as"/>
-    <application path="test/managers/TestDialogManager.as"/>
-    <application path="test/component/TestProgressBar.as"/>
-    <application path="test/util/TestCRCUtil.as"/>
-    <application path="test/util/TestCsvUtil.as"/>
-    <application path="test/component/TestScrollList.as"/>
-    <application path="test/component/TestClips.as"/>
-    <application path="test/component/TestRadioGroup.as"/>
-    <application path="test/component/TestViewCreater.as"/>
-    <application path="test/component/TestLabel.as"/>
-    <application path="test/rpg/TestMap.as"/>
-    <application path="test/component/TestViewStack.as"/>
-    <application path="test/managers/TestResourceManager.as"/>
-    <application path="test/managers/TestKeyBoardManager.as"/>
-    <application path="test/component/TestContainer.as"/>
-    <application path="test/managers/TestCursorManager.as"/>
-    <application path="test/component/TestImage.as"/>
-    <application path="test/component/TestPanel.as"/>
-    <application path="test/component/TestSlider.as"/>
-    <application path="test/managers/TestDragManager.as"/>
-    <application path="test/managers/TestTimerManager.as"/>
-    <application path="test/component/TestPageList.as"/>
-    <application path="test/component/TestButton.as"/>
-    <application path="test/component/TestScrollBar.as"/>
-    <application path="test/component/TestTextArea.as"/>
-    <application path="test/util/TestMathUtil.as"/>
+    <application path="testPackage/managers/TestDoubleClickManager.as"/>
+    <application path="testPackage/util/TestArrayUtil.as"/>
+    <application path="testPackage/managers/TestSharedObjectManager.as"/>
+    <application path="testPackage/util/TestObjectUtil.as"/>
+    <application path="testPackage/managers/TestCursorManager.as"/>
+    <application path="testPackage/component/TestComboBox.as"/>
+    <application path="testPackage/component/TestFrameClip.as"/>
+    <application path="testPackage/component/TestScrollBar.as"/>
+    <application path="testPackage/component/TestLinkButton.as"/>
+    <application path="testPackage/rpg/TestMap.as"/>
+    <application path="testPackage/component/TestClips.as"/>
+    <application path="testPackage/util/TestMathUtil.as"/>
+    <application path="testPackage/component/TestRadioGroup.as"/>
+    <application path="testPackage/managers/TestDialogManager.as"/>
+    <application path="testPackage/component/TestTextArea.as"/>
+    <application path="testPackage/component/TestLabel.as"/>
+    <application path="testPackage/managers/TestTimerManager.as"/>
+    <application path="testPackage/component/TestCanvas.as"/>
+    <application path="testPackage/component/TestContainer.as"/>
+    <application path="testPackage/component/TestTextInput.as"/>
+    <application path="testPackage/managers/TestDragManager.as"/>
+    <application path="testPackage/component/TestButton.as"/>
+    <application path="testPackage/util/TestCRCUtil.as"/>
+    <application path="testPackage/component/TestViewCreater.as"/>
+    <application path="testPackage/component/TestScrollList.as"/>
+    <application path="testPackage/util/TestCsvUtil.as"/>
+    <application path="testPackage/component/TestList.as"/>
+    <application path="testPackage/component/TestTab.as"/>
+    <application path="testPackage/component/TestProgressBar.as"/>
+    <application path="testPackage/component/TestRadioButton.as"/>
+    <application path="testPackage/component/TestCheckBox.as"/>
+    <application path="testPackage/component/TestViewStack.as"/>
+    <application path="testPackage/managers/TestResourceManager.as"/>
+    <application path="testPackage/managers/TestKeyBoardManager.as"/>
+    <application path="testPackage/component/TestImage.as"/>
+    <application path="testPackage/component/TestSlider.as"/>
+    <application path="testPackage/component/TestPageList.as"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

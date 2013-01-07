@@ -3,7 +3,7 @@ package com.canaan.lib.base.component.controls
 	import com.canaan.lib.base.component.IAnimation;
 	import com.canaan.lib.base.component.Styles;
 	import com.canaan.lib.base.component.UIComponent;
-	import com.canaan.lib.base.core.MethodElement;
+	import com.canaan.lib.base.core.Method;
 	import com.canaan.lib.base.events.UIEvent;
 	import com.canaan.lib.base.managers.ResourceManager;
 	import com.canaan.lib.base.managers.TimerManager;
@@ -23,7 +23,7 @@ package com.canaan.lib.base.component.controls
 		
 		protected var from:int;
 		protected var to:int;
-		protected var completeCallback:MethodElement;
+		protected var completeCallback:Method;
 		protected var loop:Boolean;
 		
 		public function FrameClip(skin:String = null)
@@ -95,9 +95,9 @@ package com.canaan.lib.base.component.controls
 						to = 0;
 						stop();
 						if (completeCallback != null) {
-							var methodElement:MethodElement = completeCallback;
+							var method:Method = completeCallback;
 							completeCallback = null;
-							methodElement.apply();
+							method.apply();
 						}
 						animationComplete();
 					}
@@ -110,7 +110,7 @@ package com.canaan.lib.base.component.controls
 			}
 		}
 		
-		public function fromTo(from:Object = null, to:Object = null, onComplete:MethodElement = null, loop:Boolean = false):void {
+		public function fromTo(from:Object = null, to:Object = null, onComplete:Method = null, loop:Boolean = false):void {
 			this.from = Math.max(0, int(from) || 0);
 			this.to = Math.min(maxIndex, int(to) || maxIndex);
 			completeCallback = onComplete;

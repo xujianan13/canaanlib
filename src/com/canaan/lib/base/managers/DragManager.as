@@ -6,7 +6,6 @@ package com.canaan.lib.base.managers
 	
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
-	import flash.events.MouseEvent;
 	import flash.geom.Point;
 
 	public class DragManager extends Sprite
@@ -45,11 +44,11 @@ package com.canaan.lib.base.managers
 				addChild(dragImage);
 			}
         	dragImage.startDrag();
-        	stage.addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
+        	StageManager.getInstance().mouseUpMethods.register(mouseUpHandler);
         	dragInitiator.dispatchEvent(new DragEvent(DragEvent.DRAG_START, dragInitiator, data));
         }
 
-        private function mouseUpHandler(event:MouseEvent):void {
+        private function mouseUpHandler():void {
         	dragImage.stopDrag();
         	var dropTarget:IDropObject = getDropTarget(dragImage.dropTarget);
         	if (dropTarget != null) {
@@ -59,7 +58,7 @@ package com.canaan.lib.base.managers
 			if (dragInitiator != dragImage) {
         		DisplayUtil.removeChild(dragImage.parent, dragImage);
 			}
-        	stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
+			StageManager.getInstance().mouseUpMethods.del(mouseUpHandler);
         	dragInitiator = null;
         	data = null;
         	dragImage = null;

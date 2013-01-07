@@ -1,11 +1,11 @@
 package com.canaan.lib.base.component
 {
 	import com.canaan.lib.base.component.layout.Layout;
-	import com.canaan.lib.base.core.Application;
-	import com.canaan.lib.base.core.MethodElement;
+	import com.canaan.lib.base.core.Method;
 	import com.canaan.lib.base.display.BaseSprite;
 	import com.canaan.lib.base.events.UIEvent;
 	import com.canaan.lib.base.interfaces.IDispose;
+	import com.canaan.lib.base.managers.StageManager;
 	import com.canaan.lib.base.managers.ToolTipManager;
 	import com.canaan.lib.base.utils.ArrayUtil;
 	
@@ -33,7 +33,7 @@ package com.canaan.lib.base.component
 		protected var _toolTipPosition:String;
 		protected var _toolTipOffset:Point;
 		
-		protected var methods:Vector.<MethodElement> = new Vector.<MethodElement>();
+		protected var methods:Vector.<Method> = new Vector.<Method>();
 		protected var layoutObject:Layout;
 		
 		public function UIComponent()
@@ -80,8 +80,8 @@ package com.canaan.lib.base.component
 		}
 		
 		public function setFocus():void {
-			if (Application.stage) {
-				Application.stage.focus = this;
+			if (StageManager.getInstance().stage) {
+				StageManager.getInstance().stage.focus = this;
 			}
 		}
 		
@@ -160,11 +160,11 @@ package com.canaan.lib.base.component
 		}
 		
 		public function callLater(func:Function, args:Array = null):void {
-			var methodElement:MethodElement = ArrayUtil.find(methods, "func", func) as MethodElement;
-			if (methodElement != null) {
-				methodElement.args = args;
+			var method:Method = ArrayUtil.find(methods, "func", func) as Method;
+			if (method != null) {
+				method.args = args;
 			} else {
-				methods.push(new MethodElement(func, args));
+				methods.push(new Method(func, args));
 			}
 			invalidate();
 		}
@@ -172,8 +172,8 @@ package com.canaan.lib.base.component
 		protected function invalidate():void {
 			addEventListener(Event.RENDER, onValidate);
 			addEventListener(Event.ENTER_FRAME, onValidate);
-			if (Application.stage != null) {
-				Application.stage.invalidate();
+			if (StageManager.getInstance().stage != null) {
+				StageManager.getInstance().stage.invalidate();
 			}
 		}
 		
@@ -209,8 +209,8 @@ package com.canaan.lib.base.component
 			}
 		}
 		
-		protected function excute(methodElement:MethodElement):void {
-			methodElement.apply();
+		protected function excute(method:Method):void {
+			method.apply();
 		}
 		
 		public function sendEvent(type:String, data:Object = null):void {

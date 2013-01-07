@@ -5,7 +5,6 @@ package com.canaan.lib.base.managers
 	import com.canaan.lib.base.component.Position;
 	import com.canaan.lib.base.component.Styles;
 	import com.canaan.lib.base.component.controls.ToolTip;
-	import com.canaan.lib.base.core.Application;
 	import com.canaan.lib.base.events.UIEvent;
 	
 	import flash.display.DisplayObject;
@@ -244,7 +243,7 @@ package com.canaan.lib.base.managers
 		}
 		
 		private function positionTip():void {
-			var stage:Stage = Application.stage;
+			var stage:Stage = StageManager.getInstance().stage;
 			var xx:Number;
 			var yy:Number;
 			var displayObject:DisplayObject = currentToolTip as DisplayObject;
@@ -306,7 +305,7 @@ package com.canaan.lib.base.managers
 		
 		private function showTip():void {
 			currentTarget.sendEvent(UIEvent.TOOL_TIP_SHOW, currentToolTip);
-			Application.stage.addEventListener(MouseEvent.MOUSE_DOWN, stageMouseDownHandler);
+			StageManager.getInstance().mouseDownMethods.register(stageMouseDownHandler);
 			currentToolTip.visible = true;
 			hideToolTip();
 		}
@@ -314,14 +313,14 @@ package com.canaan.lib.base.managers
 		private function hideTip():void {
 			if (previousTarget) {
 				previousTarget.sendEvent(UIEvent.TOOL_TIP_HIDE, currentToolTip);
-				Application.stage.removeEventListener(MouseEvent.MOUSE_DOWN, stageMouseDownHandler);
+				StageManager.getInstance().mouseDownMethods.del(stageMouseDownHandler);
 			}
 			if (currentToolTip) {
 				currentToolTip.visible = false;
 			}
 		}
 		
-		private function stageMouseDownHandler(event:MouseEvent):void {
+		private function stageMouseDownHandler():void {
 			reset();
 		}
 		

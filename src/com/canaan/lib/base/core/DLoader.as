@@ -25,5 +25,13 @@ package com.canaan.lib.base.core
 		public function get data():Object {
 			return _data;
 		}
+		
+		public static function fromPool():DLoader {
+			return ObjectPool.getObject(DLoader) as DLoader;
+		}
+		
+		public static function toPool(loader:DLoader):void {
+			ObjectPool.disposeObject(loader);
+		}
 	}
 }

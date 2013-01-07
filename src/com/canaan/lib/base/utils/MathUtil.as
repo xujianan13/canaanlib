@@ -1,11 +1,14 @@
 package com.canaan.lib.base.utils
 {
+	import flash.geom.Point;
+
 	public class MathUtil
 	{
 		private static var sinCache:Vector.<Number> = new Vector.<Number>(360);
 		private static var cosCache:Vector.<Number> = new Vector.<Number>(360);
 		
 		public static function sin(angle:int):Number {
+			angle = toUAngle(angle);
 			if (!sinCache[angle]) {
 				sinCache[angle] = Math.sin(angleToRadian(angle));
 			}
@@ -13,6 +16,7 @@ package com.canaan.lib.base.utils
 		}
 		
 		public static function cos(angle:int):Number {
+			angle = toUAngle(angle);
 			if (!cosCache[angle]) {
 				cosCache[angle] = Math.cos(angleToRadian(angle));
 			}
@@ -76,6 +80,31 @@ package com.canaan.lib.base.utils
 			var dx:Number = x2 - x1;
 			var dy:Number = y2 - y1;
 			return Math.sqrt(dx * dx + dy * dy);
+		}
+		
+		/**
+		 * 获取线段(x1, y1) (x2, y2)上距离点(x1, y1)位移为length的点
+		 * @param x1
+		 * @param y1
+		 * @param x2
+		 * @param y2
+		 * @param length
+		 * @return 
+		 * 
+		 */		
+		public static function getLinePoint(x1:Number, y1:Number, x2:Number, y2:Number, length:Number):Point {
+			var distance:Number = getDistance(x1, y1, x2, y2);
+			var rate:Number = length / (distance - length);
+			var point:Point = new Point();
+			point.x = (x1 + x2 * rate) / (1 + rate);
+			point.y = (y1 + y2 * rate) / (1 + rate);
+			return point;
+		}
+		
+		public static function getLinePoint2(x:Number, y:Number, length:Number, angle:int):Point {
+			var xx:Number = x + length * cos(angle);
+			var yy:Number = y + length * sin(angle);
+			return new Point(xx, yy);
 		}
 	}
 }
