@@ -1,8 +1,6 @@
 package com.canaan.lib.base.events
 {
-	import flash.events.Event;
-
-	public class KeyEvent extends Event
+	public class KeyEvent extends CEvent
 	{
 		public static const KEY_DOWN:String = "keyDown";
 		public static const KEY_UP:String = "keyUp";
@@ -13,16 +11,48 @@ package com.canaan.lib.base.events
 		public static const KEY_DOWN_CTRL_SHIFT:String = "keyDownCtrlShift";
 		public static const KEY_UP_CTRL_SHIFT:String = "keyUpCtrlShift";
 		
-		public var keyCode:uint;
-		public var charCode:uint;
-		public var keyLocation:uint;
-		public var ctrlKey:Boolean;
-		public var shiftKey:Boolean;
-		public var altKey:Boolean;
+		private var _keyCode:uint;
+		private var _charCode:uint;
+		private var _keyLocation:uint;
+		private var _ctrlKey:Boolean;
+		private var _shiftKey:Boolean;
+		private var _altKey:Boolean;
 		
-		public function KeyEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function KeyEvent(type:String, keyCode:uint, charCode:uint,
+								 keyLocation:uint, ctrlKey:Boolean,
+								 shiftKey:Boolean, altKey:Boolean)
 		{
-			super(type, bubbles, cancelable);
+			super(type, keyCode);
+			_keyCode = _keyCode;
+			_charCode = charCode;
+			_keyLocation = keyLocation;
+			_ctrlKey = ctrlKey;
+			_shiftKey = shiftKey;
+			_altKey = altKey;
+		}
+		
+		public function get keyCode():uint {
+			return _keyCode;
+		}
+		
+		public function get charCode():uint {
+			return _charCode;
+		}
+		
+		public function get keyLocation():uint {
+			return _keyLocation;
+		}
+		
+		public function get ctrlKey():Boolean {
+			return _ctrlKey;
+		}
+		
+		public function get shiftKey():Boolean {
+			return _shiftKey;
+		}
+		
+		public function get altKey():Boolean {
+			return _altKey;
 		}
 	}
 }

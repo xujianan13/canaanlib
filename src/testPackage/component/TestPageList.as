@@ -30,7 +30,7 @@ package testPackage.component
 			list.verticalGap = 5;
 			list.showBorder();
 			list.data = ["shit1", "shit2", "shit3", "shit4", "shit5", "shit6", "shit7", "shit8"];
-			list.addEventListener(UIEvent.CHANGE, onChange);
+			list.dispatcher.addEventListener(UIEvent.CHANGE, onChange);
 			list.layout = Layouts.HORIZONTAL;
 			addChild(list);
 			list.left = 5;

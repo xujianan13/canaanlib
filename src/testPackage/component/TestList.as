@@ -29,7 +29,7 @@ package testPackage.component
 			list.verticalGap = 5;
 			list.showBorder();
 			list.data = ["shit1", "shit2", "shit3"];
-			list.addEventListener(UIEvent.CHANGE, onChange);
+			list.dispatcher.addEventListener(UIEvent.CHANGE, onChange);
 			addChild(list);
 			list.left = 5;
 			list.top = 5;

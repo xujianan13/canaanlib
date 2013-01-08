@@ -1,8 +1,6 @@
 package com.canaan.lib.base.events
 {
-	import flash.events.Event;
-	
-	public class UIEvent extends Event
+	public class UIEvent extends CEvent
 	{
 		public static const RENDER_COMPLETED:String = "renderCompleted";
 		public static const RESIZE:String = "resize";
@@ -15,24 +13,23 @@ package com.canaan.lib.base.events
 		public static const TOOL_TIP_SHOW:String = "toolTipShow";
 		public static const TOOL_TIP_HIDE:String = "toolTipHide";
 		
-		protected var _data:Object;
-		
-		public function UIEvent(type:String, data:Object = null, bubbles:Boolean=false, cancelable:Boolean=false)
+		private static var eventPool:Vector.<UIEvent> = new <UIEvent>[];
+
+		public function UIEvent(type:String, data:Object = null)
 		{
-			super(type, bubbles, cancelable);
-			_data = data;
+			super(type, data);
 		}
 		
-		public function set data(value:Object):void {
-			_data = value;
+		public static function fromPool(type:String, data:Object = null):UIEvent {
+			if (eventPool.length != 0) {
+				return eventPool.pop().reset(type, data);
+			} else {
+				return new UIEvent(type, data);
+			}
 		}
 		
-		public function get data():Object {
-			return _data;
-		}
-		
-		override public function clone():Event {
-			return new UIEvent(type, _data, bubbles, cancelable);
+		public static function toPool(event:UIEvent):void {
+			eventPool.push(event.reset());
 		}
 	}
 }

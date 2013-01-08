@@ -1,20 +1,31 @@
 package com.canaan.lib.base.events
 {
-	import flash.events.Event;
-
-	public class LogEvent extends Event
+	public class LogEvent extends CEvent
 	{
 		public static const LOG:String = "log";
 		
-		public var owner:String;
-		public var logLevel:int;
-		public var value:*;
-		public var logString:String;
+		private var _owner:String;
+		private var _logLevel:int;
+		private var _logString:String;
 		
-		public function LogEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function LogEvent(type:String, data:Object, owner:String, logLevel:int, logString:String)
 		{
-			super(type, bubbles, cancelable);
+			super(type, data);
+			_owner = owner;
+			_logLevel = logLevel;
+			_logString = logString;
 		}
 		
+		public function get owner():String {
+			return _owner;
+		}
+		
+		public function get logLevel():int {
+			return _logLevel;
+		}
+		
+		public function get logString():String {
+			return _logString;
+		}
 	}
 }

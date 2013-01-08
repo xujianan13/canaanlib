@@ -2,10 +2,6 @@ package com.canaan.lib.base.utils
 {
 	public class DateUtil
 	{
-		public function DateUtil()
-		{
-		}
-
 		public static function addZero(value:int):String {
 			return (value < 10 ? "0" : "") + value;
 		}

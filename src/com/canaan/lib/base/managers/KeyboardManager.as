@@ -1,8 +1,8 @@
 package com.canaan.lib.base.managers
 {
+	import com.canaan.lib.base.events.CEventDispatcher;
 	import com.canaan.lib.base.events.KeyEvent;
 	
-	import flash.events.EventDispatcher;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
 
@@ -15,7 +15,7 @@ package com.canaan.lib.base.managers
 	[Event(name="keyDownCtrlShift", type="com.canaan.lib.base.events.KeyEvent")]
 	[Event(name="keyUpCtrlShift", type="com.canaan.lib.base.events.KeyEvent")]
 	
-	public class KeyboardManager extends EventDispatcher
+	public class KeyboardManager extends CEventDispatcher
 	{
 		public static const CTRL:String = "Ctrl";
 		public static const SHIFT:String = "Shift";
@@ -60,15 +60,9 @@ package com.canaan.lib.base.managers
 			}
 		}
 
-		private function dispatch(type:String, keyBoardEvent:KeyboardEvent):void {
-			var event:KeyEvent = new KeyEvent(type);
-			event.keyCode = keyBoardEvent.keyCode;
-			event.charCode = keyBoardEvent.charCode;
-			event.keyLocation = keyBoardEvent.keyLocation;
-			event.ctrlKey = keyBoardEvent.ctrlKey;
-			event.shiftKey = keyBoardEvent.shiftKey;
-			event.altKey = keyBoardEvent.altKey;
-			dispatchEvent(event);
+		private function dispatch(type:String, event:KeyboardEvent):void {
+			dispatchEvent(new KeyEvent(type, event.keyCode, event.charCode,
+				event.keyLocation, event.ctrlKey, event.shiftKey, event.altKey));
 		}
 		
 		public function set enabled(value:Boolean):void {

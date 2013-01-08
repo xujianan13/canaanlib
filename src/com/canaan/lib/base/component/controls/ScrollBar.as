@@ -46,7 +46,7 @@ package com.canaan.lib.base.component.controls
 			upButton.addEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown);
 			downButton.addEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown);
 			slider.showLabel = false;
-			slider.addEventListener(UIEvent.CHANGE, onSliderChange);
+			slider.dispatcher.addEventListener(UIEvent.CHANGE, onSliderChange);
 		}
 		
 		protected function onButtonMouseDown(event:MouseEvent):void {
@@ -172,7 +172,7 @@ package com.canaan.lib.base.component.controls
 			super.dispose();
 			upButton.removeEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown);
 			downButton.removeEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown);
-			slider.removeEventListener(UIEvent.CHANGE, onSliderChange);
+			slider.dispatcher.removeEventListener(UIEvent.CHANGE, onSliderChange);
 			onStageMouseUp();
 		}
 	}

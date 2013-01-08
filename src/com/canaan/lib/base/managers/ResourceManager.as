@@ -4,13 +4,13 @@ package com.canaan.lib.base.managers
 	import com.canaan.lib.base.core.ResourceLoader;
 	import com.canaan.lib.base.core.Setting;
 	import com.canaan.lib.base.debug.Log;
+	import com.canaan.lib.base.events.CEventDispatcher;
 	import com.canaan.lib.base.events.ResourceEvent;
 	import com.canaan.lib.base.utils.DisplayUtil;
 	import com.canaan.lib.base.utils.MathUtil;
 	import com.canaan.lib.base.utils.ObjectUtil;
 	
 	import flash.display.BitmapData;
-	import flash.events.EventDispatcher;
 	import flash.system.ApplicationDomain;
 	import flash.utils.Dictionary;
 
@@ -18,7 +18,7 @@ package com.canaan.lib.base.managers
 	[Event(name="complete", type="com.canaan.lib.base.events.ResourceEvent")]
 	[Event(name="progress", type="com.canaan.lib.base.events.ResourceEvent")]
 	
-	public class ResourceManager extends EventDispatcher
+	public class ResourceManager extends CEventDispatcher
 	{
 		private static var canInstantiate:Boolean;
 		private static var instance:ResourceManager;

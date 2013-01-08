@@ -31,7 +31,7 @@ package com.canaan.lib.base.component.controls
 			wordWrap = true;
 			multiline = true;
 			_textField.addEventListener(Event.SCROLL, onTextFieldScroll);
-			scrollBar.addEventListener(UIEvent.CHANGE, onScrollBarChange);
+			scrollBar.dispatcher.addEventListener(UIEvent.CHANGE, onScrollBarChange);
 		}
 		
 		protected function onTextFieldScroll(event:Event):void {
@@ -60,7 +60,7 @@ package com.canaan.lib.base.component.controls
 		override public function dispose():void {
 			super.dispose();
 			_textField.removeEventListener(Event.SCROLL, onTextFieldScroll);
-			scrollBar.removeEventListener(UIEvent.CHANGE, onScrollBarChange);
+			scrollBar.dispatcher.removeEventListener(UIEvent.CHANGE, onScrollBarChange);
 		}
 	}
 }
