@@ -31,7 +31,7 @@ package testPackage.component
 			comboBox.position = Position.RIGHT;
 			addChild(comboBox);
 			
-			comboBox.addEventListener(UIEvent.CHANGE, onChange);
+			comboBox.dispatcher.addEventListener(UIEvent.CHANGE, onChange);
 		}
 		
 		private function onChange(event:UIEvent):void {

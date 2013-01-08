@@ -1,14 +1,13 @@
 package com.canaan.lib.base.debug
 {
+	import com.canaan.lib.base.events.CEventDispatcher;
 	import com.canaan.lib.base.events.LogEvent;
 	import com.canaan.lib.base.managers.TimerManager;
 	import com.canaan.lib.base.utils.DateUtil;
 	
-	import flash.events.EventDispatcher;
-	
 	[Event(name="log", type="com.canaan.lib.base.events.LogEvent")]
 	
-	public class Log extends EventDispatcher
+	public class Log extends CEventDispatcher
 	{
 		public static const INFO:int = 0;
 		public static const WARN:int = 1;
@@ -79,12 +78,8 @@ package com.canaan.lib.base.debug
 			
 			if (logLevel >= logEntity.logLevel) {
 				var logString:String = formatLogString(owner, logLevel, value);
-				var logEvent:LogEvent = new LogEvent("log");
-				logEvent.owner = owner;
-				logEvent.logLevel = logLevel;
-				logEvent.value = value;
-				logEvent.logString = logString;
-				dispatchEvent(logEvent);
+				var event:LogEvent = new LogEvent(LogEvent.LOG, value, owner, logLevel, logString);
+				dispatchEvent(event);
 				trace(logString);
 			}
 		}

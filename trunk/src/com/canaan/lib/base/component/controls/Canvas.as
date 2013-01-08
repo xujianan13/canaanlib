@@ -39,7 +39,7 @@ package com.canaan.lib.base.component.controls
 		override protected function initialize():void {
 			super.initialize();
 			_content.mask = _mask;
-			_scrollBar.addEventListener(UIEvent.CHANGE, onScrollBarChange);
+			_scrollBar.dispatcher.addEventListener(UIEvent.CHANGE, onScrollBarChange);
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
 			direction = Direction.VERTICAL;
 		}
@@ -97,7 +97,7 @@ package com.canaan.lib.base.component.controls
 		
 		override public function dispose():void {
 			super.dispose();
-			_scrollBar.removeEventListener(UIEvent.CHANGE, onScrollBarChange);
+			_scrollBar.dispatcher.removeEventListener(UIEvent.CHANGE, onScrollBarChange);
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
 		}
 		

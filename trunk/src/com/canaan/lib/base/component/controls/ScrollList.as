@@ -32,7 +32,7 @@ package com.canaan.lib.base.component.controls
 			layoutObject = new ScrollListLayout();
 			layoutObject.target = this;
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
-			_scrollBar.addEventListener(UIEvent.CHANGE, onSrollBarChange);
+			_scrollBar.dispatcher.addEventListener(UIEvent.CHANGE, onSrollBarChange);
 			resetScrollBarDirection();
 			_scrollBar.visible = false;
 		}
@@ -167,7 +167,7 @@ package com.canaan.lib.base.component.controls
 		override public function dispose():void {
 			super.dispose();
 			removeEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
-			_scrollBar.removeEventListener(UIEvent.CHANGE, onSrollBarChange);
+			_scrollBar.dispatcher.removeEventListener(UIEvent.CHANGE, onSrollBarChange);
 		}
 		
 		public function get scrollBarVisible():Boolean {

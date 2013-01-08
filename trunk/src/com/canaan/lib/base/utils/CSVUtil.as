@@ -9,11 +9,7 @@ package com.canaan.lib.base.utils
 		public static var quoteReg:RegExp = /""/g;
 		public static var doubleQuotesReg:RegExp = /\"/g;
 		public static var splitReg:RegExp = /"?,(?=[^"]*(?:(?:"[^"]*){2})*$)"?/; 
-		
-		public function CSVUtil()
-		{
-		}
-		
+
 		private static function escape(value:String):String {
 			return value.replace(quoteReg, quote);
 		}

@@ -6,10 +6,6 @@ package com.canaan.lib.base.utils
 	
 	public class JSUtil
 	{
-		public function JSUtil()
-		{
-		}
-
 		public static function addCallback(functionName:String, closure:Function):void {
 			if (!available) {
 				Log.getInstance().error("ExternalInterface is not available!");

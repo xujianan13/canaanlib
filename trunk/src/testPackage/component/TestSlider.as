@@ -23,7 +23,7 @@ package testPackage.component
 			addChild(slider);
 			slider.left = 5;
 			slider.top = 5;
-			slider.addEventListener(UIEvent.CHANGE, onChange);
+			slider.dispatcher.addEventListener(UIEvent.CHANGE, onChange);
 			
 			ResourceManager.getInstance().add("assets/comp.swf", new Method(complete));
 			ResourceManager.getInstance().load();

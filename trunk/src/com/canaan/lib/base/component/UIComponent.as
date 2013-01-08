@@ -3,6 +3,7 @@ package com.canaan.lib.base.component
 	import com.canaan.lib.base.component.layout.Layout;
 	import com.canaan.lib.base.core.Method;
 	import com.canaan.lib.base.display.BaseSprite;
+	import com.canaan.lib.base.events.CEventDispatcher;
 	import com.canaan.lib.base.events.UIEvent;
 	import com.canaan.lib.base.interfaces.IDispose;
 	import com.canaan.lib.base.managers.StageManager;
@@ -22,6 +23,7 @@ package com.canaan.lib.base.component
 	
 	public class UIComponent extends BaseSprite implements IUIComponent, IToolTipManagerClient, IDispose
 	{
+		private var _dispatcher:CEventDispatcher;
 		protected var _data:Object;
 		protected var _x:Number = 0;
 		protected var _y:Number = 0;
@@ -38,6 +40,7 @@ package com.canaan.lib.base.component
 		
 		public function UIComponent()
 		{
+			_dispatcher = new CEventDispatcher();
 			tabEnabled = false;
 			tabChildren = false;
 			mouseChildren = false;
@@ -58,6 +61,10 @@ package com.canaan.lib.base.component
 		protected function initialize():void {
 			layoutObject = new Layout();
 			layoutObject.target = this;
+		}
+		
+		public function get dispatcher():CEventDispatcher {
+			return _dispatcher;
 		}
 		
 		public function get data():Object {
@@ -214,8 +221,10 @@ package com.canaan.lib.base.component
 		}
 		
 		public function sendEvent(type:String, data:Object = null):void {
-			if (hasEventListener(type)) {
-				dispatchEvent(new UIEvent(type, data));
+			if (_dispatcher.hasEventListener(type)) {
+				var event:UIEvent = UIEvent.fromPool(type, data);
+				_dispatcher.dispatchEvent(event);
+				UIEvent.toPool(event);
 			}
 		}
 		
