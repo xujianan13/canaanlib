@@ -38,5 +38,23 @@ package com.canaan.lib.base.core
 				func.apply(null, args);
 			}
 		}
+		
+		public function applyWith(data:Array):void {
+			if (data == null) {
+				apply();
+				return;
+			}
+			var func:Function;
+			var args:Array;
+			for (var i:int = 0; i < _methods.length; i++) {
+				func = _methods[i];
+				args = _args[i];
+				func.apply(null, args ? args.concat(data) : data);
+			}
+		}
+		
+		public function get length():int {
+			return _methods.length;
+		}
 	}
 }

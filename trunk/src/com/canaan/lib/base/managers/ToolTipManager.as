@@ -305,7 +305,7 @@ package com.canaan.lib.base.managers
 		
 		private function showTip():void {
 			currentTarget.sendEvent(UIEvent.TOOL_TIP_SHOW, currentToolTip);
-			StageManager.getInstance().mouseDownMethods.register(stageMouseDownHandler);
+			StageManager.getInstance().registerHandler(MouseEvent.MOUSE_DOWN, stageMouseDownHandler);
 			currentToolTip.visible = true;
 			hideToolTip();
 		}
@@ -313,7 +313,7 @@ package com.canaan.lib.base.managers
 		private function hideTip():void {
 			if (previousTarget) {
 				previousTarget.sendEvent(UIEvent.TOOL_TIP_HIDE, currentToolTip);
-				StageManager.getInstance().mouseDownMethods.del(stageMouseDownHandler);
+				StageManager.getInstance().deleteHandler(MouseEvent.MOUSE_DOWN, stageMouseDownHandler);
 			}
 			if (currentToolTip) {
 				currentToolTip.visible = false;

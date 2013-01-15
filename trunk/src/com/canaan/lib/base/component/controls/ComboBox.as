@@ -143,7 +143,7 @@ package com.canaan.lib.base.component.controls
 					}
 					_list.moveTo(xx, yy);
 					addChild(_list);
-					StageManager.getInstance().mouseClickMethods.register(removeList);
+					StageManager.getInstance().registerHandler(MouseEvent.CLICK, removeList);
 				} else {
 					removeList();
 				}
@@ -154,7 +154,7 @@ package com.canaan.lib.base.component.controls
 			_isOpen = false;
 			_button.selected = false;
 			_list.remove();
-			StageManager.getInstance().mouseClickMethods.del(removeList);
+			StageManager.getInstance().deleteHandler(MouseEvent.CLICK, removeList);
 		}
 		
 		public function get skin():String {

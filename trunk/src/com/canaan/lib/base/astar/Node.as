@@ -9,7 +9,9 @@ package com.canaan.lib.base.astar
 		public var h:Number;								// 剩余代价
 		public var walkable:Boolean;						// 是否可通过
 		public var parent:Node;								// 父节点
-		public var costMultiplier:Number = 1.0;				// 节点代价因子
+//		public var costMultiplier:Number = 1.0;				// 节点代价因子
+		public var version:int = 1;
+		public var links:Vector.<Link>;
 		
 		public function Node(x:int, y:int, walkable:Boolean = true)
 		{

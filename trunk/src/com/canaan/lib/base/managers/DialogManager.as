@@ -39,7 +39,7 @@ package com.canaan.lib.base.managers
 		
 		private function onAddedToStage(event:Event):void {
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			StageManager.getInstance().resizeMethods.register(onResize);
+			StageManager.getInstance().registerHandler(Event.RESIZE, onResize);
 			onResize();
 		}
 		

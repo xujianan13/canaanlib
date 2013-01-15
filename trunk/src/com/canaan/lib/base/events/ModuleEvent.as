@@ -7,9 +7,9 @@ package com.canaan.lib.base.events
 		
 		private static var eventPool:Vector.<ModuleEvent> = new <ModuleEvent>[];
 		
-		public function ModuleEvent(type:String, sceneName:String)
+		public function ModuleEvent(type:String, data:Object = null)
 		{
-			super(type, sceneName);
+			super(type, data);
 		}
 		
 		public function get sceneName():String {

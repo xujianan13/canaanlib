@@ -1,5 +1,6 @@
 package com.canaan.lib.rpg.core
 {
+	import com.canaan.lib.base.astar.Grid;
 	import com.canaan.lib.base.core.Config;
 
 	public class RPGSetting
@@ -39,5 +40,7 @@ package com.canaan.lib.rpg.core
 		public static function get chatSocketPort():String {
 			return Config.getConfig("chatSocketPort");
 		}
+		
+		public static var gridType:int = Grid.TYPE_8_DIRECTION;
 	}
 }

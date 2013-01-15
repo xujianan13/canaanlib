@@ -2,6 +2,7 @@ package com.canaan.lib.rpg.core.map
 {
 	import com.canaan.lib.base.core.DLoader;
 	import com.canaan.lib.base.utils.ObjectUtil;
+	import com.canaan.lib.rpg.core.model.MapVo;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -60,7 +61,7 @@ package com.canaan.lib.rpg.core.map
 		/**
 		 * 地图数据
 		 */
-		protected var _mapData:MapData;
+		protected var _mapVo:MapVo;
 		
 		/**
 		 * 缩略图源数据
@@ -89,8 +90,8 @@ package com.canaan.lib.rpg.core.map
 		/**
 		 * 初始化地图并开始加载缩略图
 		 */
-		public function initialize(value:MapData):void {
-			_mapData = value;
+		public function initialize(mapVo:MapVo):void {
+			_mapVo = mapVo;
 			resize();
 			loadThumbnail();
 		}
@@ -102,7 +103,7 @@ package com.canaan.lib.rpg.core.map
 			var loader:Loader = new Loader();
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, thumbnailComplete);
 			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
-			loader.load(new URLRequest(_mapData.thumbnailPath));
+			loader.load(new URLRequest(_mapVo.thumbnailPath));
 		}
 		
 		/**
@@ -115,9 +116,9 @@ package com.canaan.lib.rpg.core.map
 			var loader:DLoader;
 			for (var i:int = drawTiles.length - 1; i >= 0; i--) {
 				point = drawTiles[i];
-				tilePath = _mapData.getTilePath(point.x, point.y);
+				tilePath = _mapVo.getTilePath(point.x, point.y);
 				if (cache[tilePath] != null) {
-					buffer.copyPixels(cache[tilePath], cache[tilePath].rect, new Point(int((point.x - currentStartX) * _mapData.tileWidth), int((point.y - currentStartY) * _mapData.tileHeight)));
+					buffer.copyPixels(cache[tilePath], cache[tilePath].rect, new Point(int((point.x - currentStartX) * _mapVo.tileWidth), int((point.y - currentStartY) * _mapVo.tileHeight)));
 					drawTiles.splice(i, 1);
 				} else {
 					loader = DLoader.fromPool();
@@ -138,8 +139,8 @@ package com.canaan.lib.rpg.core.map
 		protected function thumbnailComplete(event:Event):void {
 			var loaderInfo:LoaderInfo = event.target as LoaderInfo;
 			_bmpdThumbnail = Bitmap(loaderInfo.content).bitmapData;
-			var percentX:Number = _bmpdThumbnail.width / _mapData.mapWidth;
-			var percentY:Number = _bmpdThumbnail.height / _mapData.mapHeight;
+			var percentX:Number = _bmpdThumbnail.width / _mapVo.mapWidth;
+			var percentY:Number = _bmpdThumbnail.height / _mapVo.mapHeight;
 			thumbnailBuffer = new BitmapData(buffer.width * percentX, buffer.height * percentY, false, 0x000000);
 			loaderInfo.removeEventListener(Event.COMPLETE, thumbnailComplete);
 			loaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
@@ -158,10 +159,10 @@ package com.canaan.lib.rpg.core.map
 			
 			var loader:DLoader = loaderInfo.loader as DLoader;
 			var point:Point = loader.data as Point;
-			var key:String = _mapData.getTilePath(point.x, point.y);
+			var key:String = _mapVo.getTilePath(point.x, point.y);
 			cache[key] = Bitmap(loaderInfo.content).bitmapData;
 			if (drawTiles.indexOf(point) != -1) {
-				buffer.copyPixels(cache[key], cache[key].rect, new Point(int((point.x - currentStartX) * _mapData.tileWidth), int((point.y - currentStartY) * _mapData.tileHeight)));
+				buffer.copyPixels(cache[key], cache[key].rect, new Point(int((point.x - currentStartX) * _mapVo.tileWidth), int((point.y - currentStartY) * _mapVo.tileHeight)));
 				drawTiles.splice(drawTiles.indexOf(point), 1);
 //				if (drawTiles.length == 0) {
 //					_drawBuffer.cacheAsBitmap = true;
@@ -182,21 +183,21 @@ package com.canaan.lib.rpg.core.map
 		 * 重绘
 		 */
 		public function resize():void {
-			_center.x = _mapData.mapWidth * 0.5;
-			_center.y = _mapData.mapHeight * 0.5;
+			_center.x = _mapVo.mapWidth * 0.5;
+			_center.y = _mapVo.mapHeight * 0.5;
 			
 			if (buffer != null) {
 				buffer.dispose();
 			}
-			buffer = new BitmapData(_mapData.mapWidth + _mapData.tileWidth, _mapData.mapHeight + _mapData.tileHeight, false);
+			buffer = new BitmapData(_mapVo.mapWidth + _mapVo.tileWidth, _mapVo.mapHeight + _mapVo.tileHeight, false);
 			
 //			_drawBuffer.graphics.clear();
 //			_drawBuffer.graphics.beginBitmapFill(buffer);
 //			_drawBuffer.graphics.drawRect(0, 0, buffer.width, buffer.height);
 			_drawBuffer.bitmapData = buffer;
 			
-			tileX = Math.ceil(_mapData.mapWidth / _mapData.tileWidth) + 1;
-			tileY = Math.ceil(_mapData.mapHeight / _mapData.tileHeight) + 1;
+			tileX = Math.ceil(_mapVo.mapWidth / _mapVo.tileWidth) + 1;
+			tileY = Math.ceil(_mapVo.mapHeight / _mapVo.tileHeight) + 1;
 			
 			render(true);
 		}
@@ -206,8 +207,8 @@ package com.canaan.lib.rpg.core.map
 		 */
 		protected function update(startX:int = -1, startY:int = -1, redraw:Boolean = false):void {
 			if (startX == -1) {
-				startX = int(leftTop.x / _mapData.tileWidth);
-				startY = int(leftTop.y / _mapData.tileHeight);
+				startX = int(leftTop.x / _mapVo.tileWidth);
+				startY = int(leftTop.y / _mapVo.tileHeight);
 			}
 			if (currentStartX == startX && currentStartY == startY && !redraw) {
 				return;
@@ -218,8 +219,8 @@ package com.canaan.lib.rpg.core.map
 			drawTiles.length = 0;
 			drawThumbnail(startX, startY);
 			
-			var maxTileX:int = Math.min(startX + tileX, _mapData.maxTileX);
-			var maxTileY:int = Math.min(startY + tileY, _mapData.maxTileY);
+			var maxTileX:int = Math.min(startX + tileX, _mapVo.maxTileX);
+			var maxTileY:int = Math.min(startY + tileY, _mapVo.maxTileY);
 			for (var y:int = startY; y < maxTileY; y++) {
 				for (var x:int = startX; x < maxTileX; x++) {
 					drawTiles.push(new Point(x, y));
@@ -232,12 +233,12 @@ package com.canaan.lib.rpg.core.map
 		 * 渲染
 		 */
 		public function render(redraw:Boolean = false):void {
-			var startX:int = int(leftTop.x / _mapData.tileWidth);
-			var startY:int = int(leftTop.y / _mapData.tileHeight);
+			var startX:int = int(leftTop.x / _mapVo.tileWidth);
+			var startY:int = int(leftTop.y / _mapVo.tileHeight);
 			update(startX, startY, redraw);
 			if (currentStartX == startX && currentStartY == startY) {
-				_drawBuffer.x = -(leftTop.x % _mapData.tileWidth);
-				_drawBuffer.y = -(leftTop.y % _mapData.tileHeight);
+				_drawBuffer.x = -(leftTop.x % _mapVo.tileWidth);
+				_drawBuffer.y = -(leftTop.y % _mapVo.tileHeight);
 			}
 		}
 		
@@ -245,18 +246,19 @@ package com.canaan.lib.rpg.core.map
 			if (_bmpdThumbnail == null || thumbnailBuffer == null) {
 				return;
 			}
-			var percentX:Number = _bmpdThumbnail.width / _mapData.maxWidth;
-			var percentY:Number = _bmpdThumbnail.height / _mapData.maxHeight;
+			var percentX:Number = _bmpdThumbnail.width / _mapVo.maxWidth;
+			var percentY:Number = _bmpdThumbnail.height / _mapVo.maxHeight;
 			thumbnailBuffer.fillRect(thumbnailBuffer.rect, 0x000000);
-			thumbnailBuffer.copyPixels(_bmpdThumbnail, new Rectangle(startX * _mapData.tileWidth * percentX, startY * _mapData.tileHeight * percentY, _bmpdThumbnail.width, _bmpdThumbnail.height), new Point());
-			percentX = _mapData.maxWidth / _bmpdThumbnail.width;
-			percentY = _mapData.maxHeight / _bmpdThumbnail.height;
+			thumbnailBuffer.copyPixels(_bmpdThumbnail, new Rectangle(startX * _mapVo.tileWidth * percentX, startY * _mapVo.tileHeight * percentY, _bmpdThumbnail.width, _bmpdThumbnail.height), new Point());
+			percentX = _mapVo.maxWidth / _bmpdThumbnail.width;
+			percentY = _mapVo.maxHeight / _bmpdThumbnail.height;
 			buffer.draw(thumbnailBuffer, new Matrix(percentX, 0, 0, percentY), null, null, null, true);
 		}
 		
 		public function moveTo(x:Number, y:Number):void {
-			_center.x = Math.max(_mapData.mapWidth * 0.5, Math.min(_mapData.maxWidth - _mapData.mapWidth * 0.5, x));
-			_center.y = Math.max(_mapData.mapHeight * 0.5, Math.min(_mapData.maxHeight - _mapData.mapHeight * 0.5, y));
+			_center.x = Math.max(_mapVo.mapWidth * 0.5, Math.min(_mapVo.maxWidth - _mapVo.mapWidth * 0.5, x));
+			_center.y = Math.max(_mapVo.mapHeight * 0.5, Math.min(_mapVo.maxHeight - _mapVo.mapHeight * 0.5, y));
+			render();
 		}
 		
 		public static function clearCache():void {
@@ -264,13 +266,13 @@ package com.canaan.lib.rpg.core.map
 		}
 		
 		public function get leftTop():Point {
-			var xx:Number = Math.min(Math.max(0, center.x - _mapData.mapWidth * 0.5), _mapData.maxWidth - _mapData.mapWidth);
-			var yy:Number = Math.min(Math.max(0, center.y - _mapData.mapHeight * 0.5), _mapData.maxHeight - _mapData.mapHeight);
+			var xx:Number = Math.min(Math.max(0, center.x - _mapVo.mapWidth * 0.5), _mapVo.maxWidth - _mapVo.mapWidth);
+			var yy:Number = Math.min(Math.max(0, center.y - _mapVo.mapHeight * 0.5), _mapVo.maxHeight - _mapVo.mapHeight);
 			return new Point(xx, yy);
 		}
 		
-		public function get mapData():MapData {
-			return _mapData;
+		public function get mapVo():MapVo {
+			return _mapVo;
 		}
 		
 		public function get bmpdThumbnail():BitmapData {

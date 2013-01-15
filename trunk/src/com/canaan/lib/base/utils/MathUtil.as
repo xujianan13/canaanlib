@@ -55,6 +55,10 @@ package com.canaan.lib.base.utils
 			return radianToAngle(getRadian(x, y));
 		}
 		
+		public static function getUAngle(x:Number, y:Number):int {
+			return toUAngle(radianToAngle(getRadian(x, y)));
+		}
+		
 		public static function toUAngle(angle:int):int {
 			if (angle > -1 && angle < 360) {
 				return angle;

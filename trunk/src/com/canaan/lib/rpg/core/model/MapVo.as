@@ -1,8 +1,9 @@
-package com.canaan.lib.rpg.core.map
+package com.canaan.lib.rpg.core.model
 {
+	import com.canaan.lib.base.abstract.AbstractVo;
 	import com.canaan.lib.rpg.core.Resources;
 
-	public class MapData
+	public class MapVo extends AbstractVo
 	{
 		public var id:String;
 		public var mapWidth:Number;
@@ -12,14 +13,18 @@ package com.canaan.lib.rpg.core.map
 		public var maxWidth:Number;
 		public var maxHeight:Number;
 		
-		public function MapData(value:Object) {
-			id = value.id;
-			mapWidth = value.mapWidth;
-			mapHeight = value.mapHeight;
-			tileWidth = value.tileWidth;
-			tileHeight = value.tileHeight;
-			maxWidth = value.maxWidth;
-			maxHeight = value.maxHeight;
+		public function MapVo() {
+			
+		}
+		
+		override public function reinitialize():void {
+			id = null;
+			mapWidth = NaN;
+			mapHeight = NaN;
+			tileWidth = NaN;
+			tileHeight = NaN;
+			maxWidth = NaN;
+			maxHeight = NaN;
 		}
 		
 		public function get maxTileX():int {
