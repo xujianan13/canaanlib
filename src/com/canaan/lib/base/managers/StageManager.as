@@ -9,7 +9,7 @@ package com.canaan.lib.base.managers
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
-	import flash.events.MouseEvent;
+	import flash.utils.Dictionary;
 
 	public class StageManager
 	{
@@ -17,12 +17,9 @@ package com.canaan.lib.base.managers
 		private static var instance:StageManager;
 		
 		public var stage:Stage;
-		public var mouseClickMethods:Methods;
-		public var mouseDownMethods:Methods;
-		public var mouseUpMethods:Methods;
-		public var mouseMoveMethods:Methods;
-		public var resizeMethods:Methods;
 		
+		private var methodsDict:Dictionary = new Dictionary();
+
 		public function StageManager()
 		{
 			if (!canInstantiate) {
@@ -50,18 +47,6 @@ package com.canaan.lib.base.managers
 			
 			setFlashVars();
 			stage.frameRate = Setting.fps;
-			
-			mouseClickMethods = new Methods();
-			mouseDownMethods = new Methods();
-			mouseUpMethods = new Methods();
-			mouseMoveMethods = new Methods();
-			resizeMethods = new Methods();
-			
-			stage.addEventListener(MouseEvent.CLICK, mouseEvent);
-			stage.addEventListener(MouseEvent.MOUSE_DOWN, mouseEvent);
-			stage.addEventListener(MouseEvent.MOUSE_UP, mouseEvent);
-			stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseEvent);
-			stage.addEventListener(Event.RESIZE, eventHandler);
 		}
 		
 		private function setFlashVars():void {
@@ -74,28 +59,31 @@ package com.canaan.lib.base.managers
 			}
 		}
 		
-		private function mouseEvent(event:MouseEvent):void {
-			switch (event.type) {
-				case MouseEvent.CLICK:
-					mouseClickMethods.apply();
-					break;
-				case MouseEvent.MOUSE_DOWN:
-					mouseDownMethods.apply();
-					break;
-				case MouseEvent.MOUSE_UP:
-					mouseUpMethods.apply();
-					break;
-				case MouseEvent.MOUSE_MOVE:
-					mouseMoveMethods.apply();
-					break;
+		public function registerHandler(type:String, func:Function, args:Array = null):void {
+			var methods:Methods = methodsDict[type];
+			if (!methods) {
+				methods = new Methods();
+				methodsDict[type] = methods;
+				stage.addEventListener(type, eventHandler);
+			}
+			methods.register(func, args);
+		}
+		
+		public function deleteHandler(type:String, func:Function):void {
+			var methods:Methods = methodsDict[type];
+			if (methods) {
+				methods.del(func);
+				if (methods.length == 0) {
+					delete methodsDict[type];
+					stage.removeEventListener(type, eventHandler);
+				}
 			}
 		}
 		
 		private function eventHandler(event:Event):void {
-			switch (event.type) {
-				case Event.RESIZE:
-					resizeMethods.apply();
-					break;
+			var methods:Methods = methodsDict[event.type];
+			if (methods) {
+				methods.apply();
 			}
 		}
 	}

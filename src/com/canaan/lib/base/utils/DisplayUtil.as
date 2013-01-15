@@ -17,10 +17,11 @@ package com.canaan.lib.base.utils
 	
 	public class DisplayUtil
 	{
-		public static var matrixArray:Array = [];
-		public static var matrix:Matrix = new Matrix();
-		public static var rect:Rectangle = new Rectangle();
-		public static var point:Point = new Point();
+		public static var gMatrixArray:Array = [];
+		public static var gMatrix:Matrix = new Matrix();
+		public static var gRect:Rectangle = new Rectangle();
+		public static var gPoint:Point = new Point();
+		public static var gBitmapData:BitmapData = new BitmapData(1, 1, true, 0xFFFFFFFF);
 		
 		public static function gray(target:DisplayObject, isGray:Boolean = true):void {
 			if (isGray) {
@@ -36,11 +37,11 @@ package com.canaan.lib.base.utils
 		 * 100, -50, -50为红色
 		 */
 		public static function getColorMatrixFilter(r:Number, g:Number, b:Number, alpha:Number):ColorMatrixFilter {
-			matrixArray = 	[alpha,	0,		0,		0,		r,
+			gMatrixArray = 	[alpha,	0,		0,		0,		r,
 							0,		alpha,	0,		0, 		g,
 							0,		0,		alpha,	0,		b,
 							0,		0,		0,		1,		0];
-			return new ColorMatrixFilter(matrixArray);
+			return new ColorMatrixFilter(gMatrixArray);
 		}
 		
 		public static function removeChild(parent:DisplayObjectContainer, child:DisplayObject, dispose:Boolean = false):void {
@@ -133,10 +134,10 @@ package com.canaan.lib.base.utils
 			if (target == null) {
 				target = new BitmapData(source.width, source.height, true, 0x00FFFFFF);
 			}
-			matrix.identity();
-			matrix.a = -1;
-			matrix.tx = source.width;
-			target.draw(source, matrix);
+			gMatrix.identity();
+			gMatrix.a = -1;
+			gMatrix.tx = source.width;
+			target.draw(source, gMatrix);
 			return target;
 		}
 		
@@ -144,10 +145,10 @@ package com.canaan.lib.base.utils
 			if (target == null) {
 				target = new BitmapData(source.width, source.height, true, 0x00FFFFFF);
 			}
-			matrix.identity();
-			matrix.d = -1;
-			matrix.ty = source.width;
-			target.draw(source, matrix);
+			gMatrix.identity();
+			gMatrix.d = -1;
+			gMatrix.ty = source.width;
+			target.draw(source, gMatrix);
 			return target;
 		}
 		
@@ -181,13 +182,13 @@ package com.canaan.lib.base.utils
 			var width:int = Math.max(source.width / x, 1);
 			var height:int = Math.max(source.height / y, 1);
 			var bmd:BitmapData;
-			point.x = 0;
-			point.y = 0;
+			gPoint.x = 0;
+			gPoint.y = 0;
 			for (var i:int = 0; i < x; i++) {
 				for (var j:int = 0; j < y; j++) {
 					bmd = new BitmapData(width, height);
-					rect.setTo(i * width, j * height, width, height);
-					bmd.copyPixels(source, rect, point);
+					gRect.setTo(i * width, j * height, width, height);
+					bmd.copyPixels(source, gRect, gPoint);
 					tiles.push(bmd);
 				}
 			}
@@ -211,39 +212,65 @@ package com.canaan.lib.base.utils
 			var newBmd:BitmapData = new BitmapData(width, height, bmd.transparent, 0x00000000);
 			
 			if (width > gw && height > gh) {
-				rect.setTo(sizeGrid[0], sizeGrid[1], bmd.width - sizeGrid[0] - sizeGrid[2], bmd.height - sizeGrid[1] - sizeGrid[3]);
-				var rows:Array = [0, rect.top, rect.bottom, bmd.height];
-				var cols:Array = [0, rect.left, rect.right, bmd.width];
-				var newRows:Array = [0, rect.top, height - (bmd.height - rect.bottom), height];
-				var newCols:Array = [0, rect.left, width - (bmd.width - rect.right), width];
+				gRect.setTo(sizeGrid[0], sizeGrid[1], bmd.width - sizeGrid[0] - sizeGrid[2], bmd.height - sizeGrid[1] - sizeGrid[3]);
+				var rows:Array = [0, gRect.top, gRect.bottom, bmd.height];
+				var cols:Array = [0, gRect.left, gRect.right, bmd.width];
+				var newRows:Array = [0, gRect.top, height - (bmd.height - gRect.bottom), height];
+				var newCols:Array = [0, gRect.left, width - (bmd.width - gRect.right), width];
 				var newRectWidth:Number;
 				var newRectHeight:Number;
 				var newRectX:Number;
 				var newRectY:Number;
 				for (var i:int = 0; i < 3; i++) {
 					for (var j:int = 0; j < 3; j++) {
-						rect.setTo(cols[i], rows[j], cols[i + 1] - cols[i], rows[j + 1] - rows[j]);
-						newRectWidth = rect.width;
-						newRectHeight = rect.height;
-						newRectX = rect.x;
-						newRectY = rect.y;
-						rect.setTo(newCols[i], newRows[j], newCols[i + 1] - newCols[i], newRows[j + 1] - newRows[j]);
-						matrix.identity();
-						matrix.a = rect.width / newRectWidth;
-						matrix.d = rect.height / newRectHeight;
-						matrix.tx = rect.x - newRectX * matrix.a;
-						matrix.ty = rect.y - newRectY * matrix.d;
-						newBmd.draw(bmd, matrix, null, null, rect, true);
+						gRect.setTo(cols[i], rows[j], cols[i + 1] - cols[i], rows[j + 1] - rows[j]);
+						newRectWidth = gRect.width;
+						newRectHeight = gRect.height;
+						newRectX = gRect.x;
+						newRectY = gRect.y;
+						gRect.setTo(newCols[i], newRows[j], newCols[i + 1] - newCols[i], newRows[j + 1] - newRows[j]);
+						gMatrix.identity();
+						gMatrix.a = gRect.width / newRectWidth;
+						gMatrix.d = gRect.height / newRectHeight;
+						gMatrix.tx = gRect.x - newRectX * gMatrix.a;
+						gMatrix.ty = gRect.y - newRectY * gMatrix.d;
+						newBmd.draw(bmd, gMatrix, null, null, gRect, true);
 					}
 				}
 			} else {
-				matrix.identity();
-				matrix.a = width / bmd.width;
-				matrix.d = height / bmd.height;
-				rect.setTo(0, 0, width, height);
-				newBmd.draw(bmd, matrix, null, null, rect, true);
+				gMatrix.identity();
+				gMatrix.a = width / bmd.width;
+				gMatrix.d = height / bmd.height;
+				gRect.setTo(0, 0, width, height);
+				newBmd.draw(bmd, gMatrix, null, null, gRect, true);
 			}
 			return newBmd;
+		}
+		
+		public static function getColor(displayObject:DisplayObject, x:int, y:int):uint {
+			gBitmapData.fillRect(gBitmapData.rect, 0xFFFFFF);
+			gMatrix.identity();
+			gMatrix.tx = -x;
+			gMatrix.ty = -y;
+			gBitmapData.draw(displayObject, gMatrix);
+			return gBitmapData.getPixel(0, 0);
+		}
+		
+		public static function containsPoint(displayObject:DisplayObject, x:int, y:int):Boolean {
+			gBitmapData.fillRect(gBitmapData.rect, 0);
+			gMatrix.identity();
+			gMatrix.tx = -x;
+			gMatrix.ty = -y;
+			gBitmapData.draw(displayObject, gMatrix);
+			var color:int = gBitmapData.getPixel32(0, 0) >> 24 & 0xFF;
+			if (color > 0) {
+				return true;
+			}
+			return false;
+		}
+		
+		public static function getVisualRect(bitmapData:BitmapData):Rectangle {
+			return bitmapData.getColorBoundsRect(0xFF000000, 0, false);
 		}
 	}
 }

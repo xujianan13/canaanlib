@@ -9,7 +9,6 @@
 
 package com.canaan.lib.base.utils
 {
-	import flash.utils.ByteArray;
 	import flash.utils.getQualifiedClassName;
 	import flash.utils.getQualifiedSuperclassName;
 	
@@ -23,8 +22,6 @@ package com.canaan.lib.base.utils
 	 */
 	public class StringUtil
 	{
-		
-		private static var byte:ByteArray = new ByteArray();
 		
 	    //--------------------------------------------------------------------------
 	    //
@@ -190,11 +187,12 @@ package com.canaan.lib.base.utils
 			return className;
 		}
 		
-		public static function getLength(value:String):int {
-			byte.length = 0;
-			byte.position = 0;
-			byte.writeMultiByte(value, "gb2312");
-			return byte.length;
+		public static function equalBegin(begin:String, str:String):Boolean {
+			return begin == str.substring(0, begin.length);
+		}
+		
+		public static function equalEnd(end:String, str:String):Boolean {
+			return end == str.substring(str.length - end.length);
 		}
 	}
 }

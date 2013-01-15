@@ -1,21 +1,22 @@
 package com.canaan.lib.rpg.core.scene
 {
 	import com.canaan.lib.base.astar.AStar;
+	import com.canaan.lib.rpg.core.RPGSetting;
+	import com.canaan.lib.rpg.core.layers.BackgroundLayer;
+	import com.canaan.lib.rpg.core.layers.EffectLayer;
+	import com.canaan.lib.rpg.core.layers.ObjectsLayer;
 	import com.canaan.lib.rpg.core.map.Map;
 	
 	import flash.display.DisplayObjectContainer;
-	import flash.display.Sprite;
 
 	public class Scene
 	{
 		protected var astar:AStar;
 		protected var map:Map;
-		protected var objects:Array;
-		protected var renderList:Array;
 		protected var container:DisplayObjectContainer;
-		protected var backgroundLayer:Sprite;
-		protected var objectsLayer:Sprite;
-		protected var effectLayer:Sprite;
+		protected var backgroundLayer:BackgroundLayer;
+		protected var objectsLayer:ObjectsLayer;
+		protected var effectLayer:EffectLayer;
 		
 		public function Scene(container:DisplayObjectContainer)
 		{
@@ -24,15 +25,15 @@ package com.canaan.lib.rpg.core.scene
 		}
 		
 		protected function initialize():void {
-			astar = new AStar();
+			astar = new AStar(RPGSetting.gridType);
 			map = new Map();
-			objects = [];
-			renderList = [];
+
+			backgroundLayer = new BackgroundLayer();
+			objectsLayer = new ObjectsLayer();
+			effectLayer = new EffectLayer();
 			
-			backgroundLayer = new Sprite();
-			objectsLayer = new Sprite();
-			effectLayer = new Sprite();
 			container.addChild(backgroundLayer);
+			container.addChild(map.drawBuffer);
 			container.addChild(objectsLayer);
 			container.addChild(effectLayer);
 		}

@@ -5,6 +5,8 @@ package com.canaan.lib.base.debug
 	import com.canaan.lib.base.managers.TimerManager;
 	import com.canaan.lib.base.utils.DateUtil;
 	
+	import flash.utils.Dictionary;
+	
 	[Event(name="log", type="com.canaan.lib.base.events.LogEvent")]
 	
 	public class Log extends CEventDispatcher
@@ -23,8 +25,9 @@ package com.canaan.lib.base.debug
 		private static var canInstantiate:Boolean = false;
 		private static var instance:Log;
 		
-		private var logEntities:Object = {};
+		private var logDict:Dictionary = new Dictionary();
 		private var _enabled:Boolean = true;
+		private var _printable:Boolean = true;
 
 		public function Log()
 		{
@@ -43,9 +46,9 @@ package com.canaan.lib.base.debug
 		}
 		
 		public function initialLog(owner:String = "System", logLevel:int = 0):void {
-			if (logEntities[owner] == null) {
-				var logEntity:LogEntity = new LogEntity(owner, logLevel);
-				logEntities[owner] = logEntity;
+			if (logDict[owner] == null) {
+				var logItem:LogItem = new LogItem(owner, logLevel);
+				logDict[owner] = logItem;
 			}
 		}
 
@@ -70,17 +73,19 @@ package com.canaan.lib.base.debug
 				return;
 			}
 			
-			if (logEntities[owner] == null) {
+			if (logDict[owner] == null) {
 				initialLog(owner, INFO);
 			}
 				
-			var logEntity:LogEntity = logEntities[owner];
+			var logItem:LogItem = logDict[owner];
 			
-			if (logLevel >= logEntity.logLevel) {
+			if (logLevel >= logItem.logLevel) {
 				var logString:String = formatLogString(owner, logLevel, value);
 				var event:LogEvent = new LogEvent(LogEvent.LOG, value, owner, logLevel, logString);
 				dispatchEvent(event);
-				trace(logString);
+				if (_printable) {
+					trace(logString);
+				}
 			}
 		}
 		
@@ -93,21 +98,29 @@ package com.canaan.lib.base.debug
 		}
 		
 		public function set enabled(value:Boolean):void {
-			this._enabled = value;
+			_enabled = value;
 		}
 		
 		public function get enabled():Boolean {
-			return this._enabled;
+			return _enabled;
+		}
+		
+		public function set printable(value:Boolean):void {
+			_printable = value;
+		}
+		
+		public function get printable():Boolean {
+			return _printable;
 		}
 	}
 }
 
-internal class LogEntity
+internal class LogItem
 {
 	public var owner:String;
 	public var logLevel:int;
 	
-	public function LogEntity(owner:String, logLevel:int)
+	public function LogItem(owner:String, logLevel:int)
 	{
 		this.owner = owner;
 		this.logLevel = logLevel;

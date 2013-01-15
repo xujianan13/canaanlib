@@ -15,12 +15,11 @@ package com.canaan.lib.base.abstract
 		}
 		
 		public function addedToScene(sceneName:String):void {
-			removeFromScene();
 			_sceneName = sceneName;
 			dispatch(ModuleEvent.ADDED_TO_SCENE);
 		}
 		
-		public function removeFromScene():Boolean {
+		public function removeFromScene():void {
 			_sceneName = null;
 			dispatch(ModuleEvent.REMOVE_FROM_SCENE);
 		}

@@ -38,11 +38,7 @@ package com.canaan.lib.base.component
 		public static var buttonSkinW:int = 1;
 		public static var buttonSkinH:int = 3;
 		public static var buttonScale9Grid:Array = [4, 4, 4, 4];
-		
-		//------------- CheckBox default setting -------------
-		public static var checkBoxSkinW:int = 2;
-		public static var checkBoxSkinH:int = 3;
-		
+
 		//------------- LinkButton default setting -------------
 		public static var linkButtonLabelColors:Array = [0x0080C0, 0xFF8000, 0x800000, 0xC0C0C0];
 		

@@ -15,8 +15,7 @@ package testPackage.component
 		public function TestCheckBox()
 		{
 			Application.initialize(this);
-			checkBox = new CheckBox();
-			addChild(checkBox);
+			
 //			checkBox.disabled = true;
 			ResourceManager.getInstance().add("assets/comp.swf", new Method(complete));
 			ResourceManager.getInstance().load();
@@ -24,8 +23,8 @@ package testPackage.component
 		}
 		
 		private function complete(content:*):void {
-			checkBox.skin = "png.comp.checkbox";
-			checkBox.label = "checkbox";
+			checkBox = new CheckBox("png.comp.checkbox", "checkbox");
+			addChild(checkBox);
 		}
 	}
 }

@@ -28,7 +28,7 @@ package com.canaan.lib.base.component.controls
 		override protected function changeLabelSize():void {
 			_btnLabel.validateNow();
 			_btnLabel.x = bitmap.width + _labelMargin[0];
-			_btnLabel.y = tiles ? (bitmap.height - _btnLabel.height) * 0.5 + _labelMargin[1] : 0;
+			_btnLabel.y = (bitmap.height - _btnLabel.height) * 0.5 + _labelMargin[1];
 		}
 		
 		override public function dispose():void {

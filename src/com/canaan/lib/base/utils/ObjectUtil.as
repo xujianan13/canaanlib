@@ -7,6 +7,8 @@ package com.canaan.lib.base.utils
 	
 	public class ObjectUtil
 	{
+		public static var gBytes:ByteArray = new ByteArray();
+		
 		public static function clone(source:Object):Object {
 	        var result:Object = {};
 	        var prop:String;
@@ -27,8 +29,12 @@ package com.canaan.lib.base.utils
 	    	return bytesToObject(bytes);
 	    }
 		
-		public static function objectToBytes(value:Object, compress:Boolean = false):ByteArray {
-			var bytes:ByteArray = new ByteArray();
+		public static function objectToBytes(value:Object, compress:Boolean = false, bytes:ByteArray = null):ByteArray {
+			if (!bytes) {
+				bytes = new ByteArray();
+			} else {
+				bytes.clear();
+			}
 			bytes.writeObject(value);
 			if (compress) {
 				bytes.compress();
@@ -37,13 +43,13 @@ package com.canaan.lib.base.utils
 		}
 		
 		public static function bytesToObject(bytes:ByteArray, uncompress:Boolean = false):Object {
-			var clone:ByteArray = new ByteArray();
-			clone.writeBytes(bytes);
+			gBytes.clear();
+			gBytes.writeBytes(bytes);
 			if (uncompress) {
-				clone.uncompress();
+				gBytes.uncompress();
 			}
-			clone.position = 0;
-			return clone.readObject();
+			gBytes.position = 0;
+			return gBytes.readObject();
 		}
 	    
 	    public static function count(source:Object):int {
@@ -110,6 +116,12 @@ package com.canaan.lib.base.utils
 			for (key in source) {
 				delete source[key];
 			}
+		}
+		
+		public static function getCharsLength(value:String):int {
+			gBytes.clear();
+			gBytes.writeMultiByte(value, "gb2312");
+			return gBytes.length;
 		}
 	}
 }

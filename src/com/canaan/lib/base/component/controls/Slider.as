@@ -61,8 +61,8 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		protected function onButtonMouseDown(event:MouseEvent):void {
-			StageManager.getInstance().mouseUpMethods.register(onStageMouseUp);
-			StageManager.getInstance().mouseMoveMethods.register(onStageMouseMove);
+			StageManager.getInstance().registerHandler(MouseEvent.MOUSE_UP, onStageMouseUp);
+			StageManager.getInstance().registerHandler(MouseEvent.MOUSE_MOVE, onStageMouseMove);
 			if (_direction == Direction.HORIZONTAL) {
 				button.startDrag(false, new Rectangle(0, button.y, background.width - button.width, 0));
 			} else {
@@ -72,8 +72,8 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		protected function onStageMouseUp():void {
-			StageManager.getInstance().mouseUpMethods.del(onStageMouseUp);
-			StageManager.getInstance().mouseMoveMethods.del(onStageMouseMove);
+			StageManager.getInstance().deleteHandler(MouseEvent.MOUSE_UP, onStageMouseUp);
+			StageManager.getInstance().deleteHandler(MouseEvent.MOUSE_MOVE, onStageMouseMove);
 			button.stopDrag();
 			hideValueText();
 		}

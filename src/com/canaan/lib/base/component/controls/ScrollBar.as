@@ -53,7 +53,7 @@ package com.canaan.lib.base.component.controls
 			var isUp:Boolean = event.currentTarget == upButton;
 			slide(isUp);
 			TimerManager.getInstance().doOnce(Styles.scrollBarDelay, startLoop, [isUp]);
-			StageManager.getInstance().mouseUpMethods.register(onStageMouseUp);
+			StageManager.getInstance().registerHandler(MouseEvent.MOUSE_UP, onStageMouseUp);
 		}
 		
 		protected function startLoop(isUp:Boolean):void {
@@ -65,7 +65,7 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		protected function onStageMouseUp():void {
-			StageManager.getInstance().mouseUpMethods.del(onStageMouseUp);
+			StageManager.getInstance().deleteHandler(MouseEvent.MOUSE_UP, onStageMouseUp);
 			TimerManager.getInstance().clear(startLoop);
 			TimerManager.getInstance().clear(slide);
 		}

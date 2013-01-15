@@ -2,7 +2,7 @@ package testPackage.rpg
 {
 	import com.canaan.lib.base.core.Config;
 	import com.canaan.lib.rpg.core.map.Map;
-	import com.canaan.lib.rpg.core.map.MapData;
+	import com.canaan.lib.rpg.core.model.MapVo;
 	
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -22,16 +22,14 @@ package testPackage.rpg
 		{
 			stage.focus = this;
 			Config.setConfig("locale", "zh_CN");
-			var o:Object = {
-				id:"111",
-				mapWidth:1000,
-				mapHeight:600,
-				tileWidth:320,
-				tileHeight:360,
-				maxWidth:3200,
-				maxHeight:700
-			};
-			var mapData:MapData = new MapData(o);
+			var mapData:MapVo = new MapVo();
+			mapData.id = "111";
+			mapData.mapWidth = 1000;
+			mapData.mapHeight = 600;
+			mapData.tileWidth = 320;
+			mapData.tileHeight = 360;
+			mapData.maxWidth = 3200;
+			mapData.maxHeight = 700;
 			map = new Map();
 			map.initialize(mapData);
 			this.addChild(map.drawBuffer);
@@ -64,12 +62,11 @@ package testPackage.rpg
 			} else if (keyCode == Keyboard.DOWN) {
 				map.moveTo(c.x, c.y + 3);
 			}
-			map.render();
+//			map.render();
 		}
 		
 		private function onClick(event:MouseEvent):void {
 			map.moveTo(Math.random() * 3200, Math.random() * 720);
-			map.render();
 		}
 	}
 }
