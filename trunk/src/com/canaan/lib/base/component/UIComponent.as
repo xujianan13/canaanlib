@@ -233,6 +233,7 @@ package com.canaan.lib.base.component
 			methods.length = 0;
 			methods = null;
 			layoutObject.dispose();
+			dispatcher.removeEventListeners();
 		}
 		
 		public function get toolTip():Object {

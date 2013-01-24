@@ -10,13 +10,14 @@ package com.canaan.lib.base.component
 		function gotoAndPlay(value:int):void;
 		function prevFrame():void;
 		function nextFrame():void;
-		function fromTo(from:Object = null, to:Object = null, onComplete:Method = null, loop:Boolean = false):void
-		function set autoRemoved(value:Boolean):void;
+		function fromTo(from:Object = null, to:Object = null, loop:Boolean = false, onComplete:Method = null):void;
 		function get autoRemoved():Boolean;
-		function set interval(value:int):void;
+		function set autoRemoved(value:Boolean):void;
 		function get interval():int;
-		function get isPlaying():Boolean;
+		function set interval(value:int):void;
 		function get index():int;
+		function set index(value:int):void;
 		function get maxIndex():int;
+		function get isPlaying():Boolean;
 	}
 }

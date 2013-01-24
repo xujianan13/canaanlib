@@ -2,7 +2,7 @@ package com.canaan.lib.rpg.core.map
 {
 	import com.canaan.lib.base.core.DLoader;
 	import com.canaan.lib.base.utils.ObjectUtil;
-	import com.canaan.lib.rpg.core.model.MapVo;
+	import com.canaan.lib.rpg.core.model.map.MapVo;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -92,6 +92,8 @@ package com.canaan.lib.rpg.core.map
 		 */
 		public function initialize(mapVo:MapVo):void {
 			_mapVo = mapVo;
+			_center.x = _mapVo.mapWidth / 2;
+			_center.y = _mapVo.mapHeight / 2;
 			resize();
 			loadThumbnail();
 		}
@@ -179,13 +181,25 @@ package com.canaan.lib.rpg.core.map
 			trace("Map load error:" + event.text);
 		}
 		
+		public function changeMapSize(width:Number, height:Number):void {
+			if (_mapVo == null) {
+				return;
+			}
+			if (_mapVo.mapWidth == width && _mapVo.mapHeight == height) {
+				return;
+			}
+			_mapVo.mapWidth = width;
+			_mapVo.mapHeight = height;
+			resize();
+		}
+		
 		/**
 		 * 重绘
 		 */
 		public function resize():void {
-			_center.x = _mapVo.mapWidth * 0.5;
-			_center.y = _mapVo.mapHeight * 0.5;
-			
+			if (_mapVo == null) {
+				return;
+			}
 			if (buffer != null) {
 				buffer.dispose();
 			}
@@ -206,9 +220,10 @@ package com.canaan.lib.rpg.core.map
 		 * 更新地图数据
 		 */
 		protected function update(startX:int = -1, startY:int = -1, redraw:Boolean = false):void {
+			var pLeftTop:Point = leftTop;
 			if (startX == -1) {
-				startX = int(leftTop.x / _mapVo.tileWidth);
-				startY = int(leftTop.y / _mapVo.tileHeight);
+				startX = int(pLeftTop.x / _mapVo.tileWidth);
+				startY = int(pLeftTop.y / _mapVo.tileHeight);
 			}
 			if (currentStartX == startX && currentStartY == startY && !redraw) {
 				return;
@@ -233,12 +248,13 @@ package com.canaan.lib.rpg.core.map
 		 * 渲染
 		 */
 		public function render(redraw:Boolean = false):void {
-			var startX:int = int(leftTop.x / _mapVo.tileWidth);
-			var startY:int = int(leftTop.y / _mapVo.tileHeight);
+			var pLeftTop:Point = leftTop;
+			var startX:int = int(pLeftTop.x / _mapVo.tileWidth);
+			var startY:int = int(pLeftTop.y / _mapVo.tileHeight);
 			update(startX, startY, redraw);
 			if (currentStartX == startX && currentStartY == startY) {
-				_drawBuffer.x = -(leftTop.x % _mapVo.tileWidth);
-				_drawBuffer.y = -(leftTop.y % _mapVo.tileHeight);
+				_drawBuffer.x = -(pLeftTop.x % _mapVo.tileWidth);
+				_drawBuffer.y = -(pLeftTop.y % _mapVo.tileHeight);
 			}
 		}
 		
@@ -289,6 +305,20 @@ package com.canaan.lib.rpg.core.map
 
 		public function get center():Point {
 			return _center;
+		}
+		
+		public function getScreenPosition(mapX:Number, mapY:Number):Point {
+			var screenPosition:Point = new Point(_mapVo.mapWidth / 2, _mapVo.mapHeight / 2);
+			screenPosition.x += mapX - _center.x;
+			screenPosition.y += mapY - _center.y;
+			return screenPosition;
+		}
+		
+		public function getMapPosition(x:Number, y:Number):Point {
+			var mapPosition:Point = _center.clone();
+			mapPosition.x += x - _mapVo.mapWidth / 2;
+			mapPosition.y += y - _mapVo.mapHeight / 2;
+			return mapPosition;
 		}
 	}
 }

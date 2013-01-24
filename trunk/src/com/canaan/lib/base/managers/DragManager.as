@@ -34,7 +34,10 @@ package com.canaan.lib.base.managers
             return instance;
         }
         
-        public function doDrag(dragInitiator:DisplayObject, dragImage:Sprite, data:Object = null):void {
+        public function doDrag(dragInitiator:DisplayObject, dragImage:Sprite = null, data:Object = null):void {
+			if (dragImage == null) {
+				dragImage = dragInitiator as Sprite;
+			}
         	this.dragInitiator = dragInitiator;
         	this.data = data;
         	this.dragImage = dragImage;

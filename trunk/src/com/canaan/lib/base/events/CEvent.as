@@ -4,6 +4,8 @@ package com.canaan.lib.base.events
 
 	public class CEvent
 	{
+		public static const COMPLETE:String = "complete";
+		
 		private static var eventPool:Vector.<CEvent> = new <CEvent>[];
 		
 		protected var _target:CEventDispatcher;

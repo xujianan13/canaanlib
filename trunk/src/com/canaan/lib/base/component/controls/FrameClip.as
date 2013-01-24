@@ -29,6 +29,7 @@ package com.canaan.lib.base.component.controls
 		public function FrameClip(skin:String = null)
 		{
 			super();
+			this.skin = skin;
 		}
 		
 		override protected function preinitialize():void {
@@ -51,14 +52,6 @@ package com.canaan.lib.base.component.controls
 				_mc.height = _height;
 			}
 			super.changeSize();
-		}
-		
-		protected function animationComplete():void {
-			sendEvent(UIEvent.ANIMATION_COMPLETE);
-			if (_autoRemoved) {
-				stop();
-				DisplayUtil.removeChild(parent, this);
-			}
 		}
 		
 		public function play():void {
@@ -94,27 +87,39 @@ package com.canaan.lib.base.component.controls
 						from = 0;
 						to = 0;
 						stop();
-						if (completeCallback != null) {
-							var method:Method = completeCallback;
-							completeCallback = null;
-							method.apply();
-						}
 						animationComplete();
+						animationFinished();
 					}
 					return;
 				}
 			}
 			index = _index == maxIndex ? 0 : _index + 1;
 			if (_index == 0) {
-				animationComplete();
+				animationFinished();
 			}
 		}
 		
-		public function fromTo(from:Object = null, to:Object = null, onComplete:Method = null, loop:Boolean = false):void {
+		protected function animationComplete():void {
+			if (completeCallback != null) {
+				var method:Method = completeCallback;
+				completeCallback = null;
+				method.apply();
+			}
+		}
+		
+		protected function animationFinished():void {
+			sendEvent(UIEvent.ANIMATION_COMPLETE);
+			if (_autoRemoved) {
+				stop();
+				DisplayUtil.removeChild(parent, this);
+			}
+		}
+		
+		public function fromTo(from:Object = null, to:Object = null, loop:Boolean = false, onComplete:Method = null):void {
 			this.from = Math.max(0, int(from) || 0);
 			this.to = Math.min(maxIndex, int(to) || maxIndex);
-			completeCallback = onComplete;
 			this.loop = loop;
+			completeCallback = onComplete;
 			gotoAndPlay(this.from);
 		}
 		
@@ -123,9 +128,7 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		public function set autoRemoved(value:Boolean):void {
-			if (_autoRemoved != value) {
-				_autoRemoved = value;
-			}
+			_autoRemoved = value;
 		}
 		
 		public function get autoRemoved():Boolean {
@@ -133,12 +136,14 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		public function set index(value:int):void {
-			_index = value;
-			if (_mc != null) {
-				_index = Math.min(maxIndex, Math.max(0, _index));
-				_mc.gotoAndStop(_index);
-				_width = _mc.width;
-				_height = _mc.height;
+			value = Math.min(maxIndex, Math.max(0, value));
+			if (_index != value) {
+				_index = value;
+				if (_mc != null) {
+					_mc.gotoAndStop(_index);
+					_width = _mc.width;
+					_height = _mc.height;
+				}
 			}
 		}
 		

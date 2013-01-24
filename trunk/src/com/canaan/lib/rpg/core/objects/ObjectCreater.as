@@ -1,6 +1,6 @@
 package com.canaan.lib.rpg.core.objects
 {
-	import com.canaan.lib.rpg.core.model.objects.AbstractObjectVO;
+	import com.canaan.lib.rpg.core.model.objects.AbstractObjectVo;
 
 	public class ObjectCreater
 	{
@@ -8,7 +8,7 @@ package com.canaan.lib.rpg.core.objects
 		{
 		}
 		
-		public function createObject(objectVo:AbstractObjectVO):AbstractObject {
+		public function createObject(objectVo:AbstractObjectVo):AbstractObject {
 			return null;
 		}
 	}

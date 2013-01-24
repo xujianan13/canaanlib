@@ -8,7 +8,6 @@ package testPackage.util
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	import flash.geom.Matrix;
 	
 	public class TestDisplayUtil extends Sprite
 	{
@@ -31,7 +30,7 @@ package testPackage.util
 		}
 		
 		private function mouseMove(event:MouseEvent):void {
-			trace(DisplayUtil.containsPoint(image, event.localX, event.localY));
+			trace(DisplayUtil.getIntersect(image, event.localX, event.localY));
 			
 			var color:uint = DisplayUtil.getColor(image, event.localX, event.localY) + 0xFF000000;
 			

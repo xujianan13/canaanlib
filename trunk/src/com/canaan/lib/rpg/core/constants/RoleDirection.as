@@ -11,12 +11,27 @@ package com.canaan.lib.rpg.core.constants
 		public static const LEFT:int = 7;
 		public static const LEFT_UP:int = 8;
 		
-		public static function getOppsiteDirection(direction:int):int {
-			var oppsiteDirection:int = direction + 4;
-			if (oppsiteDirection > LEFT_UP) {
-				oppsiteDirection -= LEFT_UP;
+		public static function getOppositeDirection(direction:int):int {
+			var oppositeDirection:int = direction + 4;
+			if (oppositeDirection > LEFT_UP) {
+				oppositeDirection -= LEFT_UP;
 			}
-			return oppsiteDirection;
+			return oppositeDirection;
+		}
+		
+		public static function getCopyDirection(direction:int):int {
+			switch (direction) {
+				case LEFT_DOWN:
+					direction = RIGHT_DOWN;
+					break;
+				case LEFT:
+					direction = RIGHT;
+					break;
+				case LEFT_UP:
+					direction = RIGHT_UP;
+					break;
+			}
+			return direction;
 		}
 	}
 }
