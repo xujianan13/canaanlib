@@ -256,7 +256,7 @@ package com.canaan.lib.base.utils
 			return gBitmapData.getPixel(0, 0);
 		}
 		
-		public static function containsPoint(displayObject:DisplayObject, x:int, y:int):Boolean {
+		public static function getIntersect(displayObject:DisplayObject, x:int, y:int):Boolean {
 			gBitmapData.fillRect(gBitmapData.rect, 0);
 			gMatrix.identity();
 			gMatrix.tx = -x;

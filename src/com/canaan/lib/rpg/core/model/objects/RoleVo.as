@@ -1,6 +1,6 @@
 package com.canaan.lib.rpg.core.model.objects
 {
-	public class RoleVo extends AbstractObjectVO
+	public class RoleVo extends AbstractObjectVo
 	{
 		public var level:int;
 		public var hp:int;

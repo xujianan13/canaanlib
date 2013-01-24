@@ -24,12 +24,12 @@ package testPackage.managers
 			addChild(DialogManager.getInstance());
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			
-			gd = new Dialog();
-			gd.graphics.beginFill(0xFFFFFF * Math.random(), Math.random());
-			gd.graphics.drawRect(0, 0, 600 * Math.random(), 400 * Math.random());
-			gd.graphics.endFill();
-			gd.popup(true);
-			gd.addEventListener(MouseEvent.CLICK, onClick2);
+//			gd = new Dialog();
+//			gd.graphics.beginFill(0xFFFFFF * Math.random(), Math.random());
+//			gd.graphics.drawRect(0, 0, 600 * Math.random(), 400 * Math.random());
+//			gd.graphics.endFill();
+//			gd.popup(true);
+//			gd.addEventListener(MouseEvent.CLICK, onClick2);
 		}
 		
 		private function onKeyDown(event:KeyboardEvent):void {
@@ -44,6 +44,7 @@ package testPackage.managers
 				dialog.graphics.endFill();
 				dialog.popup();
 				dialog.addEventListener(MouseEvent.CLICK, onClick2);
+//				dialog.addEventListener(MouseEvent.MOUSE_DOWN, onClick2);
 			} else if (event.keyCode == Keyboard.SPACE) {
 				dialog.graphics.beginFill(0xFFFFFF * Math.random(), Math.random());
 				dialog.graphics.drawRect(0, 0, 600 * Math.random(), 400 * Math.random());
@@ -55,9 +56,11 @@ package testPackage.managers
 		
 		private function onClick2(event:MouseEvent):void {
 			var dialog:Dialog = event.currentTarget as Dialog;
-			trace(dialog.isPopup);
-			dialog.close();
-			trace(dialog.isPopup);
+//			trace(dialog.isPopup);
+//			dialog.close();
+//			trace(dialog.isPopup);
+			
+			dialog.doDrag();
 		}
 		
 		private function onComplete(content:*):void {

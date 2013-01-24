@@ -132,7 +132,7 @@ package com.canaan.lib.base.core
 				case FILE_TYPE_BINARY:
 					var bytes:ByteArray = urlLoader.data as ByteArray;
 					bytes.uncompress();
-					content = bytes.toString();
+					content = bytes.readObject();
 					break;
 			}
 			endLoad(cache[_url] = content);

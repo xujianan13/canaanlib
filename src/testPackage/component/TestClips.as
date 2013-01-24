@@ -3,8 +3,9 @@ package testPackage.component
 	import com.canaan.lib.base.component.controls.Clip;
 	import com.canaan.lib.base.core.Application;
 	import com.canaan.lib.base.core.Config;
-	import com.canaan.lib.base.core.Setting;
 	import com.canaan.lib.base.core.Method;
+	import com.canaan.lib.base.core.Setting;
+	import com.canaan.lib.base.events.UIEvent;
 	import com.canaan.lib.base.managers.ResourceManager;
 	import com.canaan.lib.base.managers.TimerManager;
 	
@@ -35,10 +36,13 @@ package testPackage.component
 			clip.tileY = 1;
 			clip.interval = 200;
 			clip.left = 5;
-//			clip.url = "png.comp.clip_num";
-			clip.url = "assets/clip_num.png";
+			clip.url = "png.comp.clip_num";
+//			clip.url = "assets/clip_num.png";
 			addChild(clip);
-			clip.fromTo(0, 6, new Method(callback));
+			clip.play();
+			
+			clip.dispatcher.addEventListener(UIEvent.COMPLETE, onComplete);
+			
 //			clip.autoRemoved = true;
 			stage.addEventListener(MouseEvent.CLICK, onClick);
 //			clip.prevFrame();
@@ -49,9 +53,15 @@ package testPackage.component
 //			clip2.y = 50;
 		}
 		
+		private function onComplete():void {
+//			clip.fromTo(0, 6, new Method(callback));
+//			clip.autoRemoved = true;
+//			clip.play();
+		}
+		
 		private function callback():void {
 			trace("callback");
-			clip.fromTo(0, 6, new Method(callback));
+//			clip.fromTo(0, 6, new Method(callback));
 		}
 		
 		private function onClick(event:MouseEvent):void {
@@ -62,11 +72,7 @@ package testPackage.component
 //			}
 			clip.stop();
 		}
-		
-		private function onComplete(event:Event):void {
-			trace("onComplete");
-		}
-		
+
 		private function t():void {
 			clip2 = new Clip("assets/clip_num.png", 10, 1);
 			addChild(clip2);

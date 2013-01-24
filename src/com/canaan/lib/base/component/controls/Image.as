@@ -102,6 +102,14 @@ package com.canaan.lib.base.component.controls
 			return _scale9.toString();
 		}
 		
+		public function get smoothing():Boolean {
+			return _bitmap.smoothing;
+		}
+		
+		public function set smoothing(value:Boolean):void {
+			_bitmap.smoothing = value;
+		}
+		
 		public function get bitmap():Bitmap {
 			return _bitmap;
 		}

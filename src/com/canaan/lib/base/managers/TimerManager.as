@@ -1,5 +1,7 @@
 package com.canaan.lib.base.managers
 {
+	import com.canaan.lib.base.core.Setting;
+	
 	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.utils.Dictionary;
@@ -30,6 +32,7 @@ package com.canaan.lib.base.managers
 			handlers = new Dictionary();
 			pool = new Vector.<TimerHandler>();
 			currTime = getTimer();
+			time = 0;
 		}
 		
 		public static function getInstance():TimerManager {
@@ -104,7 +107,7 @@ package com.canaan.lib.base.managers
 		}
 		
 		public function running(method:Function):Boolean {
-			return handlers[method];
+			return handlers[method] != null;
 		}
 		
 		public function get count():int {
@@ -113,11 +116,25 @@ package com.canaan.lib.base.managers
 		
 		public function set time(value:Number):void {
 			_time = value;
-			doFrameLoop(1, timeStep);
+			if (!running(timeStep)) {
+				doFrameLoop(1, timeStep);
+			}
 		}
 		
 		public function get time():Number {
 			return _time;
+		}
+		
+		public function get timeSecond():Number {
+			return _time / 1000.0;
+		}
+		
+		public function get interval():int {
+			return int(intervalSecond * 1000);
+		}
+		
+		public function get intervalSecond():Number {
+			return 1.0 / Setting.fps;
 		}
 		
 		private function timeStep():void {

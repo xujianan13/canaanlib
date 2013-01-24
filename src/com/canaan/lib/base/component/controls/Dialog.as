@@ -1,6 +1,7 @@
 package com.canaan.lib.base.component.controls
 {
 	import com.canaan.lib.base.managers.DialogManager;
+	import com.canaan.lib.base.managers.DragManager;
 
 	public class Dialog extends View
 	{
@@ -29,6 +30,10 @@ package com.canaan.lib.base.component.controls
 
 		public function close():void {
 			DialogManager.getInstance().close(this);
+		}
+		
+		public function doDrag():void {
+			DragManager.getInstance().doDrag(this);
 		}
 	}
 }

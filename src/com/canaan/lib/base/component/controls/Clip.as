@@ -18,7 +18,7 @@ package com.canaan.lib.base.component.controls
 	{
 		protected var _tileX:int;
 		protected var _tileY:int;
-		protected var _index:int;
+		protected var _index:int = -1;
 		protected var _interval:int;
 		protected var _isPlaying:Boolean;
 		protected var _autoRemoved:Boolean;
@@ -59,6 +59,9 @@ package com.canaan.lib.base.component.controls
 		override protected function setBitmapData(bmd:BitmapData):void {
 			if (bmd != null) {
 				changeClip();
+				if (_isPlaying) {
+					play();
+				}
 			}
 			sendEvent(UIEvent.COMPLETE);
 		}
@@ -76,17 +79,11 @@ package com.canaan.lib.base.component.controls
 			}
 		}
 		
-		protected function animationComplete():void {
-			sendEvent(UIEvent.ANIMATION_COMPLETE);
-			if (_autoRemoved) {
-				stop();
-				DisplayUtil.removeChild(parent, this);
-			}
-		}
-		
 		public function play():void {
 			_isPlaying = true;
-			TimerManager.getInstance().doLoop(_interval, nextFrame);
+			if (tiles != null) {
+				TimerManager.getInstance().doLoop(_interval, nextFrame);
+			}
 		}
 		
 		public function stop():void {
@@ -117,35 +114,50 @@ package com.canaan.lib.base.component.controls
 						from = 0;
 						to = 0;
 						stop();
-						if (completeCallback != null) {
-							var method:Method = completeCallback;
-							completeCallback = null;
-							method.apply();
-						}
 						animationComplete();
+						animationFinished();
 					}
 					return;
 				}
 			}
 			index = _index == maxIndex ? 0 : _index + 1;
 			if (_index == 0) {
-				animationComplete();
+				animationFinished();
 			}
 		}
 		
-		public function fromTo(from:Object = null, to:Object = null, onComplete:Method = null, loop:Boolean = false):void {
+		protected function animationComplete():void {
+			if (completeCallback != null) {
+				var method:Method = completeCallback;
+				completeCallback = null;
+				method.apply();
+			}
+		}
+		
+		protected function animationFinished():void {
+			sendEvent(UIEvent.ANIMATION_COMPLETE);
+			if (_autoRemoved) {
+				stop();
+				DisplayUtil.removeChild(parent, this);
+			}
+		}
+		
+		public function fromTo(from:Object = null, to:Object = null, loop:Boolean = false, onComplete:Method = null):void {
 			this.from = Math.max(0, int(from) || 0);
 			this.to = Math.min(maxIndex, int(to) || maxIndex);
-			completeCallback = onComplete;
 			this.loop = loop;
+			completeCallback = onComplete;
 			gotoAndPlay(this.from);
 		}
 		
 		public function set index(value:int):void {
-			_index = value;
-			if (tiles != null) {
-				_index = Math.min(maxIndex, Math.max(0, _index));
-				bitmap.bitmapData = tiles[_index];
+			_index != value;
+			value = Math.min(maxIndex, Math.max(0, value));
+			if (_index != value) {
+				_index = value;
+				if (tiles != null) {
+					bitmap.bitmapData = tiles[_index];
+				}
 			}
 		}
 		
@@ -189,9 +201,7 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		public function set autoRemoved(value:Boolean):void {
-			if (_autoRemoved != value) {
-				_autoRemoved = value;
-			}
+			_autoRemoved = value;
 		}
 		
 		public function get autoRemoved():Boolean {
