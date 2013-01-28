@@ -77,13 +77,13 @@ package com.canaan.lib.base.animation
 		 * 	@param transition can be either a String (e.g. one of the constants defined in the
 		 * 		   Transitions class) or a function. Look up the 'Transitions' class for a
 		 *		   documentation about the required function signature. */		
-		public function Tween(target:Object, time:Number, transition:Object="linear")        
+		public function Tween(target:Object = null, time:Number = 0, transition:Object="linear")        
 		{
 			reset(target, time, transition);
 		}
 		
 		/** Resets the tween to its default values. Useful for pooling tweens. */
-		public function reset(target:Object, time:Number, transition:Object="linear"):Tween
+		public function reset(target:Object = null, time:Number = 0, transition:Object="linear"):Tween
 		{
 			mTarget = target;
 			mCurrentTime = 0;
@@ -145,7 +145,11 @@ package com.canaan.lib.base.animation
 		/** @inheritDoc */
 		public function advanceTime(time:Number):void
 		{
-			if (time == 0 || (mRepeatCount == 1 && mCurrentTime == mTotalTime)) return;
+			if (time == 0 || (mRepeatCount == 1 && mCurrentTime == mTotalTime))
+			{
+				stop();
+				return;
+			}
 			
 			var i:int;
 			var previousTime:Number = mCurrentTime;
@@ -219,6 +223,7 @@ package com.canaan.lib.base.animation
 		
 		/** The target object that is animated. */
 		public function get target():Object { return mTarget; }
+		public function set target(value:Object):void { mTarget = value };
 		
 		/** The transition method used for the animation. @see Transitions */
 		public function get transition():String { return mTransitionName; }
@@ -241,6 +246,10 @@ package com.canaan.lib.base.animation
 		
 		/** The total time the tween will take (in seconds). */
 		public function get totalTime():Number { return mTotalTime; }
+		public function set totalTime(value:Number):void
+		{
+			mTotalTime = Math.max(0.0001, value);
+		}
 		
 		/** The time that has passed since the tween was created. */
 		public function get currentTime():Number { return mCurrentTime; }

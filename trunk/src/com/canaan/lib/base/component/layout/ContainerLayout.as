@@ -25,9 +25,9 @@ package com.canaan.lib.base.component.layout
 		
 		override public function dispose():void {
 			if (_target != null) {
-				super.dispose();
 				_target.removeEventListener(Event.ADDED, onAdded);
 				_target.removeEventListener(Event.REMOVED, onRemoved);
+				super.dispose();
 			}
 		}
 		
