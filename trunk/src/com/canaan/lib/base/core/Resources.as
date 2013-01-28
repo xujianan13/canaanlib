@@ -9,14 +9,26 @@ package com.canaan.lib.base.core
 	public class Resources
 	{
 		public static var root:XMLList;
-		public static var dirImages:String;									// 静态图片目录
-		public static var dirMap:String;									// rpg地图图片目录
+		public static var dirImage:String;									// 静态图片目录
+		public static var dirAudio:String;									// 音频文件目录
+		public static var dirRpg:String;									// rpg资源目录
+		public static var dirSlg:String;									// slg资源目录
+		public static var dirTable:String;									// 数据表目录
+		public static var dirSetting:String;								// 静态配置文件setting
+		public static var dirLang:String;									// 语言文件目录
+		public static var dirUIXml:String;									// UIXml文件目录
 		public static var preLoadFiles:Vector.<ResourceItem>;				// 预加载文件
 		
 		public static function initialize(xmlList:XMLList):void {
 			root = xmlList;
-			dirImages = root.@dirImages;
-			dirMap = root.@dirMap;
+			dirImage = root.@dirImages;
+			dirAudio = root.@dirAudio;
+			dirRpg = root.@dirRpg;
+			dirSlg = root.@dirSlg;
+			dirTable = root.@dirTable;
+			dirSetting = root.@dirSetting;
+			dirLang = root.@dirLang;
+			dirUIXml = root.@dirUIXml;
 			preLoadFiles = new Vector.<ResourceItem>();
 			
 			var fileList:XMLList = root.preLoadFiles;

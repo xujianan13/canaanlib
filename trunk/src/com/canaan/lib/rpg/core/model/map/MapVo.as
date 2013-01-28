@@ -37,12 +37,12 @@ package com.canaan.lib.rpg.core.model.map
 		
 		public function get thumbnailPath():String {
 			var fileName:String = id + ".jpg";
-			return Resources.dirMap + "thumbnails/" + fileName; 
+			return Resources.dirRpg + "map/thumbnails/" + fileName; 
 		}
 		
 		public function getTilePath(tileX:int, tileY:int):String {
 			var fileName:String = tileY + "_" + tileX + ".jpg";
-			return Resources.dirMap + "tiles/" + id + "/" + fileName;
+			return Resources.dirRpg + "map/tiles/" + id + "/" + fileName;
 		}
 	}
 }

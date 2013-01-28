@@ -4,10 +4,17 @@
 			chatSocketHost="127.0.0.1" chatSocketPort="8080"
 			resHost=""
 			locale="zh_CN"
-			platform=""
+			platform="tencent"
 			version="1.0.0.1" />
 	<setting fps="24" debugMode="true" />
-	<resources dirImages="res/zh_CN/assets/images/" dirMap="res/zh_CN/assets/map/">
+	<resources dirImages="res/zh_CN/assets/image/"
+				dirAudio="res/zh_CN/assets/audio/"
+				dirRpg="res/zh_CN/assets/rpg/"
+				dirSlg="res/zh_CN/assets/slg/"
+				dirTab="res/zh_CN/config/table/"
+				dirSetting="res/zh_CN/config/setting/"
+				dirLang="res/zh_CN/config/language/"
+				dirUIXml="res/zh_CN/config/uixml/">
 		<preLoadFiles>
 <!-- 			<file name="language" url="" title="测试"/> -->
 		</preLoadFiles>
