@@ -69,15 +69,20 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		override public function addChild(child:DisplayObject):DisplayObject {
-			return _content.addChild(child);
+			_content.addChild(child);
+			callLater(changeSize);
+			return child;
 		}
 		
 		override public function removeChild(child:DisplayObject):DisplayObject {
-			return _content.removeChild(child);
+			_content.removeChild(child);
+			callLater(changeSize);
+			return child;
 		}
 		
 		override public function removeAllChildren():void {
 			_content.removeAllChildren();
+			callLater(changeSize);
 		}
 		
 		override protected function changeSize():void {
@@ -87,10 +92,12 @@ package com.canaan.lib.base.component.controls
 				_scrollBar.x = _width;
 				_scrollBar.y = 0;
 				_scrollBar.height = _height;
+				_scrollBar.visible = _height < _content.height;
 			} else {
 				_scrollBar.x = 0;
 				_scrollBar.y = _height;
 				_scrollBar.width = _width;
+				_scrollBar.visible = _width < _content.width;
 			}
 			super.changeSize();
 		}

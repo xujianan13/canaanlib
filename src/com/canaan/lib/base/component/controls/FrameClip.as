@@ -19,6 +19,7 @@ package com.canaan.lib.base.component.controls
 		protected var _index:int;
 		protected var _interval:int;
 		protected var _isPlaying:Boolean;
+		protected var _autoPlay:Boolean = true;
 		protected var _autoRemoved:Boolean;
 		
 		protected var from:int;
@@ -39,7 +40,14 @@ package com.canaan.lib.base.component.controls
 		
 		override protected function initialize():void {
 			super.initialize();
+			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+		}
+		
+		protected function onAddedToStage(e:Event):void {
+			if (_autoPlay) {
+				play();
+			}
 		}
 		
 		protected function onRemovedFromStage(event:Event):void {
@@ -93,9 +101,11 @@ package com.canaan.lib.base.component.controls
 					return;
 				}
 			}
-			index = _index == maxIndex ? 0 : _index + 1;
-			if (_index == 0) {
+			if (_index == maxIndex) {
+				index = 0;
 				animationFinished();
+			} else {
+				index = _index + 1;
 			}
 		}
 		
@@ -156,6 +166,17 @@ package com.canaan.lib.base.component.controls
 				return _mc.totalFrames - 1;
 			}
 			return 0;
+		}
+		
+		public function get autoPlay():Boolean {
+			return _autoPlay;
+		}
+		
+		public function set autoPlay(value:Boolean):void {
+			if (_autoPlay != value) {
+				_autoPlay = value;
+				_autoPlay ? play() : stop();
+			}
 		}
 		
 		public function set interval(value:int):void {

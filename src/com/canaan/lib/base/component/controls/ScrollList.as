@@ -14,10 +14,10 @@ package com.canaan.lib.base.component.controls
 		protected var _container:Container;
 		protected var _scrollBar:ScrollBar;
 		
-		public function ScrollList(skin:String=null, scrollSkin:String = null, row:int=0, column:int=0)
+		public function ScrollList(skin:String=null, scrollBarSkin:String = null, row:int=0, column:int=0)
 		{
 			super(skin, row, column);
-			this.scrollSkin = scrollSkin;
+			this.scrollBarSkin = scrollBarSkin;
 		}
 		
 		override protected function createChildren():void {
@@ -73,11 +73,11 @@ package com.canaan.lib.base.component.controls
 			return _container.addChild(child);
 		}
 		
-		public function set scrollSkin(value:String):void {
+		public function set scrollBarSkin(value:String):void {
 			_scrollBar.skin = value;
 		}
 		
-		public function get scrollSkin():String {
+		public function get scrollBarSkin():String {
 			return _scrollBar.skin;
 		}
 		

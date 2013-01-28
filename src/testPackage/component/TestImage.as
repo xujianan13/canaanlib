@@ -15,18 +15,20 @@ package testPackage.component
 		
 		public function TestImage()
 		{
-			Application.initialize(this);
-			
+			Application.initialize(this, new Method(initializeComplete));
+		}
+		
+		private function initializeComplete():void {
 			image = new Image();
 			image.scale9 = "0,0,0,0";
 			image.width = 100;
 			image.height = 200;
 			addChild(image);
-			ResourceManager.getInstance().add("assets/comp.swf", new Method(complete));
-			ResourceManager.getInstance().load();
+			ResourceManager.getInstance().add("assets/comp.swf");
+			ResourceManager.getInstance().load(new Method(complete));
 		}
 		
-		private function complete(content:*):void {
+		private function complete():void {
 			image.url = "assets/btn_blue.png";
 			image.url = "assets/Altar.png";
 //			image.showBorder();

@@ -14,14 +14,17 @@ package testPackage.managers
 		
 		public function TestCursorManager()
 		{
-			Application.initialize(this);
-			ResourceManager.getInstance().add("assets/bear.swf", new Method(onComplete));
-			ResourceManager.getInstance().load();
+			Application.initialize(this, new Method(initializeComplete));
+		}
+		
+		private function initializeComplete():void {
+			ResourceManager.getInstance().add("assets/bear.swf");
+			ResourceManager.getInstance().load(new Method(onComplete));
 			addChild(CursorManager.getInstance());
 		}
 		
-		private function onComplete(content:*):void {
-			CursorManager.getInstance().addCursor("bear", content);
+		private function onComplete():void {
+			CursorManager.getInstance().addCursor("bear", ResourceManager.getInstance().getContent("assets/bear.swf"));
 			stage.addEventListener(MouseEvent.CLICK, onClick);
 			CursorManager.getInstance().removeCursor();
 		}

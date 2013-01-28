@@ -14,7 +14,7 @@ package com.canaan.lib.base.core
 		public function set func(value:Function):void {
 			_func = value;
 		}
-
+		
 		public function get func():Function {
 			return _func;
 		}
@@ -34,12 +34,25 @@ package com.canaan.lib.base.core
 		}
 		
 		public function applyWith(data:Array):* {
-			if (data == null) {
+			if (data == null || length == 0) {
 				return apply();
 			}
 			if (_func != null) {
 				return _func.apply(null, _args ? _args.concat(data) : data);
 			}
+		}
+		
+		public function clear():void {
+			_func = null;
+			_args = null;
+		}
+		
+		public function clone():Method {
+			return new Method(_func, _args);
+		}
+		
+		public function get length():int {
+			return _func.length;
 		}
 	}
 }

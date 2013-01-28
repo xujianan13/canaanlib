@@ -6,6 +6,7 @@ package testPackage.component
 	import com.canaan.lib.base.managers.ResourceManager;
 	
 	import flash.display.Sprite;
+	import flash.utils.setTimeout;
 	
 	public class TestProgressBar extends Sprite
 	{
@@ -13,24 +14,30 @@ package testPackage.component
 		
 		public function TestProgressBar()
 		{
-			Application.initialize(this);
-			
-			progressBar = new ProgressBar();
-			progressBar.width = 100;
-			progressBar.label = "牛逼";
-			addChild(progressBar);
-			
-			ResourceManager.getInstance().add("assets/comp.swf", new Method(complete));
-			ResourceManager.getInstance().load();
+			Application.initialize(this, new Method(initializeComplete));
 		}
 		
-		private function complete(content:*):void {
+		private function initializeComplete():void {
+			ResourceManager.getInstance().add("assets/comp.swf");
+			ResourceManager.getInstance().load(new Method(complete));
+		}
+		
+		private function complete():void {
+			progressBar = new ProgressBar();
+			addChild(progressBar);
+			progressBar.label = "牛逼";
+			progressBar.width = 100;
 			progressBar.skin = "png.comp.progress";
-			progressBar.scale9 = "5,5,5,5";
 			progressBar.width = 200;
-			progressBar.height = 50;
-			progressBar.value = 0.5;
+			progressBar.scale9 = "5,5,5,5";
+//			progressBar.height = 50;
+//			progressBar.value = 0.5;
 //			progressBar.label = "牛逼";
+			setTimeout(func, 1000);
+		}
+		
+		private function func():void {
+//			trace(progressBar.width);
 		}
 	}
 }

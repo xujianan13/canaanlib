@@ -17,14 +17,16 @@ package testPackage.component
 		
 		public function TestPageList()
 		{
-			Application.initialize(this);
-			ResourceManager.getInstance().add("assets/comp.swf", new Method(complete));
-			ResourceManager.getInstance().load();
-			
-			ViewCreater.addUserClass("TestListItem", TestListItem);
+			Application.initialize(this, new Method(initializeComplete));
 		}
 		
-		private function complete(content:*):void {
+		private function initializeComplete():void {
+			ViewCreater.addUserClass("TestListItem", TestListItem);
+			ResourceManager.getInstance().add("assets/comp.swf");
+			ResourceManager.getInstance().load(new Method(complete));
+		}
+		
+		private function complete():void {
 			list = new PageList("TestListItem", 2, 3);
 			list.horizontalGap = 5;
 			list.verticalGap = 5;

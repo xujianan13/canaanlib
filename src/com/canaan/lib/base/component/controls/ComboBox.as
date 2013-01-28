@@ -27,6 +27,8 @@ package com.canaan.lib.base.component.controls
 		protected var _listColors:Array;
 		protected var _maxRows:int;
 		protected var _position:String;				// Position枚举，BELOW为下方 ，ABOVE为上方，LEFT为左方，RIGHT为右方
+		protected var _defaultText:String;
+		protected var _changeCallback:Method;
 		
 		public function ComboBox(skin:String = null, labels:String = null)
 		{
@@ -73,6 +75,9 @@ package com.canaan.lib.base.component.controls
 		protected function onListChange(value:Object):void {
 			changeLabel();
 			sendEvent(UIEvent.CHANGE);
+			if (_changeCallback != null) {
+				_changeCallback.apply();
+			}
 		}
 		
 		protected function changeOpen():void {
@@ -80,7 +85,7 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		protected function changeLabel():void {
-			_button.label = labelField ? _list.selectedValue[labelField] : _list.selectedValue.toString();
+			_button.label = labelField ? _list.selectedValue[labelField] : _list.selectedValue as String;
 		}
 		
 		protected function changeListWidth():void {
@@ -177,6 +182,7 @@ package com.canaan.lib.base.component.controls
 			if (_labels != value) {
 				_labels = value;
 				_list.data = _labels.split(",");
+				maxRows = _list.data.length;
 			}
 		}
 		
@@ -189,11 +195,11 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		public function get scrollBarSkin():String {
-			return _list.scrollSkin;
+			return _list.scrollBarSkin;
 		}
 		
 		public function set scrollBarSkin(value:String):void {
-			_list.scrollSkin = value;
+			_list.scrollBarSkin = value;
 			_list.callLater(changeListWidth);
 		}
 		
@@ -253,6 +259,29 @@ package com.canaan.lib.base.component.controls
 				_list.row = Math.min(_list.data.length, _maxRows);
 				_list.callLater(changeListWidth);
 			}
+		}
+		
+		public function get defaultText():String {
+			return _defaultText;
+		}
+		
+		public function set defaultText(value:String):void {
+			if (_defaultText != value) {
+				_defaultText = value;
+				if (_button.label == "") {
+					_button.label = _defaultText;
+				}
+			}
+		}
+		
+		public function set changeCallback(value:Method):void {
+			if (_changeCallback != value) {
+				_changeCallback = value;
+			}
+		}
+		
+		public function get changeCallback():Method {
+			return _changeCallback;
 		}
 		
 		override public function dispose():void {

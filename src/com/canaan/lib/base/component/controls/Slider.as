@@ -22,9 +22,9 @@ package com.canaan.lib.base.component.controls
 		protected var _tick:Number = 1;
 		protected var _direction:String = Direction.HORIZONTAL;
 		protected var _showLabel:Boolean;
+		protected var _button:Button;
 		
 		protected var background:Image;
-		protected var button:Button;
 		protected var label:Label;
 		
 		public function Slider(skin:String = null)
@@ -39,8 +39,8 @@ package com.canaan.lib.base.component.controls
 		override protected function createChildren():void {
 			background = new Image();
 			addChild(background);
-			button = new Button();
-			addChild(button);
+			_button = new Button();
+			addChild(_button);
 			label = new Label();
 			addChild(label);
 		}
@@ -49,14 +49,14 @@ package com.canaan.lib.base.component.controls
 			super.initialize();
 			background.scale9 = Styles.sliderBackgroundScale9Grid;
 			background.addEventListener(MouseEvent.MOUSE_DOWN, onBackgroundMouseDown);
-			button.addEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown);
+			_button.addEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown);
 		}
 		
 		protected function onBackgroundMouseDown(event:MouseEvent):void {
 			if (_direction == Direction.HORIZONTAL) {
-				value = background.mouseX / (background.width - button.width) * (_maxValue - _minValue) + _minValue;
+				value = background.mouseX / (background.width - _button.width) * (_maxValue - _minValue) + _minValue;
 			} else {
-				value = background.mouseY / (background.height - button.height) * (_maxValue - _minValue) + _minValue;
+				value = background.mouseY / (background.height - _button.height) * (_maxValue - _minValue) + _minValue;
 			}
 		}
 		
@@ -64,9 +64,9 @@ package com.canaan.lib.base.component.controls
 			StageManager.getInstance().registerHandler(MouseEvent.MOUSE_UP, onStageMouseUp);
 			StageManager.getInstance().registerHandler(MouseEvent.MOUSE_MOVE, onStageMouseMove);
 			if (_direction == Direction.HORIZONTAL) {
-				button.startDrag(false, new Rectangle(0, button.y, background.width - button.width, 0));
+				_button.startDrag(false, new Rectangle(0, _button.y, background.width - _button.width, 0));
 			} else {
-				button.startDrag(false, new Rectangle(button.x, 0, 0, background.height - button.height));
+				_button.startDrag(false, new Rectangle(_button.x, 0, 0, background.height - _button.height));
 			}
 			updateValue();
 		}
@@ -74,16 +74,16 @@ package com.canaan.lib.base.component.controls
 		protected function onStageMouseUp():void {
 			StageManager.getInstance().deleteHandler(MouseEvent.MOUSE_UP, onStageMouseUp);
 			StageManager.getInstance().deleteHandler(MouseEvent.MOUSE_MOVE, onStageMouseMove);
-			button.stopDrag();
+			_button.stopDrag();
 			hideValueText();
 		}
 		
 		protected function onStageMouseMove():void {
 			var lastValue:Number = _value;
 			if (_direction == Direction.HORIZONTAL) {
-				_value = button.realX / (background.width - button.width) * (_maxValue - _minValue) + _minValue;
+				_value = _button.realX / (background.width - _button.width) * (_maxValue - _minValue) + _minValue;
 			} else {
-				_value = button.realY / (background.height - button.height) * (_maxValue - _minValue) + _minValue;
+				_value = _button.realY / (background.height - _button.height) * (_maxValue - _minValue) + _minValue;
 			}
 			_value = Math.round(_value / _tick) * _tick;
 			if (_value != lastValue) {
@@ -96,11 +96,11 @@ package com.canaan.lib.base.component.controls
 			if (_showLabel) {
 				label.text = _value.toString();
 				if (_direction == Direction.HORIZONTAL) {
-					label.x = (button.width - label.width) * 0.5 + button.realX;
-					label.y = button.y - 20;
+					label.x = (_button.width - label.width) * 0.5 + _button.realX;
+					label.y = _button.y - 20;
 				} else {
-					label.x = button.x + 20;
-					label.y = (button.height - label.height) * 0.5 + button.realY;
+					label.x = _button.x + 20;
+					label.y = (_button.height - label.height) * 0.5 + _button.realY;
 				}
 			}
 		}
@@ -121,9 +121,9 @@ package com.canaan.lib.base.component.controls
 		private function changeValue():void {
 			_value = Math.min(_maxValue, Math.max(_minValue, _value));
 			if (_direction == Direction.HORIZONTAL) {
-				button.x = (_value - _minValue) / (_maxValue - _minValue) * (background.width - button.width);
+				_button.x = (_value - _minValue) / (_maxValue - _minValue) * (background.width - _button.width);
 			} else {
-				button.y = (_value - _minValue) / (_maxValue - _minValue) * (background.height - button.height);
+				_button.y = (_value - _minValue) / (_maxValue - _minValue) * (background.height - _button.height);
 			}
 		}
 		
@@ -131,12 +131,12 @@ package com.canaan.lib.base.component.controls
 			if (_skin != value) {
 				_skin = value;
 				background.url = _skin;
-				button.skin = _skin + BUTTON_SKIN_SUFFIX;
-				button.validateNow();
+				_button.skin = _skin + BUTTON_SKIN_SUFFIX;
+				_button.validateNow();
 				if (_direction == Direction.HORIZONTAL) {
-					button.y = (background.height - button.height) * 0.5;
+					_button.y = (background.height - _button.height) * 0.5;
 				} else {
-					button.x = (background.width - button.width) * 0.5;
+					_button.x = (background.width - _button.width) * 0.5;
 				}
 				_width = _width || background.width;
 				_height = _height || background.height;
@@ -223,10 +223,14 @@ package com.canaan.lib.base.component.controls
 			return _showLabel;
 		}
 		
+		public function get button():Button {
+			return _button;
+		}
+		
 		override public function dispose():void {
 			super.dispose();
 			background.removeEventListener(MouseEvent.MOUSE_DOWN, onBackgroundMouseDown);
-			button.removeEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown);
+			_button.removeEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown);
 			StageManager.getInstance().stage.removeEventListener(MouseEvent.MOUSE_UP, onStageMouseUp);
 			StageManager.getInstance().stage.removeEventListener(MouseEvent.MOUSE_MOVE, onStageMouseMove);
 		}

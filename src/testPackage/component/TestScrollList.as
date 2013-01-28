@@ -1,6 +1,5 @@
 package testPackage.component
 {
-	import com.canaan.lib.base.component.Layouts;
 	import com.canaan.lib.base.component.ViewCreater;
 	import com.canaan.lib.base.component.controls.Button;
 	import com.canaan.lib.base.component.controls.ScrollList;
@@ -16,14 +15,16 @@ package testPackage.component
 		
 		public function TestScrollList()
 		{
-			Application.initialize(this);
-			ResourceManager.getInstance().add("assets/comp.swf", new Method(complete));
-			ResourceManager.getInstance().load();
-			
-			ViewCreater.addUserClass("TestListItem", TestListItem);
+			Application.initialize(this, new Method(initializeComplete));
 		}
 		
-		private function complete(content:*):void {
+		private function initializeComplete():void {
+			ViewCreater.addUserClass("TestListItem", TestListItem);
+			ResourceManager.getInstance().add("assets/comp.swf");
+			ResourceManager.getInstance().load(new Method(complete));
+		}
+		
+		private function complete():void {
 			list = new ScrollList("TestListItem", "png.comp.vscroll");
 			list.horizontalGap = 5;
 			list.verticalGap = 5;

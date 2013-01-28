@@ -21,6 +21,7 @@ package com.canaan.lib.base.component.controls
 		protected var _index:int = -1;
 		protected var _interval:int;
 		protected var _isPlaying:Boolean;
+		protected var _autoPlay:Boolean = true;
 		protected var _autoRemoved:Boolean;
 		
 		protected var tiles:Vector.<BitmapData>;
@@ -28,7 +29,7 @@ package com.canaan.lib.base.component.controls
 		protected var to:int;
 		protected var completeCallback:Method;
 		protected var loop:Boolean;
-
+		
 		public function Clip(url:String = null, tileX:int = 1, tileY:int = 1)
 		{
 			_tileX = tileX;
@@ -43,7 +44,14 @@ package com.canaan.lib.base.component.controls
 		
 		override protected function initialize():void {
 			super.initialize();
+			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+		}
+		
+		protected function onAddedToStage(e:Event):void {
+			if (_autoPlay) {
+				play();
+			}
 		}
 		
 		protected function onRemovedFromStage(event:Event):void {
@@ -120,9 +128,11 @@ package com.canaan.lib.base.component.controls
 					return;
 				}
 			}
-			index = _index == maxIndex ? 0 : _index + 1;
-			if (_index == 0) {
+			if (_index == maxIndex) {
+				index = 0;
 				animationFinished();
+			} else {
+				index = _index + 1;
 			}
 		}
 		
@@ -156,7 +166,7 @@ package com.canaan.lib.base.component.controls
 			if (_index != value) {
 				_index = value;
 				if (tiles != null) {
-					bitmap.bitmapData = tiles[_index];
+					_bitmap.bitmapData = tiles[_index];
 				}
 			}
 		}
@@ -214,6 +224,17 @@ package com.canaan.lib.base.component.controls
 		
 		public function get maxIndex():int {
 			return _tileX * _tileY - 1;
+		}
+		
+		public function get autoPlay():Boolean {
+			return _autoPlay;
+		}
+		
+		public function set autoPlay(value:Boolean):void {
+			if (_autoPlay != value) {
+				_autoPlay = value;
+				_autoPlay ? play() : stop();
+			}
 		}
 		
 		override public function dispose():void {

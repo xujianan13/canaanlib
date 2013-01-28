@@ -2,17 +2,12 @@ package testPackage.component
 {
 	import com.canaan.lib.base.component.controls.Clip;
 	import com.canaan.lib.base.core.Application;
-	import com.canaan.lib.base.core.Config;
 	import com.canaan.lib.base.core.Method;
-	import com.canaan.lib.base.core.Setting;
 	import com.canaan.lib.base.events.UIEvent;
 	import com.canaan.lib.base.managers.ResourceManager;
-	import com.canaan.lib.base.managers.TimerManager;
 	
 	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.utils.setTimeout;
 	
 	public class TestClips extends Sprite
 	{
@@ -21,22 +16,22 @@ package testPackage.component
 		
 		public function TestClips()
 		{
-			Setting.fps = 2;
-			
-			Application.initialize(this);
-			
-			clip = new Clip();
-			
-			ResourceManager.getInstance().add("assets/comp.swf", new Method(complete));
-			ResourceManager.getInstance().load();
+			Application.initialize(this, new Method(initializeComplete));
 		}
 		
-		private function complete(content:*):void {
+		private function initializeComplete():void {
+			ResourceManager.getInstance().add("assets/comp.swf");
+			ResourceManager.getInstance().load(new Method(complete));
+		}
+		
+		private function complete():void {
+			clip = new Clip();
+			clip.url = "png.comp.clip_num";
 			clip.tileX = 10;
 			clip.tileY = 1;
-			clip.interval = 200;
+			clip.interval = 500;
 			clip.left = 5;
-			clip.url = "png.comp.clip_num";
+			
 //			clip.url = "assets/clip_num.png";
 			addChild(clip);
 			clip.play();

@@ -2,6 +2,7 @@ package testPackage.component
 {
 	import com.canaan.lib.base.component.controls.TextInput;
 	import com.canaan.lib.base.core.Application;
+	import com.canaan.lib.base.core.Method;
 	
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
@@ -12,7 +13,11 @@ package testPackage.component
 		
 		public function TestTextInput()
 		{
-			Application.initialize(this);
+			Application.initialize(this, new Method(initializeComplete));
+			stage.addEventListener(MouseEvent.CLICK, onClick);
+		}
+		
+		private function initializeComplete():void {
 			
 			textInput = new TextInput("hi");
 //			textInput.editable = false;
@@ -24,8 +29,6 @@ package testPackage.component
 			textInput.restrict = "0-9";
 			textInput.maxChars = 10;
 			addChild(textInput);
-			
-			stage.addEventListener(MouseEvent.CLICK, onClick);
 		}
 		
 		private function onClick(event:MouseEvent):void {

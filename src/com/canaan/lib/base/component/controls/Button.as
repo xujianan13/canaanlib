@@ -120,11 +120,11 @@ package com.canaan.lib.base.component.controls
 		
 		protected function changeLabelSize():void {
 			_btnLabel.validateNow();
-			_btnLabel.x = _labelMargin[0];
 			_btnLabel.width = bitmap.width - _labelMargin[0] - _labelMargin[2];
 			_btnLabel.autoSize = TextFieldAutoSize.LEFT;
 			_btnLabel.height = _btnLabel.textField.height;
 			_btnLabel.autoSize = TextFieldAutoSize.NONE;
+			_btnLabel.x = _labelMargin[0];
 			_btnLabel.y = (bitmap.height - _btnLabel.height) * 0.5 + _labelMargin[1];
 		}
 		
@@ -144,6 +144,7 @@ package com.canaan.lib.base.component.controls
 		public function set label(value:String):void {
 			if (_btnLabel.text != value) {
 				_btnLabel.text = value;
+				callLater(changeTiles);
 				callLater(changeState);
 				callLater(changeLabelSize);
 			}

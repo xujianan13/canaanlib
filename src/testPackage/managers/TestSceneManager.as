@@ -1,6 +1,7 @@
 package testPackage.managers
 {
 	import com.canaan.lib.base.core.Application;
+	import com.canaan.lib.base.core.Method;
 	import com.canaan.lib.base.managers.DialogManager;
 	import com.canaan.lib.base.managers.SceneManager;
 	import com.canaan.lib.base.managers.TimerManager;
@@ -14,7 +15,10 @@ package testPackage.managers
 
 		public function TestSceneManager()
 		{
-			Application.initialize(this);
+			Application.initialize(this, new Method(initializeComplete));
+		}
+		
+		private function initializeComplete():void {
 			addChild(DialogManager.getInstance());
 			
 			sceneA = new SceneA("sceneA");

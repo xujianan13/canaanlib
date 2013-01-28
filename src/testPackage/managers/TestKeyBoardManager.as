@@ -1,6 +1,7 @@
 package testPackage.managers
 {
 	import com.canaan.lib.base.core.Application;
+	import com.canaan.lib.base.core.Method;
 	import com.canaan.lib.base.events.KeyEvent;
 	import com.canaan.lib.base.managers.KeyboardManager;
 	
@@ -10,8 +11,10 @@ package testPackage.managers
 	{
 		public function TestKeyBoardManager()
 		{
-			Application.initialize(this);
-			
+			Application.initialize(this, new Method(initializeComplete));
+		}
+		
+		private function initializeComplete():void {
 			KeyboardManager.getInstance().enabled = true;
 			KeyboardManager.getInstance().addEventListener(KeyEvent.KEY_DOWN, keyEvent);
 			KeyboardManager.getInstance().addEventListener(KeyEvent.KEY_UP, keyEvent);

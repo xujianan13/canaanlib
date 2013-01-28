@@ -14,15 +14,17 @@ package testPackage.component
 		
 		public function TestScrollBar()
 		{
-			Application.initialize(this);
-			
-			scrollBar = new VScrollBar();
-			addChild(scrollBar);
-			ResourceManager.getInstance().add("assets/comp.swf", new Method(complete));
-			ResourceManager.getInstance().load();
+			Application.initialize(this, new Method(initializeComplete));
 		}
 		
-		private function complete(content:*):void {
+		private function initializeComplete():void {
+			scrollBar = new VScrollBar();
+			addChild(scrollBar);
+			ResourceManager.getInstance().add("assets/comp.swf");
+			ResourceManager.getInstance().load(new Method(complete));
+		}
+		
+		private function complete():void {
 			scrollBar.skin = "png.comp.vscroll";
 			scrollBar.setScroll(0, 100, 50);
 			scrollBar.height = 100;

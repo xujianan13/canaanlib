@@ -15,21 +15,21 @@ package testPackage.component
 		
 		public function TestSlider()
 		{
-			Application.initialize(this);
-			
-			slider = new HSlider();
-//			slider.x = 50;
-//			slider.y = 50;
-			addChild(slider);
-			slider.left = 5;
-			slider.top = 5;
-			slider.dispatcher.addEventListener(UIEvent.CHANGE, onChange);
-			
-			ResourceManager.getInstance().add("assets/comp.swf", new Method(complete));
-			ResourceManager.getInstance().load();
+			Application.initialize(this, new Method(initializeComplete));
 		}
 		
-		private function complete(content:*):void {
+		private function initializeComplete():void {
+			slider = new HSlider();
+			slider.x = 50;
+			slider.y = 50;
+			addChild(slider);
+			slider.dispatcher.addEventListener(UIEvent.CHANGE, onChange);
+			
+			ResourceManager.getInstance().add("assets/comp.swf");
+			ResourceManager.getInstance().load(new Method(complete));
+		}
+		
+		private function complete():void {
 			slider.skin = "png.comp.hslider";
 			slider.showLabel = true;
 			slider.tick = 1;

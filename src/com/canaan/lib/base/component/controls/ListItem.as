@@ -5,7 +5,7 @@ package com.canaan.lib.base.component.controls
 	
 	import flash.events.MouseEvent;
 	
-	public class ListItem extends Container implements IListItem
+	public class ListItem extends View implements IListItem
 	{
 		protected var _selected:Boolean;
 		protected var _mouseClickHandler:Method;

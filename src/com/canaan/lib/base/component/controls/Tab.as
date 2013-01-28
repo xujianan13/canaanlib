@@ -1,11 +1,16 @@
 package com.canaan.lib.base.component.controls
 {
+	import com.canaan.lib.base.component.Layouts;
 	import com.canaan.lib.base.core.Method;
-
+	
 	public class Tab extends ListBase
 	{
 		protected var _skin:String;
 		protected var _labels:String;
+		protected var _labelColors:String;
+		protected var _labelStroke:String;
+		protected var _labelSize:Object;
+		protected var _labelBold:Object;
 		
 		public function Tab(labels:String = null, skin:String = null)
 		{
@@ -13,21 +18,26 @@ package com.canaan.lib.base.component.controls
 			this.skin = skin;
 		}
 		
+		override protected function initialize():void {
+			super.initialize();
+			layout = Layouts.HORIZONTAL;
+		}
+		
 		override public function initialItems():void {
-			_data = [];
-			var item:Button;
-			for (var i:int = 0; i < numChildren; i++) {
-				item = getChildAt(i) as Button;
-				if (item != null) {
-					_data.push(item.label);
-					item.data = item.label;
-					item.selected = false;
-					item.mouseClickHandler = new Method(itemClickHandler, [item]);
-					_items.push(item);
+			if (_data == null) {
+				layout = Layouts.ABSOLUTE;
+				_data = [];
+				var item:Button;
+				for (var i:int = 0; i < numChildren; i++) {
+					item = getChildAt(i) as Button;
+					if (item != null) {
+						_data.push(item.data);
+						item.data = item.data;
+						item.selected = false;
+						item.mouseClickHandler = new Method(itemClickHandler, [item]);
+						_items.push(item);
+					}
 				}
-			}
-			if (_data.length > 0) {
-				selectedValue = _data[0];
 			}
 		}
 		
@@ -64,12 +74,68 @@ package com.canaan.lib.base.component.controls
 				item.data = _data[i];
 				item.selected = false;
 				item.mouseClickHandler = new Method(itemClickHandler, [item]);
+				if (_labelColors) {
+					item.labelColors = _labelColors;
+				}
+				if (_labelStroke) {
+					item.labelStroke = _labelStroke;
+				}
+				if (_labelSize) {
+					item.labelSize = _labelSize;
+				}
+				if (_labelBold) {
+					item.labelBold = _labelBold;
+				}
 				_items[i] = addChild(item);
 			}
 			if (_data.length > 0) {
 				selectedValue = _selectedValue || _data[0];
 			} else {
 				selectedValue = null;
+			}
+		}
+		
+		public function get labelColors():String {
+			return _labelColors;
+		}
+		
+		public function set labelColors(value:String):void {
+			if (_labelColors != value) {
+				_labelColors = value;
+				callLater(changeLabels);
+			}
+		}
+		
+		public function get labelStroke():String {
+			return _labelStroke;
+		}
+		
+		public function set labelStroke(value:String):void {
+			if (_labelStroke != value) {
+				_labelStroke = value;
+				callLater(changeLabels);
+			}
+		}
+		
+		public function get labelSize():Object {
+			return _labelSize;
+		}
+		
+		public function set labelSize(value:Object):void {
+			if (_labelSize != value) {
+				_labelSize = value;
+				callLater(changeLabels);
+			}
+		}
+		
+		public function get labelBold():Object {
+			return _labelBold;
+		}
+		
+		public function set labelBold(value:Object):void {
+			if (_labelBold != value) {
+				_labelBold = value;
+				callLater(changeLabels);
 			}
 		}
 	}

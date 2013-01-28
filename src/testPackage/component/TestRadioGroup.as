@@ -14,13 +14,15 @@ package testPackage.component
 		
 		public function TestRadioGroup()
 		{
-			Application.initialize(this);
-
-			ResourceManager.getInstance().add("assets/comp.swf", new Method(complete));
-			ResourceManager.getInstance().load();
+			Application.initialize(this, new Method(initializeComplete));
 		}
 		
-		private function complete(content:*):void {
+		private function initializeComplete():void {
+			ResourceManager.getInstance().add("assets/comp.swf");
+			ResourceManager.getInstance().load(new Method(complete));
+		}
+		
+		private function complete():void {
 			radioGroup = new RadioGroup("a,b,c,d", "png.comp.radio");
 			addChild(radioGroup);
 //			radioGroup.layout = Layouts.HORIZONTAL;

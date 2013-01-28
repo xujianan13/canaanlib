@@ -8,7 +8,6 @@ package testPackage.component
 	import com.canaan.lib.base.managers.ResourceManager;
 	
 	import flash.display.Sprite;
-	import flash.events.MouseEvent;
 	
 	public class TestComboBox extends Sprite
 	{
@@ -16,12 +15,23 @@ package testPackage.component
 		
 		public function TestComboBox()
 		{
-			Application.initialize(this);
-			ResourceManager.getInstance().add("assets/comp.swf", new Method(complete));
-			ResourceManager.getInstance().load();
+			Application.initialize(this, new Method(initializeComplete));
 		}
 		
-		private function complete(content:*):void {
+		private function initializeComplete():void {
+			ResourceManager.getInstance().add("assets/comp.swf");
+			ResourceManager.getInstance().load(new Method(complete));
+			ResourceManager.getInstance().add("assets/bear.swf");
+			ResourceManager.getInstance().load(new Method(complete2));
+		}
+		
+		private function complete2():void {
+			trace("complete2");
+			ResourceManager.getInstance();
+		}
+		
+		private function complete():void {
+			trace("complete")
 			comboBox = new ComboBox("png.comp.combobox", "类可使用表示,位带符号整数的数据,这意味着无需对象,不需要使用构造函数,这意味着需要对象才能,不需要浮点数,如果您正在处理超过,无需使用构造函数");
 			comboBox.width = 150;
 			comboBox.maxRows = 7;

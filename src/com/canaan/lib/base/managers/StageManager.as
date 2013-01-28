@@ -1,10 +1,8 @@
 package com.canaan.lib.base.managers
 {
-	import com.canaan.lib.base.core.Config;
 	import com.canaan.lib.base.core.Methods;
 	import com.canaan.lib.base.core.Setting;
 	
-	import flash.display.LoaderInfo;
 	import flash.display.Stage;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
@@ -44,21 +42,9 @@ package com.canaan.lib.base.managers
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.stageFocusRect = false;
-			
-			setFlashVars();
 			stage.frameRate = Setting.fps;
 		}
-		
-		private function setFlashVars():void {
-			var loaderInfo:LoaderInfo = stage.loaderInfo;
-			var flashVars:Object = loaderInfo.parameters;
-			if (flashVars != null) {
-				for (var key:String in flashVars) {
-					Config.setConfig(key, flashVars[key]);
-				}
-			}
-		}
-		
+
 		public function registerHandler(type:String, func:Function, args:Array = null):void {
 			var methods:Methods = methodsDict[type];
 			if (!methods) {

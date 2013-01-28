@@ -13,25 +13,26 @@ package testPackage.component
 		
 		public function TestTextArea()
 		{
-			Application.initialize(this);
-			
+			Application.initialize(this, new Method(initializeComplete));
+		}
+		
+		private function initializeComplete():void {
+			ResourceManager.getInstance().add("assets/comp.swf");
+			ResourceManager.getInstance().load(new Method(complete));
+		}
+		
+		private function complete():void {
 			textArea = new TextArea();
+			addChild(textArea);
+			textArea.scrollBarSkin = "png.comp.vscroll";
 			textArea.text = "圣达菲圣达菲第三方第三方第三方圣达菲第三方速度佛挡杀佛第三方圣达菲都是" +
 				"圣达菲圣达菲第三方第三方第三方圣达菲第三方速度佛挡杀佛第三方圣达菲都是" +
 				"圣达菲圣达菲第三方第三方第三方圣达菲第三方速度佛挡杀佛第三方圣达菲都是" + 
 				"圣达菲圣达菲第三方第三方第三方圣达菲第三方速度佛挡杀佛第三方圣达菲都是" +
 				"圣达菲圣达菲第三方第三方第三方圣达菲第三方速度佛挡杀佛第三方圣达菲都是" +
 				"圣达菲圣达菲第三方第三方第三方圣达菲第三方速度佛挡杀佛第三方圣达菲都是";
-			addChild(textArea);
-			
-			ResourceManager.getInstance().add("assets/comp.swf", new Method(complete));
-			ResourceManager.getInstance().load();
-		}
-		
-		private function complete(content:*):void {
-			textArea.scrollBarSkin = "png.comp.vscroll";
 //			textArea.stroke = null;
-			textArea.width = 200;
+			textArea.width = 202;
 			textArea.height = 200;
 		}
 	}

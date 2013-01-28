@@ -7,22 +7,21 @@ package testPackage.component
 	
 	import flash.display.Sprite;
 	
-//	[SWF(backgroundColor="0x000000")]
 	public class TestCheckBox extends Sprite
 	{
 		private var checkBox:CheckBox;
 		
 		public function TestCheckBox()
 		{
-			Application.initialize(this);
-			
-//			checkBox.disabled = true;
-			ResourceManager.getInstance().add("assets/comp.swf", new Method(complete));
-			ResourceManager.getInstance().load();
-
+			Application.initialize(this, new Method(initializeComplete));
 		}
 		
-		private function complete(content:*):void {
+		private function initializeComplete():void {
+			ResourceManager.getInstance().add("assets/comp.swf");
+			ResourceManager.getInstance().load(new Method(complete));
+		}
+		
+		private function complete():void {
 			checkBox = new CheckBox("png.comp.checkbox", "checkbox");
 			addChild(checkBox);
 		}

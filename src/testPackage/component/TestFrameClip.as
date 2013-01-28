@@ -14,20 +14,22 @@ package testPackage.component
 		
 		public function TestFrameClip()
 		{
-			Application.initialize(this);
-			
+			Application.initialize(this, new Method(initializeComplete));
+		}
+		
+		private function initializeComplete():void {
 			frameClip = new FrameClip();
 			frameClip.addEventListener(Event.COMPLETE, playComplete);
 			addChild(frameClip);
-			ResourceManager.getInstance().add("assets/vector.swf", new Method(complete));
-			ResourceManager.getInstance().load();
+			ResourceManager.getInstance().add("assets/vector.swf");
+			ResourceManager.getInstance().load(new Method(complete));
 		}
 
 		private function playComplete(event:Event):void {
 			trace("playComplete");
 		}
 		
-		private function complete(content:*):void {
+		private function complete():void {
 			
 //			frameClip.autoRemoved = true;
 			frameClip.play();

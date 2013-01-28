@@ -1,6 +1,7 @@
 package com.canaan.lib.base.core
 {
 	import com.canaan.lib.base.debug.Log;
+	import com.canaan.lib.base.managers.ResourceManager;
 	import com.canaan.lib.base.utils.MathUtil;
 	import com.canaan.lib.base.utils.ObjectUtil;
 	
@@ -88,7 +89,7 @@ package com.canaan.lib.base.core
 		}
 		
 		private function startLoad():void {
-			urlRequest.url = _url;
+			urlRequest.url = ResourceManager.formatUrl(_url);
 			switch (_fileType) {
 				case FILE_TYPE_SWF:
 				case FILE_TYPE_IMAGE:

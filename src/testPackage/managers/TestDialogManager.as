@@ -17,9 +17,11 @@ package testPackage.managers
 		
 		public function TestDialogManager()
 		{
-			Application.initialize(this);
-			
-			ResourceManager.getInstance().add("assets/bear.swf", new Method(onComplete));
+			Application.initialize(this, new Method(initializeComplete));
+		}
+		
+		private function initializeComplete():void {
+			ResourceManager.getInstance().add("assets/bear.swf");
 			ResourceManager.getInstance().load();
 			addChild(DialogManager.getInstance());
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
@@ -61,10 +63,6 @@ package testPackage.managers
 //			trace(dialog.isPopup);
 			
 			dialog.doDrag();
-		}
-		
-		private function onComplete(content:*):void {
-			
 		}
 	}
 }

@@ -26,6 +26,7 @@ package com.canaan.lib.base.component.controls
 		protected var _htmlMode:Boolean;
 		protected var _stroke:String;
 		protected var _scale9:Array;
+		protected var _margin:Array;
 		
 		public function Label(text:String = "", skin:String = null)
 		{
@@ -37,6 +38,7 @@ package com.canaan.lib.base.component.controls
 			mouseChildren = false;
 			_format = new TextFormat(Styles.fontName, Styles.fontSize, Styles.labelColor);
 			_scale9 = Styles.labelScale9Grid;
+			_margin = Styles.labelMargin;
 		}
 		
 		override protected function createChildren():void {
@@ -123,8 +125,10 @@ package com.canaan.lib.base.component.controls
 		override protected function changeSize():void {
 			if (_width != 0) {
 				_textField.autoSize = TextFieldAutoSize.NONE;
-				_textField.width = _width;
-				_textField.height = _height == 0 ? Styles.labelHeight : _height;
+				_textField.x = _margin[0];
+				_textField.y = _margin[1];
+				_textField.width = _width - _margin[0] - _margin[2];
+				_textField.height = _height == 0 ? Styles.labelHeight : _height - _margin[1] - _margin[3];
 			} else {
 				_width = _height = 0;
 				_textField.autoSize = TextFieldAutoSize.LEFT;
@@ -323,26 +327,13 @@ package com.canaan.lib.base.component.controls
 			}
 		}
 		
-		public function get leftMargin():Object {
-			return _format.leftMargin;
+		public function get margin():String {
+			return _margin.join(",");
 		}
 		
-		public function set leftMargin(value:Object):void {
-			if (int(_format.leftMargin) != int(value)) {
-				_format.leftMargin = value;
-				callLater(changeText);
-			}
-		}
-		
-		public function get rightMargin():Object {
-			return _format.rightMargin;
-		}
-		
-		public function set rightMargin(value:Object):void {
-			if (int(_format.rightMargin) != int(value)) {
-				_format.rightMargin = value;
-				callLater(changeText);
-			}
+		public function set margin(value:String):void {
+			_margin = ArrayUtil.copyAndFill(_margin, value);
+			callLater(changeSize);
 		}
 		
 		public function get format():TextFormat {

@@ -1,12 +1,11 @@
 package testPackage.rpg
 {
-	import com.canaan.lib.base.core.Config;
+	import com.canaan.lib.base.core.Application;
+	import com.canaan.lib.base.core.Method;
 	import com.canaan.lib.rpg.core.map.Map;
 	import com.canaan.lib.rpg.core.model.map.MapVo;
 	
 	import flash.display.Sprite;
-	import flash.display.StageAlign;
-	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
@@ -23,10 +22,10 @@ package testPackage.rpg
 		
 		public function TestMap()
 		{
-			stage.scaleMode = StageScaleMode.NO_SCALE;
-			stage.align = StageAlign.TOP_LEFT;
-			stage.focus = this;
-			Config.setConfig("locale", "zh_CN");
+			Application.initialize(this, new Method(initializeComplete));
+		}
+		
+		private function initializeComplete():void {
 			mapVo = new MapVo();
 			mapVo.id = "111";
 			mapVo.mapWidth = 1000;

@@ -1,7 +1,7 @@
 package com.canaan.lib.rpg.core.model.map
 {
 	import com.canaan.lib.base.abstract.AbstractVo;
-	import com.canaan.lib.rpg.core.ResourceURL;
+	import com.canaan.lib.base.core.Resources;
 
 	public class MapVo extends AbstractVo
 	{
@@ -37,12 +37,12 @@ package com.canaan.lib.rpg.core.model.map
 		
 		public function get thumbnailPath():String {
 			var fileName:String = id + ".jpg";
-			return ResourceURL.DIR_MAP + "thumbnails/" + fileName; 
+			return Resources.dirMap + "thumbnails/" + fileName; 
 		}
 		
 		public function getTilePath(tileX:int, tileY:int):String {
 			var fileName:String = tileY + "_" + tileX + ".jpg";
-			return ResourceURL.DIR_MAP + "tiles/" + id + "/" + fileName;
+			return Resources.dirMap + "tiles/" + id + "/" + fileName;
 		}
 	}
 }

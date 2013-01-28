@@ -1,6 +1,8 @@
 package testPackage.animation
 {
 	import com.canaan.lib.base.animation.Tween;
+	import com.canaan.lib.base.core.Application;
+	import com.canaan.lib.base.core.Method;
 	
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
@@ -13,7 +15,11 @@ package testPackage.animation
 		
 		public function TestTween()
 		{
-			super();
+			Application.initialize(this, new Method(initializeComplete));
+			
+		}
+		
+		private function initializeComplete():void {
 			sprite = new Sprite();
 			sprite.graphics.beginFill(0);
 			sprite.graphics.drawCircle(0, 0, 20);

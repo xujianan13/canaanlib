@@ -18,7 +18,7 @@ package com.canaan.lib.base.component
 			"ScrollBar":ScrollBar,
 			"VScrollBar":VScrollBar,
 			"HScrollBar":HScrollBar,
-			"ProcessBar":ProgressBar,
+			"ProgressBar":ProgressBar,
 			"Image":Image,
 			"Clip":Clip,
 			"FrameClip":FrameClip,

@@ -13,16 +13,18 @@ package testPackage.component
 		
 		public function TestRadioButton()
 		{
-			Application.initialize(this);
-			
+			Application.initialize(this, new Method(initializeComplete));
+		}
+		
+		private function initializeComplete():void {
 			radioButton = new RadioButton();
 //			radioButton.label = "checkbox";
 			addChild(radioButton);
-			ResourceManager.getInstance().add("assets/comp.swf", new Method(complete));
-			ResourceManager.getInstance().load();
+			ResourceManager.getInstance().add("assets/comp.swf");
+			ResourceManager.getInstance().load(new Method(complete));
 		}
 		
-		private function complete(content:*):void {
+		private function complete():void {
 			radioButton.skin = "png.comp.radio";
 			radioButton.label = "checkbox";
 			radioButton.mouseClickHandler = new Method(onClick);

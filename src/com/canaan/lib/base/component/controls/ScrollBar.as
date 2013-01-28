@@ -118,6 +118,9 @@ package com.canaan.lib.base.component.controls
 		
 		public function setScroll(minValue:Number, maxValue:Number, value:Number):void {
 			slider.setSlider(minValue, maxValue, value);
+			upButton.enabled = maxValue > 0;
+			downButton.enabled = maxValue > 0;
+			slider.button.visible = maxValue > 0;
 		}
 		
 		public function set value(num:Number):void {
