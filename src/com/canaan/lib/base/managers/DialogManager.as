@@ -74,10 +74,12 @@ package com.canaan.lib.base.managers
 			}
 			ArrayUtil.removeElements(dialogs, dialog);
 			dialogs.push(dialog);
-			dialog.alpha = 0;
-			dialogTween.reset(dialog, 0.25);
-			dialogTween.fadeTo(1);
-			dialogTween.start();
+			if (!contains(dialog)) {
+				dialog.alpha = 0;
+				dialogTween.reset(dialog, 0.25);
+				dialogTween.fadeTo(1);
+				dialogTween.start();
+			}
 			addChild(dialog);
 			dialog.isPopup = true;
 			if (isNaN(x) && isNaN(y)) {
