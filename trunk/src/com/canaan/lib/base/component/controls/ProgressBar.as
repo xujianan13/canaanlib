@@ -46,21 +46,24 @@ package com.canaan.lib.base.component.controls
 			super.height = value;
 			background.height = _height;
 			_barLabel.y = (_height - _barLabel.height) * 0.5;
-			callLater(changeValue);
 		}
 		
 		public function set skin(value:String):void {
 			if (_skin != value) {
 				_skin = value;
-				background.url = _skin;
-				bar.url = _skin + BAR_SKIN_SUFFIX;
-				width = _width || background.width;
-				height = _height || background.height;
+				callLater(changeSkin);
 			}
 		}
 		
 		public function get skin():String {
 			return _skin;
+		}
+		
+		protected function changeSkin():void {
+			background.url = _skin;
+			bar.url = _skin + BAR_SKIN_SUFFIX;
+			width = _width || background.width;
+			height = _height || background.height;
 		}
 		
 		public function set value(value:Number):void {

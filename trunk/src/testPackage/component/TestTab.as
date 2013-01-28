@@ -14,13 +14,15 @@ package testPackage.component
 		
 		public function TestTab()
 		{
-			Application.initialize(this);
-
-			ResourceManager.getInstance().add("assets/comp.swf", new Method(complete));
-			ResourceManager.getInstance().load();
+			Application.initialize(this, new Method(initializeComplete));
 		}
 		
-		private function complete(content:*):void {
+		private function initializeComplete():void {
+			ResourceManager.getInstance().add("assets/comp.swf");
+			ResourceManager.getInstance().load(new Method(complete));
+		}
+		
+		private function complete():void {
 			tab = new Tab("a,b,c,d", "png.comp.btn_blue");
 			addChild(tab);
 			tab.layout = Layouts.HORIZONTAL;

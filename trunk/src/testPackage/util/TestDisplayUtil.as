@@ -2,6 +2,7 @@ package testPackage.util
 {
 	import com.canaan.lib.base.component.controls.Image;
 	import com.canaan.lib.base.core.Application;
+	import com.canaan.lib.base.core.Method;
 	import com.canaan.lib.base.utils.DisplayUtil;
 	
 	import flash.display.Bitmap;
@@ -17,8 +18,10 @@ package testPackage.util
 		
 		public function TestDisplayUtil()
 		{
-			Application.initialize(this);
-			
+			Application.initialize(this, new Method(initializeComplete));
+		}
+		
+		private function initializeComplete():void {
 			image = new Image("assets/Altar.png");
 			addChild(image);
 			image.addEventListener(MouseEvent.MOUSE_MOVE, mouseMove);

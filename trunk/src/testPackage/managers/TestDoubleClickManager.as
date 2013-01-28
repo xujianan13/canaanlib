@@ -1,6 +1,7 @@
 package testPackage.managers
 {
 	import com.canaan.lib.base.core.Application;
+	import com.canaan.lib.base.core.Method;
 	import com.canaan.lib.base.managers.DoubleClickManager;
 	
 	import flash.display.Sprite;
@@ -10,8 +11,10 @@ package testPackage.managers
 		public function TestDoubleClickManager()
 		{
 			super();
-			Application.initialize(this);
-			
+			Application.initialize(this, new Method(initializeComplete));
+		}
+		
+		private function initializeComplete():void {
 			var sprite:Sprite = new Sprite();
 			sprite.graphics.beginFill(0);
 			sprite.graphics.drawCircle(50, 50, 50);

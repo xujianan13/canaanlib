@@ -41,35 +41,39 @@ package com.canaan.lib.base.component.controls
 			removeCache();
 			if (_url != value) {
 				_url = value;
-				if (_url) {
-					if (ResourceManager.getInstance().hasClass(_url)) {
-						setBitmapData(ResourceManager.getInstance().getBitmapData(_url));
-					} else {
-						var fullUrl:String = ResourceManager.formatUrl(_url);
-						var obj:* = cache[_url];
-						if (obj != null) {
-							if (obj is BitmapData) {
-								setBitmapData(obj);
-							} else {
-								obj.push(this);
-							}
-						} else {
-							cache[_url] = new <Image>[this];
-							var loader:DLoader = DLoader.fromPool();
-							loader.contentLoaderInfo.addEventListener(Event.COMPLETE, completeHandler);
-							loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
-							loader.data = _url;
-							loader.load(new URLRequest(_url));
-						}
-					}
-				} else {
-					setBitmapData(null);
-				}
+				callLater(changeUrl);
 			}
 		}
 		
 		public function get url():String {
 			return _url;
+		}
+		
+		protected function changeUrl():void {
+			if (_url) {
+				if (ResourceManager.getInstance().hasClass(_url)) {
+					setBitmapData(ResourceManager.getInstance().getBitmapData(_url));
+				} else {
+					var fullUrl:String = ResourceManager.formatUrl(_url);
+					var obj:* = cache[_url];
+					if (obj != null) {
+						if (obj is BitmapData) {
+							setBitmapData(obj);
+						} else {
+							obj.push(this);
+						}
+					} else {
+						cache[_url] = new <Image>[this];
+						var loader:DLoader = DLoader.fromPool();
+						loader.contentLoaderInfo.addEventListener(Event.COMPLETE, completeHandler);
+						loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
+						loader.data = _url;
+						loader.load(new URLRequest(_url));
+					}
+				}
+			} else {
+				setBitmapData(null);
+			}
 		}
 
 		protected function setBitmapData(bmd:BitmapData):void {

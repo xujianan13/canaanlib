@@ -2,12 +2,11 @@ package testPackage.display
 {
 	import com.canaan.lib.base.component.controls.Image;
 	import com.canaan.lib.base.core.Application;
+	import com.canaan.lib.base.core.Method;
 	import com.canaan.lib.base.display.BitmapDataEx;
 	import com.canaan.lib.base.display.BitmapEx;
 	import com.canaan.lib.base.events.UIEvent;
 	
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
@@ -19,8 +18,10 @@ package testPackage.display
 		
 		public function TestBitmapEx()
 		{
-			Application.initialize(this);
-			
+			Application.initialize(this, new Method(initializeComplete));
+		}
+		
+		private function initializeComplete():void {
 			image = new Image("assets/Altar.png");
 			image.dispatcher.addEventListener(UIEvent.COMPLETE, onComplete);
 //			addChild(image);

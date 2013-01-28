@@ -1,9 +1,7 @@
 package testPackage.component
 {
-	import com.canaan.lib.base.component.Direction;
-	import com.canaan.lib.base.component.controls.Image;
 	import com.canaan.lib.base.component.controls.Canvas;
-	import com.canaan.lib.base.component.controls.VScrollBar;
+	import com.canaan.lib.base.component.controls.Image;
 	import com.canaan.lib.base.core.Application;
 	import com.canaan.lib.base.core.Method;
 	import com.canaan.lib.base.managers.ResourceManager;
@@ -20,17 +18,22 @@ package testPackage.component
 		{
 			super();
 			
-			Application.initialize(this);
-			ResourceManager.getInstance().add("assets/comp.swf", new Method(complete));
-			ResourceManager.getInstance().load();
+			Application.initialize(this, new Method(initializeComplete));
 		}
 		
-		private function complete(content:*):void {
+		private function initializeComplete():void {
+			ResourceManager.getInstance().add("assets/comp.swf");
+			ResourceManager.getInstance().load(new Method(complete));
+		}
+		
+		private function complete():void {
 			panel = new Canvas();
 			panel.scrollBarSkin = "png.comp.vscroll";
 			addChild(panel);
 			
 			image = new Image("png.comp.btn_blue");
+			image.width = 500;
+			image.height = 500;
 			image.addEventListener(MouseEvent.CLICK, onClick);
 			image.showBorder();
 			panel.addChild(image);

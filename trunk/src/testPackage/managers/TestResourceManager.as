@@ -16,8 +16,10 @@ package testPackage.managers
 		
 		public function TestResourceManager()
 		{
-			Application.initialize(this);
-			
+			Application.initialize(this, new Method(initializeComplete));
+		}
+		
+		private function initializeComplete():void {
 			ResourceManager.getInstance().addEventListener(ResourceEvent.START_LOAD, startLoadHandler);
 			ResourceManager.getInstance().addEventListener(ResourceEvent.COMPLETE, completeHandler);
 			ResourceManager.getInstance().addEventListener(ResourceEvent.PROGRESS, progressHandler);
@@ -26,11 +28,11 @@ package testPackage.managers
 			ResourceManager.getInstance().add("assets/bear.swf");
 			ResourceManager.getInstance().add("assets/Altar.png");
 			ResourceManager.getInstance().add("assets/items.xml");
-			ResourceManager.getInstance().add("assets/tooltip.swf", complete, progress);
-			ResourceManager.getInstance().load();
+			ResourceManager.getInstance().add("assets/tooltip.swf");
+			ResourceManager.getInstance().load(complete, progress);
 		}
 		
-		private function onComplete(content:*):void {
+		private function onComplete():void {
 			var mc:MovieClip = ResourceManager.getInstance().getNewInstance("Tooltip");
 			addChild(mc);
 			
@@ -40,8 +42,8 @@ package testPackage.managers
 //			trace(ResourceManager.getInstance().getContent("assets/items.xml"));
 		}
 		
-		private function onProgress(value:Number):void {
-			trace(value);
+		private function onProgress():void {
+			trace(ResourceManager.getInstance().percentLoaded);
 		}
 		
 		private function startLoadHandler(event:ResourceEvent):void {

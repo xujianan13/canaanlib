@@ -1,6 +1,7 @@
 package testPackage.debug
 {
 	import com.canaan.lib.base.core.Application;
+	import com.canaan.lib.base.core.Method;
 	import com.canaan.lib.base.debug.Log;
 	import com.canaan.lib.base.events.LogEvent;
 	
@@ -11,8 +12,10 @@ package testPackage.debug
 		public function TestLog()
 		{
 			super();
-			Application.initialize(this);
-			
+			Application.initialize(this, new Method(initializeComplete));
+		}
+		
+		private function initializeComplete():void {
 			Log.getInstance().addEventListener(LogEvent.LOG, onLog);
 			Log.getInstance().error("test");
 		}

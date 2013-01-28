@@ -15,22 +15,22 @@ package testPackage.component
 		
 		public function TestContainer()
 		{
-			Application.initialize(this);
-			
+			Application.initialize(this, new Method(initializeComplete));
+		}
+		
+		private function initializeComplete():void {
 			container = new Container();
-//			container.x = 100;
 			container.left = 5;
-//			container.x = 0;
 			container.top = 5;
 			container.gap = 5;
 			container.layout = Layouts.VERTICAL;
 			addChild(container);
 			
-			ResourceManager.getInstance().add("assets/comp.swf", new Method(complete));
-			ResourceManager.getInstance().load();
+			ResourceManager.getInstance().add("assets/comp.swf");
+			ResourceManager.getInstance().load(new Method(complete));
 		}
 		
-		private function complete(content:*):void {
+		private function complete():void {
 			var button1:Button = new Button("png.comp.btn_blue");
 			button1.label = "button1";
 			container.addChild(button1);

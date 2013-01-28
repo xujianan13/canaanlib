@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<config gameSocketHost="127.0.0.1" gameSocketPort="8080"
+			chatSocketHost="127.0.0.1" chatSocketPort="8080"
+			resHost=""
+			locale="zh_CN"
+			platform=""
+			version="1.0.0.1" />
+	<setting fps="24" debugMode="true" />
+	<resources dirImages="res/zh_CN/assets/images/" dirMap="res/zh_CN/assets/map/">
+		<preLoadFiles>
+<!-- 			<file name="language" url="" title="测试"/> -->
+		</preLoadFiles>
+	</resources>
+</root>

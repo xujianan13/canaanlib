@@ -26,7 +26,7 @@ package com.canaan.lib.base.component.controls
 			_label = new Label();
 			_label.width = Styles.comboBoxItemWidth;
 			_label.height = Styles.comboBoxItemHeight;
-			_label.leftMargin = Styles.comboBoxLabelMargin;
+			_label.margin = Styles.comboBoxLabelMargin;
 			addChild(_label);
 		}
 		

@@ -1,6 +1,5 @@
 package testPackage.events
 {
-	import com.canaan.lib.base.core.Application;
 	import com.canaan.lib.base.events.CEvent;
 	import com.canaan.lib.base.events.CEventDispatcher;
 	
@@ -13,8 +12,6 @@ package testPackage.events
 		public function TestEvent()
 		{
 			super();
-			Application.initialize(this);
-			
 			eventDispatcher = new CEventDispatcher();
 			eventDispatcher.addEventListener("TestEvent", test);
 			eventDispatcher.addEventListener("TestEvent", test1);

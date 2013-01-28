@@ -66,8 +66,8 @@ package com.canaan.lib.base.utils
 			return result;
 		}
 		
-		public static function CSVToVector(csv:String):Vector.<String> {
-			var result:Vector.<String> = new Vector.<String>();
+		public static function CSVToVector(csv:String):Vector.<Object> {
+			var result:Vector.<Object> = new Vector.<Object>();
 			var lines:Array = csv.split(wrap);
 			// remove the last line ""
 			if (lines.length > 0) {
@@ -92,7 +92,7 @@ package com.canaan.lib.base.utils
 		}
 		
 		public static function CSVToObject(csv:String, key:* = null):Object {
-			var csvVector:Vector.<String> = CSVToVector(csv);
+			var csvVector:Vector.<Object> = CSVToVector(csv);
 			if (key != null) {
 				if (key is Array) {
 					return ArrayUtil.arrayToObjectMultiKey(csvVector, key);

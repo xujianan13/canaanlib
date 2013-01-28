@@ -22,6 +22,9 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		public function initialItems():void {
+			if (_data != null) {
+				return;
+			}
 			var item:IListItem;
 			for (var i:int = 0; i < numChildren; i++) {
 				item = getChildAt(i) as IListItem;
@@ -38,7 +41,7 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		public function set selectedValue(value:Object):void {
-			if (value != null && _data.indexOf(value) == -1) {
+			if (_data == null || (value != null && _data.indexOf(value) == -1)) {
 				return;
 			}
 			if (_selectedValue != value) {

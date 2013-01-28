@@ -22,6 +22,7 @@ package com.canaan.lib.base.component
 		public static var labelStroke:Array = [0x170702, 0.8, 2, 2, 10, 1];
 		public static var labelHeight:int = 18;
 		public static var labelScale9Grid:Array = [2, 2, 2, 2];
+		public static var labelMargin:Array = [0, 0, 0, 0];
 		
 		//------------- TextInput default setting -------------
 		public static var textInputWidth:int = 128;
@@ -65,7 +66,7 @@ package com.canaan.lib.base.component
 		//------------- ComboBox default setting -------------
 		public static var comboBoxMaxRows:int = 5;
 		public static var comboBoxLabelAlign:String = TextFormatAlign.LEFT;
-		public static var comboBoxLabelMargin:String = "2";
+		public static var comboBoxLabelMargin:String = "0";
 		public static var comboBoxListColors:Array = [0x8FA4B1, 0xFFFFFF];
 		public static var comboBoxItemWidth:int = 50;
 		public static var comboBoxItemHeight:int = 22;

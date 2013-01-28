@@ -17,11 +17,13 @@ package testPackage.managers
 		
 		public function TestDragManager()
 		{
-			Application.initialize(this);
-			
+			Application.initialize(this, new Method(initializeComplete));
+		}
+		
+		private function initializeComplete():void {
 			addChild(DragManager.getInstance());
-			ResourceManager.getInstance().add("assets/bear.swf", new Method(onComplete));
-			ResourceManager.getInstance().add("assets/Altar.png", new Method(onComplete2));
+			ResourceManager.getInstance().add("assets/bear.swf", "", new Method(onComplete));
+			ResourceManager.getInstance().add("assets/Altar.png", "", new Method(onComplete2));
 			ResourceManager.getInstance().load();
 		}
 		
