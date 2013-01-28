@@ -1,5 +1,6 @@
 package com.canaan.lib.base.managers
 {
+	import com.canaan.lib.base.animation.Tween;
 	import com.canaan.lib.base.component.Styles;
 	import com.canaan.lib.base.component.controls.Dialog;
 	import com.canaan.lib.base.utils.ArrayUtil;
@@ -16,6 +17,8 @@ package com.canaan.lib.base.managers
 		private var modalMask:Sprite;
 		private var dialogs:Vector.<Dialog> = new Vector.<Dialog>();
 		private var modals:Vector.<Dialog> = new Vector.<Dialog>();
+		private var maskTween:Tween;
+		private var dialogTween:Tween;
 		
 		public function DialogManager()
 		{
@@ -25,6 +28,8 @@ package com.canaan.lib.base.managers
 			modalMask = new Sprite();
 			modalMask.graphics.beginFill(Styles.dialogModalColor, Styles.dialogModalAlpha);
 			modalMask.graphics.drawRect(0, 0, 1, 1);
+			maskTween = new Tween(modalMask, 0.25);
+			dialogTween = new Tween();
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
@@ -59,11 +64,20 @@ package com.canaan.lib.base.managers
 		
 		public function popup(dialog:Dialog, modal:Boolean = false, x:Number = NaN, y:Number = NaN):void {
 			if (modal) {
+				if (!contains(modalMask)) {
+					modalMask.alpha = 0;
+					maskTween.fadeTo(1);
+					maskTween.start();
+				}
 				addChild(modalMask);
 				ArrayUtil.addElements(modals, dialog);
 			}
 			ArrayUtil.removeElements(dialogs, dialog);
 			dialogs.push(dialog);
+			dialog.alpha = 0;
+			dialogTween.reset(dialog, 0.25);
+			dialogTween.fadeTo(1);
+			dialogTween.start();
 			addChild(dialog);
 			dialog.isPopup = true;
 			if (isNaN(x) && isNaN(y)) {
