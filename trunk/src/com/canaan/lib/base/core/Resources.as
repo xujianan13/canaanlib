@@ -37,7 +37,7 @@ package com.canaan.lib.base.core
 			var file:XML;
 			for (var i:int = 0; i < numList; i++) {
 				file = fileList.file[i];
-				resourItem = new ResourceItem(file.@url, file.@name);
+				resourItem = new ResourceItem(file.@url, file.@id, file.@name);
 				preLoadFiles.push(resourItem);
 			}
 		}
