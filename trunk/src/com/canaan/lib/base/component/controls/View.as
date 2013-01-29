@@ -30,7 +30,7 @@ package com.canaan.lib.base.component.controls
 				createView(xml);
 			} else {
 				var url:String = Resources.dirUIXml + path;
-				ResourceManager.getInstance().add(url, "", new Method(loadUIComplete, [path]));
+				ResourceManager.getInstance().add(url, path, "", new Method(loadUIComplete, [path]));
 				ResourceManager.getInstance().load();
 			}
 		}

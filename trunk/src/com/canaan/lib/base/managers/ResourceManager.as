@@ -52,8 +52,8 @@ package com.canaan.lib.base.managers
 			return instance;
 		}
 		
-		public function add(url:String, name:String = "", completeHandler:Method = null, progressHandler:Method = null):void {
-			var resourceItem:ResourceItem = new ResourceItem(url, name, completeHandler, progressHandler);
+		public function add(url:String, id:String = "", name:String = "", completeHandler:Method = null, progressHandler:Method = null):void {
+			var resourceItem:ResourceItem = new ResourceItem(url, id, name, completeHandler, progressHandler);
 			addItem(resourceItem);
 		}
 		
@@ -109,7 +109,7 @@ package com.canaan.lib.base.managers
 		
 		private function startLoad(resourceItem:ResourceItem):void {
 			_current = resourceItem;
-			loader.load(resourceItem.url, new Method(onComplete, [resourceItem]), new Method(onProgress, [resourceItem]));
+			loader.load(resourceItem.url, resourceItem.id, new Method(onComplete, [resourceItem]), new Method(onProgress, [resourceItem]));
 		}
 		
 		private function endLoad(resourceItem:ResourceItem, content:*):void {
@@ -192,8 +192,8 @@ package com.canaan.lib.base.managers
 			return null;
 		}
 		
-		public function getContent(url:String):* {
-			return ResourceLoader.getResource(url);
+		public function getContent(id:String):* {
+			return ResourceLoader.getResource(id);
 		}
 		
 		public function getNewInstance(name:String):* {
