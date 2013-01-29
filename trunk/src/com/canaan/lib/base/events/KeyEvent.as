@@ -23,7 +23,7 @@ package com.canaan.lib.base.events
 								 shiftKey:Boolean, altKey:Boolean)
 		{
 			super(type, keyCode);
-			_keyCode = _keyCode;
+			_keyCode = keyCode;
 			_charCode = charCode;
 			_keyLocation = keyLocation;
 			_ctrlKey = ctrlKey;

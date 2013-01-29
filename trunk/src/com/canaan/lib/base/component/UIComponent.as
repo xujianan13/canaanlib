@@ -25,8 +25,6 @@ package com.canaan.lib.base.component
 	{
 		private var _dispatcher:CEventDispatcher;
 		protected var _data:Object;
-		protected var _x:Number = 0;
-		protected var _y:Number = 0;
 		protected var _width:Number = 0;
 		protected var _height:Number = 0;
 		protected var _enabled:Boolean = true;
@@ -89,28 +87,6 @@ package com.canaan.lib.base.component
 		public function setFocus():void {
 			if (StageManager.getInstance().stage) {
 				StageManager.getInstance().stage.focus = this;
-			}
-		}
-		
-		override public function get x():Number {
-			return _x;
-		}
-		
-		override public function set x(value:Number):void {
-			if (_x != value) {
-				_x = value;
-				super.x = _x;
-			}
-		}
-		
-		override public function get y():Number {
-			return _y;
-		}
-		
-		override public function set y(value:Number):void {
-			if (_y != value) {
-				_y = value;
-				super.y = _y;
 			}
 		}
 		
