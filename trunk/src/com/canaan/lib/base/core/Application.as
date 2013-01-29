@@ -8,6 +8,7 @@ package com.canaan.lib.base.core
 	public class Application
 	{
 		public static var app:Sprite;
+		public static var config:XML;
 		private static var callback:Method;
 		
 		public function Application()
@@ -29,16 +30,16 @@ package com.canaan.lib.base.core
 		
 		private static function onConfigComplete(configPath:String):void {
 			// initialize config
-			var xml:XML = new XML(ResourceManager.getInstance().getContent(configPath));
-			initializeConfig(xml);
+			config = new XML(ResourceManager.getInstance().getContent(configPath));
+			initializeConfig();
 			// initialize stage
 			StageManager.getInstance().initialize(app.stage);
 			// excute callback
 			callback.apply();
 		}
 		
-		private static function initializeConfig(xml:XML):void {
-			Resources.initialize(xml.resources);
+		private static function initializeConfig():void {
+			Resources.initialize(config.resources);
 		}
 	}
 }
