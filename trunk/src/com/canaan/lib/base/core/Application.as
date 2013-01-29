@@ -4,11 +4,11 @@ package com.canaan.lib.base.core
 	import com.canaan.lib.base.managers.StageManager;
 	
 	import flash.display.Sprite;
-
+	
 	public class Application
 	{
+		public static var app:Sprite;
 		private static var callback:Method;
-		private static var app:Sprite;
 		
 		public function Application()
 		{
@@ -38,8 +38,6 @@ package com.canaan.lib.base.core
 		}
 		
 		private static function initializeConfig(xml:XML):void {
-			Config.initialize(xml.config);
-			Setting.initialize(xml.setting);
 			Resources.initialize(xml.resources);
 		}
 	}

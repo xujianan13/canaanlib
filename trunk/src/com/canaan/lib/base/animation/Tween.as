@@ -12,6 +12,7 @@
 package com.canaan.lib.base.animation
 {
 	import com.canaan.lib.base.events.CEventDispatcher;
+	import com.canaan.lib.base.managers.StageManager;
 	import com.canaan.lib.base.managers.TimerManager;
 
 	/** A Tween animates numeric properties of objects. It uses different transition functions 
@@ -143,8 +144,11 @@ package com.canaan.lib.base.animation
 		}
 		
 		/** @inheritDoc */
-		public function advanceTime(time:Number):void
+		public function advanceTime(time:Number = NaN):void
 		{
+			if (isNaN(time)) {
+				time = 1.0 / StageManager.getInstance().stage.frameRate;
+			}
 			if (time == 0 || (mRepeatCount == 1 && mCurrentTime == mTotalTime))
 			{
 				stop();
@@ -356,8 +360,7 @@ package com.canaan.lib.base.animation
 		{
 			if (running)
 				return;
-			TimerManager.getInstance().doFrameLoop(1, advanceTime,
-				[TimerManager.getInstance().intervalSecond]);
+			TimerManager.getInstance().doFrameLoop(1, advanceTime);
 		}
 		
 		public function stop():void

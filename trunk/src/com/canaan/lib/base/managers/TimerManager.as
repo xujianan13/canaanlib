@@ -1,7 +1,5 @@
 package com.canaan.lib.base.managers
 {
-	import com.canaan.lib.base.core.Setting;
-	
 	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.utils.Dictionary;
@@ -127,14 +125,6 @@ package com.canaan.lib.base.managers
 		
 		public function get timeSecond():Number {
 			return _time / 1000.0;
-		}
-		
-		public function get interval():int {
-			return int(intervalSecond * 1000);
-		}
-		
-		public function get intervalSecond():Number {
-			return 1.0 / Setting.fps;
 		}
 		
 		private function timeStep():void {
