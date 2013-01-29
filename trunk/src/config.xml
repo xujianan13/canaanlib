@@ -9,7 +9,10 @@
 				dirLang="res/zh_CN/config/language/"
 				dirUIXml="res/zh_CN/config/uixml/">
 		<preLoadFiles>
-<!-- 			<file name="language" url="" title="测试"/> -->
+			<!-- 此处填入预加载文件 -->
 		</preLoadFiles>
 	</resources>
+	<setting>
+		<!-- 此处填入游戏数据 -->
+	</setting>
 </root>
