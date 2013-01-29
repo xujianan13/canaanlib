@@ -40,6 +40,7 @@ package com.canaan.lib.base.core
 		private var loaderContext:LoaderContext;
 		
 		private var _url:String;
+		private var _id:String;
 		private var _fileType:uint;
 		private var _completeHandler:Method;
 		private var _progressHandler:Method;
@@ -68,8 +69,9 @@ package com.canaan.lib.base.core
 			}
 		}
 		
-		public function load(url:String, completeHandler:Method, progressHandler:Method):void {
+		public function load(url:String, id:String, completeHandler:Method, progressHandler:Method):void {
 			_url = url;
+			_id = id;
 			_fileType = getFileType(url);
 			_completeHandler = completeHandler;
 			_progressHandler = progressHandler;
@@ -136,7 +138,7 @@ package com.canaan.lib.base.core
 					content = bytes.readObject();
 					break;
 			}
-			endLoad(cache[_url] = content);
+			endLoad(cache[_id] = content);
 		}
 		
 		private function onProgress(event:ProgressEvent):void {
@@ -172,8 +174,8 @@ package com.canaan.lib.base.core
 			return FILE_TYPE_TEXT;
 		}
 		
-		public static function getResource(url:String):* {
-			return cache[url];
+		public static function getResource(id:String):* {
+			return cache[id];
 		}
 		
 		public static function clearCache():void {
