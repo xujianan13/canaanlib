@@ -100,11 +100,10 @@ package com.canaan.lib.base.managers
 			_itemsTotal = 0;
 			_itemsLoaded = 0;
 			_current = null;
-			excuteProgress();
-			excuteComplete();
 			if (hasEventListener(ResourceEvent.COMPLETE)) {
 				dispatchEvent(new ResourceEvent(ResourceEvent.COMPLETE));
 			}
+			excuteComplete();
 		}
 		
 		private function startLoad(resourceItem:ResourceItem):void {
