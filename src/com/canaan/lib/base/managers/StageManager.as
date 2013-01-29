@@ -1,7 +1,6 @@
 package com.canaan.lib.base.managers
 {
 	import com.canaan.lib.base.core.Methods;
-	import com.canaan.lib.base.core.Setting;
 	
 	import flash.display.Stage;
 	import flash.display.StageAlign;
@@ -41,8 +40,8 @@ package com.canaan.lib.base.managers
 			stage = value;
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.tabChildren = false;
 			stage.stageFocusRect = false;
-			stage.frameRate = Setting.fps;
 		}
 
 		public function registerHandler(type:String, func:Function, args:Array = null):void {

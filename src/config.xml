@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-	<config gameSocketHost="127.0.0.1" gameSocketPort="8080"
-			chatSocketHost="127.0.0.1" chatSocketPort="8080"
-			resHost=""
-			locale="zh_CN"
-			platform="tencent"
-			version="1.0.0.1" />
-	<setting fps="24" debugMode="true" />
 	<resources dirImages="res/zh_CN/assets/image/"
 				dirAudio="res/zh_CN/assets/audio/"
 				dirRpg="res/zh_CN/assets/rpg/"

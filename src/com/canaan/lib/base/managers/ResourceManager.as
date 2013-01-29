@@ -241,11 +241,17 @@ package com.canaan.lib.base.managers
 		}
 		
 		public static function formatUrl(url:String):String {
-			if (Config.resHost != null && url.indexOf("http") == -1) {
-				url = Config.resHost + url;
+			if (url.indexOf("http") == -1) {
+				var resHost:String = Config.getConfig("resHost");
+				if (resHost != null) {
+					url = resHost + url;
+				}
 			}
-			if (Config.version != null && url.indexOf("version") == -1) {
-				url += "?version=" + Config.version;
+			if (url.indexOf("version") == -1) {
+				var version:String = Config.getConfig("version");
+				if (version != null) {
+					url += "?version=" + version;
+				}
 			}
 			return url;
 		}
