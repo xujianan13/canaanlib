@@ -72,7 +72,7 @@ package com.canaan.lib.base.component
 		public static var comboBoxItemHeight:int = 22;
 		public static var comboBoxItemColors:Array = [0x5E95B6, 0xFFFFFF, 0x000000];
 		
-		//------------- DragDialog default setting -------------
-		public static var dragDialogDragArea:Array = [0, 0, 0, 20];		// left x, top y, right x, height
+		//------------- Dialog default setting -------------
+		public static var dialogDragArea:Array = [0, 0, 0, 20];				// left x, top y, right x, height
 	}
 }

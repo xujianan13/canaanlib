@@ -30,6 +30,7 @@ package com.canaan.lib.base.managers
 			if (!canInstantiate) {
 				throw new Error("Can not instantiate, use getInstance() instead.");
 			}
+			enabled = true;
 		}
 		
 		public static function getInstance():KeyboardManager {

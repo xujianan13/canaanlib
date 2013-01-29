@@ -17,8 +17,6 @@ package com.canaan.lib.base.managers
 		private var modalMask:Sprite;
 		private var dialogs:Vector.<Dialog> = new Vector.<Dialog>();
 		private var modals:Vector.<Dialog> = new Vector.<Dialog>();
-		private var maskTween:Tween;
-		private var dialogTween:Tween;
 		
 		public function DialogManager()
 		{
@@ -28,8 +26,6 @@ package com.canaan.lib.base.managers
 			modalMask = new Sprite();
 			modalMask.graphics.beginFill(Styles.dialogModalColor, Styles.dialogModalAlpha);
 			modalMask.graphics.drawRect(0, 0, 1, 1);
-			maskTween = new Tween(modalMask, 0.25);
-			dialogTween = new Tween();
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}
 		
@@ -66,6 +62,7 @@ package com.canaan.lib.base.managers
 			if (modal) {
 				if (!contains(modalMask)) {
 					modalMask.alpha = 0;
+					var maskTween:Tween = Tween.fromPool(modalMask, 0.25);
 					maskTween.fadeTo(1);
 					maskTween.start();
 				}
@@ -76,7 +73,7 @@ package com.canaan.lib.base.managers
 			dialogs.push(dialog);
 			if (!contains(dialog)) {
 				dialog.alpha = 0;
-				dialogTween.reset(dialog, 0.25);
+				var dialogTween:Tween = Tween.fromPool(dialog, 0.25);
 				dialogTween.fadeTo(1);
 				dialogTween.start();
 			}
@@ -91,6 +88,7 @@ package com.canaan.lib.base.managers
 		
 		public function close(dialog:Dialog):void {
 			dialog.remove();
+			ArrayUtil.removeElements(dialogs, dialog);
 			dialog.isPopup = false;
 			var modalIndex:int = modals.indexOf(dialog);
 			if (modalIndex != -1) {
@@ -102,6 +100,13 @@ package com.canaan.lib.base.managers
 					setChildIndex(modalMask, modalIndex);
 				}
 			}
+		}
+		
+		public function bringToFront(dialog:Dialog):void {
+			if (contains(dialog) && getChildIndex(dialog) == numChildren - 1) {
+				return;
+			}
+			popup(dialog, false, dialog.x, dialog.y);
 		}
 		
 		public function closeAll():void {
