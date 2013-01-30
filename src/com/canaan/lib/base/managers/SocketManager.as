@@ -118,7 +118,7 @@ package com.canaan.lib.base.managers
 		
 		public function handler(data:Object):void {
 			socketResult.setData(data);
-			var methods:Methods = methods[socketResult.cmd];
+			var methods:Methods = methodsDict[socketResult.cmd];
 			if (methods) {
 				methods.applyWith([socketResult]);
 			}
