@@ -6,17 +6,20 @@ package com.canaan.lib.base.managers
 	
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.display.Stage;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
-
+	
 	public class DragManager extends Sprite
 	{
 		private static var canInstantiate:Boolean;
-        private static var instance:DragManager;
-        
-        private var dragInitiator:DisplayObject;
-        private var data:Object;
-        private var dragImage:Sprite;
+		private static var instance:DragManager;
+		
+		private var dragInitiator:DisplayObject;
+		private var data:Object;
+		private var dragImage:Sprite;
+		private var startX:Number;
+		private var startY:Number;
 		
 		public function DragManager()
 		{
@@ -26,49 +29,62 @@ package com.canaan.lib.base.managers
 		}
 		
 		public static function getInstance():DragManager {
-            if (instance == null) {
-            	canInstantiate = true;
-                instance = new DragManager();
-                canInstantiate = false;
-            }
-            return instance;
-        }
-        
-        public function doDrag(dragInitiator:DisplayObject, dragImage:Sprite = null, data:Object = null):void {
+			if (instance == null) {
+				canInstantiate = true;
+				instance = new DragManager();
+				canInstantiate = false;
+			}
+			return instance;
+		}
+		
+		public function doDrag(dragInitiator:DisplayObject, dragImage:Sprite = null, data:Object = null):void {
 			if (dragImage == null) {
 				dragImage = dragInitiator as Sprite;
 			}
-        	this.dragInitiator = dragInitiator;
-        	this.data = data;
-        	this.dragImage = dragImage;
+			this.dragInitiator = dragInitiator;
+			this.data = data;
+			this.dragImage = dragImage;
 			if (dragInitiator != dragImage) {
-	        	var globalPoint:Point = dragInitiator.parent.localToGlobal(new Point(dragInitiator.x, dragInitiator.y));
-	        	dragImage.x = globalPoint.x;
-	        	dragImage.y = globalPoint.y;
+				var globalPoint:Point = dragInitiator.parent.localToGlobal(new Point(dragInitiator.x, dragInitiator.y));
+				dragImage.x = globalPoint.x;
+				dragImage.y = globalPoint.y;
 				addChild(dragImage);
 			}
-        	dragImage.startDrag();
-        	StageManager.getInstance().registerHandler(MouseEvent.MOUSE_UP, mouseUpHandler);
-        	dragInitiator.dispatchEvent(new DragEvent(DragEvent.DRAG_START, dragInitiator, data));
-        }
-
-        private function mouseUpHandler():void {
-        	dragImage.stopDrag();
-        	var dropTarget:IDropObject = getDropTarget(dragImage.dropTarget);
-        	if (dropTarget != null) {
-        		dropTarget.dispatchEvent(new DragEvent(DragEvent.DRAG_DROP, dragInitiator, data));
-        	}
-        	dragInitiator.dispatchEvent(new DragEvent(DragEvent.DRAG_COMPLETE, dragInitiator, data));
-			if (dragInitiator != dragImage) {
-        		DisplayUtil.removeChild(dragImage.parent, dragImage);
+			startX = mouseX;
+			startY = mouseY;
+			StageManager.getInstance().registerHandler(MouseEvent.MOUSE_MOVE, mouseMoveHandler);
+			StageManager.getInstance().registerHandler(MouseEvent.MOUSE_UP, mouseUpHandler);
+			dragInitiator.dispatchEvent(new DragEvent(DragEvent.DRAG_START, dragInitiator, data));
+		}
+		
+		private function mouseMoveHandler():void {
+			var stage:Stage = StageManager.getInstance().stage;
+			if (mouseX < 0 || mouseX > stage.stageWidth || mouseY < 0 || mouseY > stage.stageHeight) {
+				return;
 			}
+			dragImage.x += mouseX - startX;
+			dragImage.y += mouseY - startY;
+			startX = mouseX;
+			startY = mouseY;
+		}
+		
+		private function mouseUpHandler():void {
+			var dropTarget:IDropObject = getDropTarget(dragImage.dropTarget);
+			if (dropTarget != null) {
+				dropTarget.dispatchEvent(new DragEvent(DragEvent.DRAG_DROP, dragInitiator, data));
+			}
+			dragInitiator.dispatchEvent(new DragEvent(DragEvent.DRAG_COMPLETE, dragInitiator, data));
+			if (dragInitiator != dragImage) {
+				DisplayUtil.removeChild(dragImage.parent, dragImage);
+			}
+			StageManager.getInstance().deleteHandler(MouseEvent.MOUSE_MOVE, mouseMoveHandler);
 			StageManager.getInstance().deleteHandler(MouseEvent.MOUSE_UP, mouseUpHandler);
-        	dragInitiator = null;
-        	data = null;
-        	dragImage = null;
-        }
-        
-        private function getDropTarget(value:DisplayObject):IDropObject {
+			dragInitiator = null;
+			data = null;
+			dragImage = null;
+		}
+		
+		private function getDropTarget(value:DisplayObject):IDropObject {
 			while (value) {
 				if (value is IDropObject) {
 					return value as IDropObject;
@@ -76,6 +92,6 @@ package com.canaan.lib.base.managers
 				value = value.parent;
 			}
 			return null;
-        }
+		}
 	}
 }
