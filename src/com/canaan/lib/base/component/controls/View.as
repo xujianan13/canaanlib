@@ -21,7 +21,12 @@ package com.canaan.lib.base.component.controls
 		
 		public function createView(xml:XML):void {
 			ViewCreater.createView(this, xml);
+			onViewCreated();
 			sendEvent(UIEvent.VIEW_CREATED);
+		}
+		
+		protected function onViewCreated():void {
+			
 		}
 		
 		public function loadUI(path:String):void {
