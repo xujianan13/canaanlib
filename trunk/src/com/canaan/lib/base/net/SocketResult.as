@@ -26,7 +26,7 @@ package com.canaan.lib.base.net
 		}
 		
 		public function get success():Boolean {
-			return error != 0;
+			return error == 0;
 		}
 	}
 }
