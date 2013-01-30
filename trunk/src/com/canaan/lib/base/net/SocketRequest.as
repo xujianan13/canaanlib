@@ -7,7 +7,7 @@ package com.canaan.lib.base.net
 		
 		public function SocketRequest(cmd:int = 0, data:Object = null)
 		{
-			reset(cmd, data)
+			reset(cmd, data);
 		}
 		
 		public function reset(cmd:int, data:Object = null):void {
