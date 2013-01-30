@@ -2,9 +2,10 @@ package com.canaan.lib.base.component.controls
 {
 	import com.canaan.lib.base.component.Styles;
 	
+	import flash.events.Event;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFieldType;
-
+	
 	public class TextInput extends Label
 	{
 		public function TextInput(text:String = "")
@@ -23,6 +24,11 @@ package com.canaan.lib.base.component.controls
 			selectable = true;
 			_textField.type = TextFieldType.INPUT;
 			_textField.autoSize = TextFieldAutoSize.NONE;
+			_textField.addEventListener(Event.CHANGE, onTextChanged);
+		}
+		
+		protected function onTextChanged(event:Event):void {
+			_text = _textField.text;
 		}
 		
 		public function set maxChars(value:int):void {
