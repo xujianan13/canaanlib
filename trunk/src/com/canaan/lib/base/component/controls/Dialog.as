@@ -48,9 +48,6 @@ package com.canaan.lib.base.component.controls
 		
 		protected function mouseDownHandler(event:MouseEvent):void {
 			bringToFrong();
-			if (event.target != this) {
-				return;
-			}
 			if (validateDrag()) {
 				DragManager.getInstance().doDrag(this);
 			}
