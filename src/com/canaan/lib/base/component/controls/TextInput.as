@@ -54,5 +54,13 @@ package com.canaan.lib.base.component.controls
 		public function get editable():Boolean {
 			return _textField.type == TextFieldType.INPUT;
 		}
+		
+		override public function set enabled(value:Boolean):void {
+			if (_enabled != value) {
+				_enabled = value;
+				mouseEnabled = _enabled;
+				mouseChildren = _enabled;
+			}
+		}
 	}
 }
