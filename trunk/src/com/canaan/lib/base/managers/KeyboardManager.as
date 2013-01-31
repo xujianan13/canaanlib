@@ -1,11 +1,13 @@
 package com.canaan.lib.base.managers
 {
+	import com.canaan.lib.base.core.Methods;
 	import com.canaan.lib.base.events.CEventDispatcher;
 	import com.canaan.lib.base.events.KeyEvent;
 	
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
-
+	import flash.utils.Dictionary;
+	
 	[Event(name="keyDown", type="com.canaan.lib.base.events.KeyEvent")]
 	[Event(name="keyUp", type="com.canaan.lib.base.events.KeyEvent")]
 	[Event(name="keyDownCtrl", type="com.canaan.lib.base.events.KeyEvent")]
@@ -24,6 +26,8 @@ package com.canaan.lib.base.managers
 		private static var instance:KeyboardManager;
 		
 		private var _enabled:Boolean = false;
+		private var keyDownMethods:Dictionary = new Dictionary();
+		private var keyUpMethods:Dictionary = new Dictionary();
 		
 		public function KeyboardManager()
 		{
@@ -42,8 +46,36 @@ package com.canaan.lib.base.managers
 			return instance;
 		}
 		
+		public function registerHandler(keyCode:int, keyDown:Boolean, func:Function, args:Array = null):void {
+			var dict:Dictionary = keyDown ? keyDownMethods : keyUpMethods;
+			var methods:Methods = dict[keyCode];
+			if (!methods) {
+				methods = new Methods();
+				dict[keyCode] = methods;
+			}
+			methods.register(func, args);
+		}
+		
+		public function deleteHandler(keyCode:int, keyDown:Boolean, func:Function):void {
+			var dict:Dictionary = keyDown ? keyDownMethods : keyUpMethods;
+			var methods:Methods = dict[keyCode];
+			if (methods) {
+				methods.del(func);
+				if (methods.length == 0) {
+					delete dict[keyCode];
+				}
+			}
+		}
+		
 		private function keyChangeHandler(event:KeyboardEvent):void {
 			var eventType:String = event.type;
+			
+			var dict:Dictionary = eventType == KeyboardEvent.KEY_DOWN ? keyDownMethods : keyUpMethods;
+			var methods:Methods = dict[event.keyCode];
+			if (methods) {
+				methods.apply();
+			}
+			
 			dispatch(eventType, event);
 			
 			var ctrlKey:Boolean = event.ctrlKey && event.keyCode != Keyboard.CONTROL;
@@ -60,7 +92,7 @@ package com.canaan.lib.base.managers
 				dispatch(eventType + CTRL + SHIFT, event);
 			}
 		}
-
+		
 		private function dispatch(type:String, event:KeyboardEvent):void {
 			dispatchEvent(new KeyEvent(type, event.keyCode, event.charCode,
 				event.keyLocation, event.ctrlKey, event.shiftKey, event.altKey));
