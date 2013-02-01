@@ -8,9 +8,13 @@
 				dirSetting="res/zh_CN/config/setting/"
 				dirLang="res/zh_CN/config/language/"
 				dirUIXml="res/zh_CN/config/uixml/">
+		<!-- 此处填入预加载文件 -->
 		<preLoadFiles>
-			<!-- 此处填入预加载文件 -->
+<!-- 			<file id="swf_lib" name ="主资源文件" url="res/zh_CN/assets/slg/lib.swf" type="swf"/> -->
 		</preLoadFiles>
+		<!-- 此处填入游戏模块资源文件 -->
+		<moduleFiles>
+		</moduleFiles>
 	</resources>
 	<setting>
 		<!-- 此处填入游戏数据 -->

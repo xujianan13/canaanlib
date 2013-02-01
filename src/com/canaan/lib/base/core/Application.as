@@ -40,6 +40,7 @@ package com.canaan.lib.base.core
 		
 		private static function initializeConfig():void {
 			Resources.initialize(config.resources);
+			Setting.initialize(config.setting);
 		}
 	}
 }
