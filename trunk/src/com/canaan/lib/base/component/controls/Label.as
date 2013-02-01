@@ -4,6 +4,7 @@ package com.canaan.lib.base.component.controls
 	import com.canaan.lib.base.component.UIComponent;
 	import com.canaan.lib.base.events.UIEvent;
 	import com.canaan.lib.base.managers.ResourceManager;
+	import com.canaan.lib.base.managers.StageManager;
 	import com.canaan.lib.base.utils.ArrayUtil;
 	import com.canaan.lib.base.utils.DisplayUtil;
 	
@@ -52,7 +53,7 @@ package com.canaan.lib.base.component.controls
 			super.initialize();
 			_textField.selectable = false;
 			_textField.autoSize = TextFieldAutoSize.LEFT;
-//			stroke = Styles.labelStroke.toString();
+			//			stroke = Styles.labelStroke.toString();
 		}
 		
 		protected function changeText():void {
@@ -168,7 +169,7 @@ package com.canaan.lib.base.component.controls
 		public function set selectable(value:Boolean):void {
 			_textField.selectable = value;
 			mouseChildren = value;
-//			mouseEnabled = value;
+			//			mouseEnabled = value;
 		}
 		
 		public function get multiline():Boolean {
@@ -343,6 +344,12 @@ package com.canaan.lib.base.component.controls
 		public function set format(value:TextFormat):void {
 			_format = value;
 			callLater(changeText);
+		}
+		
+		override public function setFocus():void {
+			if (StageManager.getInstance().stage) {
+				StageManager.getInstance().stage.focus = _textField;
+			}
 		}
 	}
 }

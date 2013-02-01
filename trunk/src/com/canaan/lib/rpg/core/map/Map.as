@@ -15,7 +15,7 @@ package com.canaan.lib.rpg.core.map
 	import flash.geom.Rectangle;
 	import flash.net.URLRequest;
 	import flash.utils.Dictionary;
-
+	
 	public class Map
 	{
 		/**
@@ -57,7 +57,7 @@ package com.canaan.lib.rpg.core.map
 		 * 当前绘制的tile数组
 		 */
 		protected var drawTiles:Vector.<Point>;
-
+		
 		/**
 		 * 地图数据
 		 */
@@ -71,7 +71,7 @@ package com.canaan.lib.rpg.core.map
 		/**
 		 * 地图绘制区
 		 */
-//		protected var _drawBuffer:Shape;
+		//		protected var _drawBuffer:Shape;
 		protected var _drawBuffer:Bitmap;
 		
 		/**
@@ -82,7 +82,7 @@ package com.canaan.lib.rpg.core.map
 		public function Map()
 		{
 			_center = new Point();
-//			_drawBuffer = new Shape();
+			//			_drawBuffer = new Shape();
 			_drawBuffer = new Bitmap();
 			drawTiles = new Vector.<Point>();
 		}
@@ -112,7 +112,7 @@ package com.canaan.lib.rpg.core.map
 		 * 加载地图切片
 		 */
 		protected function loadTiles():void {
-//			_drawBuffer.cacheAsBitmap = false;
+			//			_drawBuffer.cacheAsBitmap = false;
 			var point:Point;
 			var tilePath:String;
 			var loader:DLoader;
@@ -130,9 +130,9 @@ package com.canaan.lib.rpg.core.map
 					loader.load(new URLRequest(tilePath));
 				}
 			}
-//			if (drawTiles.length == 0) {
-//				_drawBuffer.cacheAsBitmap = true;
-//			}
+			//			if (drawTiles.length == 0) {
+			//				_drawBuffer.cacheAsBitmap = true;
+			//			}
 		}
 		
 		/**
@@ -148,7 +148,7 @@ package com.canaan.lib.rpg.core.map
 			loaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 			loaderInfo.loader.unloadAndStop();
 			loaderInfo = null;
-			update();
+			update(-1, -1, true);
 		}
 		
 		/**
@@ -166,9 +166,9 @@ package com.canaan.lib.rpg.core.map
 			if (drawTiles.indexOf(point) != -1) {
 				buffer.copyPixels(cache[key], cache[key].rect, new Point(int((point.x - currentStartX) * _mapVo.tileWidth), int((point.y - currentStartY) * _mapVo.tileHeight)));
 				drawTiles.splice(drawTiles.indexOf(point), 1);
-//				if (drawTiles.length == 0) {
-//					_drawBuffer.cacheAsBitmap = true;
-//				}
+				//				if (drawTiles.length == 0) {
+				//					_drawBuffer.cacheAsBitmap = true;
+				//				}
 			}
 			
 			DLoader.toPool(loader);
@@ -205,9 +205,9 @@ package com.canaan.lib.rpg.core.map
 			}
 			buffer = new BitmapData(_mapVo.mapWidth + _mapVo.tileWidth, _mapVo.mapHeight + _mapVo.tileHeight, false);
 			
-//			_drawBuffer.graphics.clear();
-//			_drawBuffer.graphics.beginBitmapFill(buffer);
-//			_drawBuffer.graphics.drawRect(0, 0, buffer.width, buffer.height);
+			//			_drawBuffer.graphics.clear();
+			//			_drawBuffer.graphics.beginBitmapFill(buffer);
+			//			_drawBuffer.graphics.drawRect(0, 0, buffer.width, buffer.height);
 			_drawBuffer.bitmapData = buffer;
 			
 			tileX = Math.ceil(_mapVo.mapWidth / _mapVo.tileWidth) + 1;
@@ -295,14 +295,14 @@ package com.canaan.lib.rpg.core.map
 			return _bmpdThumbnail;
 		}
 		
-//		public function get drawBuffer():Shape {
-//			return _drawBuffer;
-//		}
+		//		public function get drawBuffer():Shape {
+		//			return _drawBuffer;
+		//		}
 		
 		public function get drawBuffer():Bitmap {
 			return _drawBuffer;
 		}
-
+		
 		public function get center():Point {
 			return _center;
 		}
