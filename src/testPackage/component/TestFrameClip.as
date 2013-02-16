@@ -44,7 +44,7 @@ package testPackage.component
 //			frameClip.gotoAndStop(50);
 //			frameClip.skin = "assets.frameclip_Bear";
 			
-			frameClip.fromTo(0, 6);
+//			frameClip.fromTo(0, 6);
 			
 			frameClip.showBorder();
 		}

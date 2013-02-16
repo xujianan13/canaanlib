@@ -9,7 +9,7 @@ package com.canaan.lib.base.component.controls
 	import com.canaan.lib.base.utils.ArrayUtil;
 	
 	import flash.events.MouseEvent;
-
+	
 	[Event(name="change", type="com.canaan.lib.base.events.UIEvent")]
 	
 	/**
@@ -85,7 +85,7 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		protected function changeLabel():void {
-			_button.label = labelField ? _list.selectedValue[labelField] : _list.selectedValue as String;
+			_button.label = _labelField ? _list.selectedValue[_labelField] : _list.selectedValue as String;
 		}
 		
 		protected function changeListWidth():void {
@@ -191,7 +191,10 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		public function set labelField(value:String):void {
-			_labelField = value;
+			if (_labelField != value) {
+				_labelField = value;
+				callLater(changeLabel);
+			}
 		}
 		
 		public function get scrollBarSkin():String {

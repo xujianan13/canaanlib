@@ -1,6 +1,6 @@
 package com.canaan.lib.base.utils
 {
-	import com.canaan.lib.base.display.Effect;
+	import com.canaan.lib.base.display.effects.Effect;
 	import com.canaan.lib.base.interfaces.IDispose;
 	import com.canaan.lib.base.managers.StageManager;
 	

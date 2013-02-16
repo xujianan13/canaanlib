@@ -11,6 +11,7 @@ package com.canaan.lib.base.component.controls
 		protected var _labelStroke:String;
 		protected var _labelSize:Object;
 		protected var _labelBold:Object;
+		protected var _labelField:String;
 		
 		public function Tab(labels:String = null, skin:String = null)
 		{
@@ -24,9 +25,9 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		override public function initialItems():void {
-			if (_data == null) {
+			_data = [];
+			if (numChildren != 0) {
 				layout = Layouts.ABSOLUTE;
-				_data = [];
 				var item:Button;
 				for (var i:int = 0; i < numChildren; i++) {
 					item = getChildAt(i) as Button;
@@ -52,11 +53,20 @@ package com.canaan.lib.base.component.controls
 			return _skin;
 		}
 		
+		override public function set data(value:Object):void {
+			if (_data != value) {
+				_data = value;
+				callLater(changeLabels);
+			}
+		}
+		
 		public function set labels(value:String):void {
 			if (_labels != value) {
 				_labels = value;
-				_data = _labels.split(",");
-				callLater(changeLabels);
+				if (_labels) {
+					_data = _labels.split(",");
+					callLater(changeLabels);
+				}
 			}
 		}
 		
@@ -69,8 +79,10 @@ package com.canaan.lib.base.component.controls
 			_items.length = 0;
 			var item:Button;
 			var l:int = _data.length;
+			var label:String;
 			for (var i:int = 0; i < l; i++) {
-				item = _skin ? new Button(_skin, _data[i]) : new LinkButton(_data[i]);
+				label = _labelField ? _data[i][_labelField].toString() : _data[i].toString();
+				item = _skin ? new Button(_skin, label) : new LinkButton(label);
 				item.data = _data[i];
 				item.selected = false;
 				item.mouseClickHandler = new Method(itemClickHandler, [item]);
@@ -90,6 +102,7 @@ package com.canaan.lib.base.component.controls
 			}
 			if (_data.length > 0) {
 				selectedValue = _selectedValue || _data[0];
+				selectedItem.selected = true;
 			} else {
 				selectedValue = null;
 			}
@@ -135,6 +148,17 @@ package com.canaan.lib.base.component.controls
 		public function set labelBold(value:Object):void {
 			if (_labelBold != value) {
 				_labelBold = value;
+				callLater(changeLabels);
+			}
+		}
+		
+		public function get labelField():String {
+			return _labelField;
+		}
+		
+		public function set labelField(value:String):void {
+			if (_labelField != value) {
+				_labelField = value;
 				callLater(changeLabels);
 			}
 		}

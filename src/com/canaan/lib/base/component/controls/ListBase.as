@@ -13,7 +13,7 @@ package com.canaan.lib.base.component.controls
 	{
 		protected var _items:Array = [];
 		protected var _selectedValue:Object;
-//		protected var _selectedItem:IListItem;
+		//		protected var _selectedItem:IListItem;
 		protected var _changeCallback:Method;
 		
 		public function ListBase()
@@ -49,7 +49,9 @@ package com.canaan.lib.base.component.controls
 					selectedItem.selected = false;
 				}
 				_selectedValue = value;
-				selectedItem.selected = true;
+				if (selectedItem != null) {
+					selectedItem.selected = true;
+				}
 			}
 		}
 		
@@ -85,43 +87,43 @@ package com.canaan.lib.base.component.controls
 			return -1;
 		}
 		
-//		public function set selectedItem(value:IListItem):void {
-//			if (_selectedItem != value) {
-//				if (_selectedItem != null) {
-//					_selectedItem.selected = false;
-//				}
-//				_selectedItem = value;
-//				_selectedItem.selected = true;
-//			}
-//		}
-//		
-//		public function get selectedItem():IListItem {
-//			return _selectedItem;
-//		}
-//		
-//		public function set selectedIndex(value:int):void {
-//			selectedItem = _items[value];
-//		}
-//		
-//		public function get selectedIndex():int {
-//			return _items.indexOf(_selectedItem);
-//		}
-//		
-//		public function set selectedValue(value:Object):void {
-//			var item:IListItem;
-//			var l:int = _items.length;
-//			for (var i:int = 0; i < l; i++) {
-//				item = _items[i];
-//				if (item.data == value) {
-//					selectedItem = item;
-//					break;
-//				}
-//			}
-//		}
-//		
-//		public function get selectedValue():Object {
-//			return _selectedItem.data;
-//		}
+		//		public function set selectedItem(value:IListItem):void {
+		//			if (_selectedItem != value) {
+		//				if (_selectedItem != null) {
+		//					_selectedItem.selected = false;
+		//				}
+		//				_selectedItem = value;
+		//				_selectedItem.selected = true;
+		//			}
+		//		}
+		//		
+		//		public function get selectedItem():IListItem {
+		//			return _selectedItem;
+		//		}
+		//		
+		//		public function set selectedIndex(value:int):void {
+		//			selectedItem = _items[value];
+		//		}
+		//		
+		//		public function get selectedIndex():int {
+		//			return _items.indexOf(_selectedItem);
+		//		}
+		//		
+		//		public function set selectedValue(value:Object):void {
+		//			var item:IListItem;
+		//			var l:int = _items.length;
+		//			for (var i:int = 0; i < l; i++) {
+		//				item = _items[i];
+		//				if (item.data == value) {
+		//					selectedItem = item;
+		//					break;
+		//				}
+		//			}
+		//		}
+		//		
+		//		public function get selectedValue():Object {
+		//			return _selectedItem.data;
+		//		}
 		
 		protected function itemClickHandler(item:IListItem):void {
 			selectedItem = item;
