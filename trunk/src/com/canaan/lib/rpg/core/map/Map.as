@@ -282,8 +282,8 @@ package com.canaan.lib.rpg.core.map
 		}
 		
 		public function get leftTop():Point {
-			var xx:Number = Math.min(Math.max(0, center.x - _mapVo.mapWidth * 0.5), _mapVo.maxWidth - _mapVo.mapWidth);
-			var yy:Number = Math.min(Math.max(0, center.y - _mapVo.mapHeight * 0.5), _mapVo.maxHeight - _mapVo.mapHeight);
+			var xx:Number = Math.min(Math.max(0, _center.x - _mapVo.mapWidth * 0.5), _mapVo.maxWidth - _mapVo.mapWidth);
+			var yy:Number = Math.min(Math.max(0, _center.y - _mapVo.mapHeight * 0.5), _mapVo.maxHeight - _mapVo.mapHeight);
 			return new Point(xx, yy);
 		}
 		

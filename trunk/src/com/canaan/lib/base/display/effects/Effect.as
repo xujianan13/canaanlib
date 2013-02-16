@@ -1,4 +1,4 @@
-package com.canaan.lib.base.display
+package com.canaan.lib.base.display.effects
 {
 	import flash.filters.ColorMatrixFilter;
 

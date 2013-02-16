@@ -1,12 +1,16 @@
 package com.canaan.lib.base.display
 {
+	import com.canaan.lib.base.managers.StageManager;
 	import com.canaan.lib.base.utils.DisplayUtil;
 	
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	
 	public class BaseSprite extends Sprite
 	{
+		protected var _resizeHandler:Function;
+		
 		public function BaseSprite()
 		{
 			super();
@@ -51,10 +55,27 @@ package com.canaan.lib.base.display
 			DisplayUtil.removeAllChildren(this);
 		}
 		
+		public function get resizeHandler():Function {
+			return _resizeHandler;
+		}
+		
+		public function set resizeHandler(value:Function):void {
+			if (_resizeHandler != value) {
+				if (_resizeHandler != null) {
+					StageManager.getInstance().deleteHandler(Event.RESIZE, _resizeHandler);
+				}
+				_resizeHandler = value;
+				if (_resizeHandler != null) {
+					StageManager.getInstance().registerHandler(Event.RESIZE, _resizeHandler);
+				}
+			}
+		}
+		
 		public function dispose():void {
 			DisplayUtil.removeAllChildren(this, true);
 			remove();
 			graphics.clear();
+			_resizeHandler = null;
 		}
 	}
 }
