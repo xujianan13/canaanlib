@@ -208,6 +208,7 @@ package com.canaan.lib.base.component
 			super.dispose();
 			methods.length = 0;
 			methods = null;
+			toolTip = null;
 			layoutObject.dispose();
 			dispatcher.removeEventListeners();
 		}

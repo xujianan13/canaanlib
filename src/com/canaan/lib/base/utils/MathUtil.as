@@ -105,6 +105,15 @@ package com.canaan.lib.base.utils
 			return point;
 		}
 		
+		/**
+		 * 获取相对于点(x, y)位移为length，弧度为angle的点
+		 * @param x
+		 * @param y
+		 * @param length
+		 * @param angle
+		 * @return 
+		 * 
+		 */		
 		public static function getLinePoint2(x:Number, y:Number, length:Number, angle:int):Point {
 			var xx:Number = x + length * cos(angle);
 			var yy:Number = y + length * sin(angle);
