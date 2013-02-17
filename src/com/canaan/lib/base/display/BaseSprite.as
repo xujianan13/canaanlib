@@ -75,7 +75,7 @@ package com.canaan.lib.base.display
 			DisplayUtil.removeAllChildren(this, true);
 			remove();
 			graphics.clear();
-			_resizeHandler = null;
+			resizeHandler = null;
 		}
 	}
 }
