@@ -111,10 +111,17 @@ package com.canaan.lib.base.component.controls
 		
 		override protected function changeSize():void {
 			super.changeSize();
+			background.width = _width;
+			background.height = _height;
+			resetButtonPosition();
+			changeValue();
+		}
+		
+		private function resetButtonPosition():void {
 			if (_direction == Direction.HORIZONTAL) {
-				background.width = _width;
+				_button.y = (background.height - _button.height) * 0.5;
 			} else {
-				background.height = _height;
+				_button.x = (background.width - _button.width) * 0.5;
 			}
 		}
 		
@@ -133,13 +140,9 @@ package com.canaan.lib.base.component.controls
 				background.url = _skin;
 				_button.skin = _skin + BUTTON_SKIN_SUFFIX;
 				_button.validateNow();
-				if (_direction == Direction.HORIZONTAL) {
-					_button.y = (background.height - _button.height) * 0.5;
-				} else {
-					_button.x = (background.width - _button.width) * 0.5;
-				}
 				_width = _width || background.width;
 				_height = _height || background.height;
+				resetButtonPosition();
 			}
 		}
 		
@@ -185,6 +188,7 @@ package com.canaan.lib.base.component.controls
 		
 		public function set tick(value:Number):void {
 			_tick = value;
+			callLater(changeValue);
 		}
 		
 		public function get tick():Number {

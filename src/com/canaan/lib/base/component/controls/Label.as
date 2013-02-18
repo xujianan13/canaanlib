@@ -334,6 +334,8 @@ package com.canaan.lib.base.component.controls
 		
 		public function set margin(value:String):void {
 			_margin = ArrayUtil.copyAndFill(_margin, value);
+			_textField.x = _margin[0];
+			_textField.y = _margin[1];
 			callLater(changeSize);
 		}
 		
