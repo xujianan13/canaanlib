@@ -125,7 +125,7 @@ package com.canaan.lib.base.component.controls
 			_btnLabel.height = _btnLabel.textField.height;
 			_btnLabel.autoSize = TextFieldAutoSize.NONE;
 			_btnLabel.x = _labelMargin[0];
-			_btnLabel.y = (bitmap.height - _btnLabel.height) * 0.5 + _labelMargin[1];
+			_btnLabel.y = (bitmap.height - _btnLabel.height) * 0.5 + _labelMargin[1] - _labelMargin[3];
 		}
 		
 		public function set skin(value:String):void {
