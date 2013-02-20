@@ -29,6 +29,8 @@ package com.canaan.lib.base.component.controls
 		
 		protected function onTextChanged(event:Event):void {
 			_text = _textField.text;
+			_langArgs = null;
+			langId = null;
 		}
 		
 		public function set maxChars(value:int):void {

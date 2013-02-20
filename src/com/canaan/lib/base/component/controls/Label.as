@@ -19,6 +19,8 @@ package com.canaan.lib.base.component.controls
 	
 	public class Label extends UIComponent
 	{
+		public static var langFunc:Function;
+		
 		protected var _skin:String;
 		protected var _bitmap:Bitmap
 		protected var _textField:TextField;
@@ -28,6 +30,9 @@ package com.canaan.lib.base.component.controls
 		protected var _stroke:String;
 		protected var _scale9:Array;
 		protected var _margin:Array;
+		protected var _langId:String;
+		protected var _langArgs:Array;
+		protected var _langText:String;
 		
 		public function Label(text:String = "", skin:String = null)
 		{
@@ -58,11 +63,11 @@ package com.canaan.lib.base.component.controls
 		
 		protected function changeText():void {
 			_textField.defaultTextFormat = _format;
-			_htmlMode ? _textField.htmlText = _text : _textField.text = _text;
+			_htmlMode ? _textField.htmlText = text : _textField.text = text;
 		}
 		
 		public function get text():String {
-			return _text;
+			return _langText || _text;
 		}
 		
 		public function set text(value:String):void {
@@ -71,6 +76,33 @@ package com.canaan.lib.base.component.controls
 				callLater(changeText);
 				sendEvent(UIEvent.CHANGE);
 			}
+		}
+		
+		public function get langId():String {
+			return _langId;
+		}
+		
+		public function set langId(value:String):void {
+			if (_langId != value) {
+				_langId = value;
+				callLater(changeLangText);
+			}
+		}
+		
+		public function get langArgs():Array {
+			return _langArgs;
+		}
+		
+		public function set langArgs(value:Array):void {
+			if (_langArgs != value) {
+				_langArgs = value;
+				callLater(changeLangText);
+			}
+		}
+		
+		protected function changeLangText():void {
+			_langText = _langId ? (langFunc != null ? langFunc(_langId, _langArgs) : _langId) : null;
+			changeText();
 		}
 		
 		public function get skin():String {
