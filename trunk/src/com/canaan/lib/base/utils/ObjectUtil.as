@@ -30,7 +30,7 @@ package com.canaan.lib.base.utils
 	    }
 		
 		public static function objectToBytes(value:Object, compress:Boolean = false, bytes:ByteArray = null):ByteArray {
-			if (!bytes) {
+			if (bytes == null) {
 				bytes = new ByteArray();
 			} else {
 				bytes.clear();
@@ -62,13 +62,24 @@ package com.canaan.lib.base.utils
 	    }
 	    
 	    public static function merge(source:Object, target:Object):void {
-	    	if (source == null) {
+	    	if (source == null || target == null) {
 	    		return;
 	    	}
 	    	for (var key:Object in target) {
 	    		source[key] = target[key];
 	    	}
 	    }
+		
+		public static function fill(source:Object, target:Object):void {
+			if (source == null || target == null) {
+				return;
+			}
+			for (var key:Object in target) {
+				if (source.hasOwnProperty(key)) {
+					source[key] = target[key];
+				}
+			}
+		}
 	    
 	    public static function objectToArray(source:Object, addKey:Boolean = false, keyStr:String = "key", valueStr:String = "value"):Array {
 	    	if (source == null) {
