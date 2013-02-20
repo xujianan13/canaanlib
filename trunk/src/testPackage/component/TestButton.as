@@ -33,8 +33,6 @@ package testPackage.component
 			button.label = "label1";
 			addChild(button);
 			button.selected = true;
-//			button.skin = ;
-//			button.label = ;
 			button.left = 5;
 			button.top = 5;
 			button.toolTip = "fucku";
