@@ -17,7 +17,7 @@ package com.canaan.lib.base.managers
 		
 		private var dragInitiator:DisplayObject;
 		private var data:Object;
-		private var dragImage:Sprite;
+		private var dragImage:DisplayObject;
 		private var startX:Number;
 		private var startY:Number;
 		
@@ -37,7 +37,7 @@ package com.canaan.lib.base.managers
 			return instance;
 		}
 		
-		public function doDrag(dragInitiator:DisplayObject, dragImage:Sprite = null, data:Object = null):void {
+		public function doDrag(dragInitiator:DisplayObject, dragImage:DisplayObject = null, data:Object = null):void {
 			if (dragImage == null) {
 				dragImage = dragInitiator as Sprite;
 			}
@@ -69,7 +69,6 @@ package com.canaan.lib.base.managers
 		}
 		
 		private function mouseUpHandler():void {
-//			var dropTarget:IDropObject = getDropTarget(dragImage.dropTarget);		// 使用startDrag
 			var dropTarget:IDropObject = getDropTarget();
 			if (dropTarget != null) {
 				dropTarget.dispatchEvent(new DragEvent(DragEvent.DRAG_DROP, dragInitiator, data));
@@ -88,27 +87,14 @@ package com.canaan.lib.base.managers
 		private function getDropTarget():IDropObject {
 			var list:Array = StageManager.getInstance().stage.getObjectsUnderPoint(new Point(mouseX, mouseY));
 			for each (var value:DisplayObject in list) {
-				if (value is IDropObject) {
-					return value as IDropObject;
+				while (value) {
+					if (value is IDropObject) {
+						return value as IDropObject;
+					}
+					value = value.parent;
 				}
 			}
 			return null;
 		}
-		
-//		/**
-//		 * 使用startDrag时的获取释放对象 
-//		 * @param value
-//		 * @return 
-//		 * 
-//		 */		
-//		private function getDropTarget(value:DisplayObject):IDropObject {
-//			while (value) {
-//				if (value is IDropObject) {
-//					return value as IDropObject;
-//				}
-//				value = value.parent;
-//			}
-//			return null;
-//		}
 	}
 }
