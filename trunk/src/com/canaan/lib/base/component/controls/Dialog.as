@@ -56,10 +56,10 @@ package com.canaan.lib.base.component.controls
 		protected function validateDrag():Boolean {
 			var leftTopX:int = int(_dragArea[0]);
 			var leftTopY:int = int(_dragArea[1]);
-			var rightTopX:int = width - leftTopX - int(_dragArea[2]);
-			var rightTopY:int = int(_dragArea[1]) + int(_dragArea[3]);
-			return mouseX >= leftTopX && mouseX <= rightTopX &&
-				mouseY >= leftTopX && mouseY <= rightTopY;
+			var rightBottomX:int = width - leftTopX - int(_dragArea[2]);
+			var rightBottomY:int = int(_dragArea[1]) + int(_dragArea[3]);
+			return mouseX >= leftTopX && mouseX <= rightBottomX &&
+				mouseY >= leftTopX && mouseY <= rightBottomY;
 		}
 		
 		public function get dragArea():String {
