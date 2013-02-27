@@ -230,6 +230,7 @@ package com.canaan.lib.base.component.controls
 		override public function dispose():void {
 			super.dispose();
 			stop();
+			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 		}
 	}
