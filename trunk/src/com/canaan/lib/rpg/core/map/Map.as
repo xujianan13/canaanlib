@@ -54,9 +54,9 @@ package com.canaan.lib.rpg.core.map
 		protected var currentStartY:int;
 		
 		/**
-		 * 当前绘制的tile数组
+		 * 当前绘制的tile
 		 */
-		protected var drawTiles:Vector.<Point>;
+		protected var drawTiles:Dictionary;
 		
 		/**
 		 * 地图数据
@@ -71,7 +71,7 @@ package com.canaan.lib.rpg.core.map
 		/**
 		 * 地图绘制区
 		 */
-		//		protected var _drawBuffer:Shape;
+//		protected var _drawBuffer:Shape;
 		protected var _drawBuffer:Bitmap;
 		
 		/**
@@ -82,9 +82,8 @@ package com.canaan.lib.rpg.core.map
 		public function Map()
 		{
 			_center = new Point();
-			//			_drawBuffer = new Shape();
+//			_drawBuffer = new Shape();
 			_drawBuffer = new Bitmap();
-			drawTiles = new Vector.<Point>();
 		}
 		
 		/**
@@ -112,27 +111,32 @@ package com.canaan.lib.rpg.core.map
 		 * 加载地图切片
 		 */
 		protected function loadTiles():void {
-			//			_drawBuffer.cacheAsBitmap = false;
+//			_drawBuffer.cacheAsBitmap = false;
 			var point:Point;
 			var tilePath:String;
 			var loader:DLoader;
-			for (var i:int = drawTiles.length - 1; i >= 0; i--) {
-				point = drawTiles[i];
+			var bmpDataCache:BitmapData;
+			for (var key:String in drawTiles) {
+				point = drawTiles[key];
 				tilePath = _mapVo.getTilePath(point.x, point.y);
 				if (cache[tilePath] != null) {
-					buffer.copyPixels(cache[tilePath], cache[tilePath].rect, new Point(int((point.x - currentStartX) * _mapVo.tileWidth), int((point.y - currentStartY) * _mapVo.tileHeight)));
-					drawTiles.splice(i, 1);
+					bmpDataCache = cache[tilePath] as BitmapData;
+					if (bmpDataCache != null) {
+						buffer.copyPixels(bmpDataCache, bmpDataCache.rect, new Point(int((point.x - currentStartX) * _mapVo.tileWidth), int((point.y - currentStartY) * _mapVo.tileHeight)));
+						delete drawTiles[key];
+					}
 				} else {
 					loader = DLoader.fromPool();
 					loader.data = point;
 					loader.contentLoaderInfo.addEventListener(Event.COMPLETE, tileComplete);
 					loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 					loader.load(new URLRequest(tilePath));
+					cache[tilePath] = loader;
 				}
 			}
-			//			if (drawTiles.length == 0) {
-			//				_drawBuffer.cacheAsBitmap = true;
-			//			}
+//			if (drawTiles.length == 0) {
+//				_drawBuffer.cacheAsBitmap = true;
+//			}
 		}
 		
 		/**
@@ -161,14 +165,15 @@ package com.canaan.lib.rpg.core.map
 			
 			var loader:DLoader = loaderInfo.loader as DLoader;
 			var point:Point = loader.data as Point;
-			var key:String = _mapVo.getTilePath(point.x, point.y);
-			cache[key] = Bitmap(loaderInfo.content).bitmapData;
-			if (drawTiles.indexOf(point) != -1) {
-				buffer.copyPixels(cache[key], cache[key].rect, new Point(int((point.x - currentStartX) * _mapVo.tileWidth), int((point.y - currentStartY) * _mapVo.tileHeight)));
-				drawTiles.splice(drawTiles.indexOf(point), 1);
-				//				if (drawTiles.length == 0) {
-				//					_drawBuffer.cacheAsBitmap = true;
-				//				}
+			var key:String = _mapVo.getTileKey(point.x, point.y);
+			var tilePath:String = _mapVo.getTilePath(point.x, point.y);
+			cache[tilePath] = Bitmap(loaderInfo.content).bitmapData;
+			if (drawTiles[key]) {
+				buffer.copyPixels(cache[tilePath], cache[tilePath].rect, new Point(int((point.x - currentStartX) * _mapVo.tileWidth), int((point.y - currentStartY) * _mapVo.tileHeight)));
+				delete drawTiles[key];
+//				if (drawTiles.length == 0) {
+//					_drawBuffer.cacheAsBitmap = true;
+//				}
 			}
 			
 			DLoader.toPool(loader);
@@ -205,9 +210,9 @@ package com.canaan.lib.rpg.core.map
 			}
 			buffer = new BitmapData(_mapVo.mapWidth + _mapVo.tileWidth, _mapVo.mapHeight + _mapVo.tileHeight, false);
 			
-			//			_drawBuffer.graphics.clear();
-			//			_drawBuffer.graphics.beginBitmapFill(buffer);
-			//			_drawBuffer.graphics.drawRect(0, 0, buffer.width, buffer.height);
+//			_drawBuffer.graphics.clear();
+//			_drawBuffer.graphics.beginBitmapFill(buffer);
+//			_drawBuffer.graphics.drawRect(0, 0, buffer.width, buffer.height);
 			_drawBuffer.bitmapData = buffer;
 			
 			tileX = Math.ceil(_mapVo.mapWidth / _mapVo.tileWidth) + 1;
@@ -231,14 +236,14 @@ package com.canaan.lib.rpg.core.map
 			currentStartX = startX;
 			currentStartY = startY;
 			
-			drawTiles.length = 0;
+			drawTiles = new Dictionary();
 			drawThumbnail(startX, startY);
 			
 			var maxTileX:int = Math.min(startX + tileX, _mapVo.maxTileX);
 			var maxTileY:int = Math.min(startY + tileY, _mapVo.maxTileY);
 			for (var y:int = startY; y < maxTileY; y++) {
 				for (var x:int = startX; x < maxTileX; x++) {
-					drawTiles.push(new Point(x, y));
+					drawTiles[mapVo.getTileKey(x, y)] = new Point(x, y);
 				}
 			}
 			loadTiles();
@@ -295,9 +300,9 @@ package com.canaan.lib.rpg.core.map
 			return _bmpdThumbnail;
 		}
 		
-		//		public function get drawBuffer():Shape {
-		//			return _drawBuffer;
-		//		}
+//		public function get drawBuffer():Shape {
+//			return _drawBuffer;
+//		}
 		
 		public function get drawBuffer():Bitmap {
 			return _drawBuffer;
