@@ -9,6 +9,7 @@ package testPackage.display
 	
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	
 	public class TestBitmapEx extends Sprite
 	{
@@ -25,7 +26,7 @@ package testPackage.display
 			image = new Image("assets/Altar.png");
 			image.dispatcher.addEventListener(UIEvent.COMPLETE, onComplete);
 //			addChild(image);
-			image.addEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
+			stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
 		}
 		
 		private function onComplete():void {
@@ -41,7 +42,7 @@ package testPackage.display
 		}
 		
 		private function mouseMove(event:MouseEvent):void {
-
+//			trace(bitmap.getIntersect(new Point(mouseX, mouseY)));
 		}
 	}
 }
