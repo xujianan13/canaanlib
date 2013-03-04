@@ -85,8 +85,12 @@ package com.canaan.lib.base.managers
 		}
 		
 		private function getDropTarget():IDropObject {
-			var list:Array = StageManager.getInstance().stage.getObjectsUnderPoint(new Point(mouseX, mouseY));
-			for each (var value:DisplayObject in list) {
+			var stage:Stage = StageManager.getInstance().stage;
+			var list:Array = stage.getObjectsUnderPoint(new Point(stage.mouseX, stage.mouseY));
+			var length:int = list.length;
+			var value:DisplayObject;
+			for (var i:int = length - 1; i >= 0; i--) {
+				value = list[i];
 				while (value) {
 					if (value is IDropObject) {
 						return value as IDropObject;
