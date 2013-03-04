@@ -25,50 +25,52 @@ package com.canaan.lib.base.display
 		protected function initialize():void {
 			_bitmapEx = new BitmapEx();
 			addChild(_bitmapEx);
-			addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-			addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+			addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			addEventListener(MouseEvent.CLICK, onMouseClick);
-		}
-		
-		protected function onMouseUp(event:MouseEvent):void {
-			if (!_intersect) {
-				return;
-			}
-			if (_mouseUp != null) {
-				_mouseUp.apply();
-			}
+			addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+			addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 		}
 		
 		protected function onMouseDown(event:MouseEvent):void {
 			if (!_intersect) {
 				return;
 			}
-			if (_mouseDown != null) {
-				_mouseDown.apply();
-			}
+			executeMouseDown();
 		}
 		
-		protected function onMouseMove(event:MouseEvent):void {
-			var currTest:Boolean = getIntersect();
-			if (_intersect && _mouseMove != null) {
-				_mouseMove.apply();
+		protected function onMouseUp(event:MouseEvent):void {
+			if (!_intersect) {
+				return;
 			}
-			if (!_intersect && currTest && _mouseOver != null) {
-				_mouseOver.apply();
-			}
-			if (_intersect && !currTest && _mouseOut != null) {
-				_mouseOut.apply();
-			}
-			_intersect = currTest;
+			executeMouseUp();
 		}
 		
 		protected function onMouseClick(event:MouseEvent):void {
 			if (!_intersect) {
 				return;
 			}
-			if (_mouseClick != null) {
-				_mouseClick.apply();
+			executeMouseClick();
+		}
+		
+		protected function onMouseMove(event:MouseEvent):void {
+			var currTest:Boolean = getIntersect();
+			if (_intersect) {
+				executeMouseMove();
+			}
+			if (!_intersect && currTest) {
+				executeMouseOver();
+			}
+			if (_intersect && !currTest) {
+				executeMouseOut();
+			}
+			_intersect = currTest;
+		}
+		
+		protected function onMouseOut(event:MouseEvent):void {
+			if (_intersect) {
+				executeMouseOut();
+				_intersect = false;
 			}
 		}
 		
@@ -76,12 +78,49 @@ package com.canaan.lib.base.display
 			return _bitmapEx.getIntersect(new Point(_bitmapEx.mouseX, _bitmapEx.mouseY), this);
 		}
 		
+		protected function executeMouseDown():void {
+			if (_mouseDown != null) {
+				_mouseDown.apply();
+			}
+		}
+		
+		protected function executeMouseUp():void {
+			if (_mouseUp != null) {
+				_mouseUp.apply();
+			}
+		}
+		
+		protected function executeMouseMove():void {
+			if (_mouseMove != null) {
+				_mouseMove.apply();
+			}
+		}
+		
+		protected function executeMouseOver():void {
+			if (_mouseOver != null) {
+				_mouseOver.apply();
+			}
+		}
+		
+		protected function executeMouseOut():void {
+			if (_mouseOut != null) {
+				_mouseOut.apply();
+			}
+		}
+		
+		protected function executeMouseClick():void {
+			if (_mouseClick != null) {
+				_mouseClick.apply();
+			}
+		}
+		
 		override public function dispose():void {
 			super.dispose();
-			removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-			removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+			removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 			removeEventListener(MouseEvent.CLICK, onMouseClick);
+			removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+			removeEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 			_mouseUp = null;
 			_mouseDown = null;
 			_mouseMove = null;

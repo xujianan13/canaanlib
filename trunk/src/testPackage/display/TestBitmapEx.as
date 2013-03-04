@@ -36,8 +36,8 @@ package testPackage.display
 			bitmap = new BitmapEx();
 			bitmap.bitmapDataEx = bitmapData;
 			addChild(bitmap);
-			bitmap.setScale(1.5, 1.5);
-			bitmap.setPivotXY(5, 5);
+			bitmap.setScale(1, 1);
+			bitmap.setPivotXY(0, 0);
 //			bitmap.rotation = 45;
 		}
 		

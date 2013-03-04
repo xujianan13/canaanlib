@@ -47,12 +47,12 @@ package com.canaan.lib.base.display
 			return null;
 		}
 		
-		public function remove():void {
-			DisplayUtil.removeChild(parent, this);
+		public function remove(dispose:Boolean = false):void {
+			DisplayUtil.removeChild(parent, this, dispose);
 		}
 		
-		public function removeAllChildren():void {
-			DisplayUtil.removeAllChildren(this);
+		public function removeAllChildren(dispose:Boolean = false):void {
+			DisplayUtil.removeAllChildren(this, dispose);
 		}
 		
 		public function get resizeHandler():Function {
@@ -72,7 +72,7 @@ package com.canaan.lib.base.display
 		}
 		
 		public function dispose():void {
-			DisplayUtil.removeAllChildren(this, true);
+			removeAllChildren(true);
 			remove();
 			graphics.clear();
 			resizeHandler = null;

@@ -7,6 +7,7 @@ package testPackage.display
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.filters.GlowFilter;
 	import flash.net.URLRequest;
 	
 	public class TestInteractiveSprite extends Sprite
@@ -43,10 +44,12 @@ package testPackage.display
 		
 		private function onMouseOver():void {
 			trace("onMouseOver");
+			filters = [new GlowFilter()];
 		}
 		
 		private function onMouseout():void {
 			trace("onMouseout");
+			filters = null;
 		}
 		
 		private function onMouseMove():void {
