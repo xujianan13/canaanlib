@@ -115,9 +115,8 @@ package com.canaan.lib.base.utils
 		 * 
 		 */		
 		public static function getLinePoint2(x:Number, y:Number, length:Number, angle:int):Point {
-			var radian:Number = angleToRadian(angle);
-			var xx:Number = x + length * cos(radian);
-			var yy:Number = y + length * sin(radian);
+			var xx:Number = x + length * cos(angle);
+			var yy:Number = y + length * sin(angle);
 			return new Point(xx, yy);
 		}
 	}
