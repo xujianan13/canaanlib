@@ -80,8 +80,8 @@ package com.canaan.lib.base.component.controls
 			return child;
 		}
 		
-		override public function removeAllChildren():void {
-			_content.removeAllChildren();
+		override public function removeAllChildren(dispose:Boolean = false):void {
+			_content.removeAllChildren(dispose);
 			callLater(changeSize);
 		}
 		
