@@ -23,6 +23,8 @@ package com.canaan.lib.base.component
 	
 	public class UIComponent extends BaseSprite implements IUIComponent, IToolTipManagerClient, IDispose
 	{
+		public static var langFunc:Function;
+		
 		private var _dispatcher:CEventDispatcher;
 		protected var _data:Object;
 		protected var _width:Number = 0;
@@ -32,6 +34,8 @@ package com.canaan.lib.base.component
 		protected var _toolTipClass:Class;
 		protected var _toolTipPosition:String;
 		protected var _toolTipOffset:Point;
+		protected var _toolTipLangId:String;
+		protected var _toolTipLangArgs:Array;
 		
 		protected var methods:Vector.<Method> = new Vector.<Method>();
 		protected var layoutObject:Layout;
@@ -206,6 +210,7 @@ package com.canaan.lib.base.component
 		
 		override public function dispose():void {
 			super.dispose();
+			_data = null;
 			methods.length = 0;
 			methods = null;
 			toolTip = null;
@@ -224,6 +229,32 @@ package com.canaan.lib.base.component
 				ToolTipManager.getInstance().registerToolTip(this, oldValue, value);
 				sendEvent(UIEvent.TOOL_TIP_CHANGED);
 			}
+		}
+		
+		public function get toolTipLangId():String {
+			return _toolTipLangId;
+		}
+		
+		public function set toolTipLangId(value:String):void {
+			if (_toolTipLangId != value) {
+				_toolTipLangId = value;
+				callLater(changeLocalToolTip);
+			}
+		}
+		
+		public function get toolTipLangArgs():Array {
+			return _toolTipLangArgs;
+		}
+		
+		public function set toolTipLangArgs(value:Array):void {
+			if (_toolTipLangArgs != value) {
+				_toolTipLangArgs = value;
+				callLater(changeLocalToolTip);
+			}
+		}
+		
+		protected function changeLocalToolTip():void {
+			toolTip = langFunc != null ? langFunc(_toolTipLangId, _toolTipLangArgs) : _toolTipLangId;
 		}
 		
 		public function get toolTipClass():Class {

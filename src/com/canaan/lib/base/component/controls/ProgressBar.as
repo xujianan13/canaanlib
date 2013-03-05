@@ -90,6 +90,22 @@ package com.canaan.lib.base.component.controls
 			return _barLabel.text;
 		}
 		
+		public function set langId(value:String):void {
+			_barLabel.langId = value;
+		}
+		
+		public function get langId():String {
+			return _barLabel.langId;
+		}
+		
+		public function set langArgs(value:Array):void {
+			_barLabel.langArgs = value;
+		}
+		
+		public function get langArgs():Array {
+			return _barLabel.langArgs;
+		}
+		
 		public function get barLabel():Label {
 			return _barLabel;
 		}

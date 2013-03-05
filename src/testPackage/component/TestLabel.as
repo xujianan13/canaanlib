@@ -1,5 +1,6 @@
 package testPackage.component
 {
+	import com.canaan.lib.base.component.UIComponent;
 	import com.canaan.lib.base.component.controls.Label;
 	import com.canaan.lib.base.core.Application;
 	import com.canaan.lib.base.core.Method;
@@ -11,7 +12,7 @@ package testPackage.component
 	{
 		public function TestLabel()
 		{
-			Label.langFunc = langFunc;
+			UIComponent.langFunc = langFunc;
 			LocalManager.getInstance().loadResources("test1 = testString", "test");
 			LocalManager.getInstance().loadResources("test2 = testString {0} is ok", "test");
 			Application.initialize(this, new Method(initializeComplete));
