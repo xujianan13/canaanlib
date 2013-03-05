@@ -69,6 +69,7 @@ package com.canaan.lib.base.component.controls
 		
 		override public function dispose():void {
 			super.dispose();
+			_mouseClickHandler = null;
 			removeEventListener(MouseEvent.CLICK, mouseHandler);
 			removeEventListener(MouseEvent.MOUSE_DOWN, mouseHandler);
 			removeEventListener(MouseEvent.MOUSE_UP, mouseHandler);
@@ -152,6 +153,32 @@ package com.canaan.lib.base.component.controls
 		
 		public function get label():String {
 			return _btnLabel.text;
+		}
+		
+		public function set langId(value:String):void {
+			if (_btnLabel.langId != value) {
+				_btnLabel.langId = value;
+				callLater(changeTiles);
+				callLater(changeState);
+				callLater(changeLabelSize);
+			}
+		}
+		
+		public function get langId():String {
+			return _btnLabel.langId;
+		}
+		
+		public function set langArgs(value:Array):void {
+			if (_btnLabel.langArgs != value) {
+				_btnLabel.langArgs = value;
+				callLater(changeTiles);
+				callLater(changeState);
+				callLater(changeLabelSize);
+			}
+		}
+		
+		public function get langArgs():Array {
+			return _btnLabel.langArgs;
 		}
 		
 		public function set toggle(value:Boolean):void {

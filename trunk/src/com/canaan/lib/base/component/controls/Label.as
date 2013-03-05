@@ -19,8 +19,6 @@ package com.canaan.lib.base.component.controls
 	
 	public class Label extends UIComponent
 	{
-		public static var langFunc:Function;
-		
 		protected var _skin:String;
 		protected var _bitmap:Bitmap
 		protected var _textField:TextField;
