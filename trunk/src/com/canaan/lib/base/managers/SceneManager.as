@@ -61,7 +61,6 @@ package com.canaan.lib.base.managers
 				return false;
 			}
 			ModuleManager.getInstance().removeModules(currentScene.sceneName);
-			deleteScene(currentScene);
 			currentScene.addEventListener(SceneEvent.EXIT_SCENE, onExitScene);
 			currentScene.exitScene();
 			return true;
