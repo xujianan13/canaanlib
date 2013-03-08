@@ -72,8 +72,11 @@ package com.canaan.lib.base.component.controls
 		
 		override protected function changeSize():void {
 			super.changeSize();
-			slider.width = _width - upButton.width - downButton.width;
-			slider.height = _height - upButton.height - downButton.height;
+			if (slider.direction == Direction.HORIZONTAL) {
+				slider.width = width - upButton.width - downButton.width;
+			} else {
+				slider.height = height - upButton.height - downButton.height;
+			}
 			resetButtonPosition();
 		}
 		

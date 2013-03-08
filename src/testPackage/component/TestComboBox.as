@@ -35,7 +35,7 @@ package testPackage.component
 			comboBox = new ComboBox("png.comp.combobox", "类可使用表示,位带符号整数的数据,这意味着无需对象,不需要使用构造函数,这意味着需要对象才能,不需要浮点数,如果您正在处理超过,无需使用构造函数");
 			comboBox.width = 150;
 			comboBox.maxRows = 7;
-			comboBox.scrollBarSkin = "png.comp.vscroll";
+//			comboBox.scrollBarSkin = "png.comp.vscroll";
 			comboBox.x = 100;
 			comboBox.y = 100;
 			comboBox.position = Position.RIGHT;

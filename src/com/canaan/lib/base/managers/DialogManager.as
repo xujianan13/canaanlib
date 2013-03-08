@@ -76,17 +76,20 @@ package com.canaan.lib.base.managers
 				var dialogTween:Tween = Tween.fromPool(dialog, 0.25);
 				dialogTween.fadeTo(1);
 				dialogTween.start();
+				if (isNaN(x) && isNaN(y)) {
+					dialog.center();
+				} else {
+					dialog.moveTo(x, y);
+				}
 			}
 			addChild(dialog);
 			dialog.isPopup = true;
-			if (isNaN(x) && isNaN(y)) {
-				dialog.center();
-			} else {
-				dialog.moveTo(x, y);
-			}
 		}
 		
 		public function close(dialog:Dialog):void {
+			if (!dialog.isPopup) {
+				return;
+			}
 			dialog.remove();
 			ArrayUtil.removeElements(dialogs, dialog);
 			dialog.isPopup = false;

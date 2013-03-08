@@ -6,8 +6,10 @@ package testPackage.component
 	import com.canaan.lib.base.core.Method;
 	import com.canaan.lib.base.managers.ResourceManager;
 	import com.canaan.lib.base.managers.ToolTipManager;
+	import com.canaan.lib.base.utils.ArrayUtil;
 	
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 	
 	public class TestButton extends Sprite
 	{
@@ -22,22 +24,22 @@ package testPackage.component
 		private function onInitializeComplete():void {
 			addChild(ToolTipManager.getInstance());
 			ToolTipManager.getInstance().hideDelay = 2000;
-			ResourceManager.getInstance().add("assets/main.swf");
+			ResourceManager.getInstance().add("assets/comp.swf");
 			ResourceManager.getInstance().load(new Method(complete));
 		}
 		
 		private function complete():void {
 //			button = new Button("png.comp.btn_blue", "test1");
 			button = new Button();
-			button.skin = "png.main.btn_blue";
+			button.skin = "png.comp.btn_blue";
 			button.label = "label1";
 			addChild(button);
-			button.selected = true;
+//			button.selected = true;
 			button.left = 5;
 			button.top = 5;
 			button.toolTip = "fucku";
 			button.toolTipPosition = Position.BELOW;
-			button.mouseClickHandler = new Method(mouseClick);
+			stage.addEventListener(MouseEvent.CLICK, mouseClick);
 			
 			
 //			var label:Label = new Label("test", "png.comp.btn_blue");
@@ -71,8 +73,10 @@ package testPackage.component
 			trace(button.btnLabel.width);
 		}
 		
-		private function mouseClick():void {
-			button.width = Math.random() * 200;
+		private function mouseClick(event:MouseEvent):void {
+			
+			button.label = ArrayUtil.getRandomItem(["a", "ab", "abc", "abcd"]);
+//			button.width = Math.random() * 200;
 		}
 	}
 }

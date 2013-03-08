@@ -7,11 +7,11 @@ package com.canaan.lib.base.component.controls
 	import com.canaan.lib.base.managers.ResourceManager;
 	import com.canaan.lib.base.utils.ArrayUtil;
 	import com.canaan.lib.base.utils.DisplayUtil;
+	import com.canaan.lib.base.utils.TextUtil;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.MouseEvent;
-	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormatAlign;
 	
 	public class Button extends UIComponent implements IListItem
@@ -120,11 +120,8 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		protected function changeLabelSize():void {
-			_btnLabel.validateNow();
 			_btnLabel.width = bitmap.width - _labelMargin[0] - _labelMargin[2];
-			_btnLabel.autoSize = TextFieldAutoSize.LEFT;
-			_btnLabel.height = _btnLabel.textField.height;
-			_btnLabel.autoSize = TextFieldAutoSize.NONE;
+			_btnLabel.height = TextUtil.getTextHeight(_btnLabel.format);
 			_btnLabel.x = _labelMargin[0];
 			_btnLabel.y = (bitmap.height - _btnLabel.height) * 0.5 + _labelMargin[1] - _labelMargin[3];
 		}

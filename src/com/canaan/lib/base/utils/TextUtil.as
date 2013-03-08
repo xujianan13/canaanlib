@@ -1,10 +1,14 @@
 package com.canaan.lib.base.utils
 {
 	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFormat;
 	
 	public class TextUtil
 	{
 		public static const TEXT_WIDTH_PADDING:Number = 5;
+		
+		private static var gTextField:TextField;
 
 		/**
 		 * 截断字符串
@@ -35,6 +39,16 @@ package com.canaan.lib.base.utils
 			}
 			htmlText = "<font color=\"" + color + "\">" + htmlText + "</font>";
 			return htmlText;
+		}
+		
+		public static function getTextHeight(format:TextFormat):Number {
+			if (gTextField == null) {
+				gTextField = new TextField();
+				gTextField.autoSize = TextFieldAutoSize.LEFT;
+				gTextField.text = "Text";
+			}
+			gTextField.defaultTextFormat = format;
+			return gTextField.height;
 		}
 	}
 }
