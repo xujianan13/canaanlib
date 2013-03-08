@@ -91,8 +91,6 @@ package com.canaan.lib.rpg.core.map
 		 */
 		public function initialize(mapVo:MapVo):void {
 			_mapVo = mapVo;
-			_center.x = _mapVo.mapWidth / 2;
-			_center.y = _mapVo.mapHeight / 2;
 			resize();
 			loadThumbnail();
 		}
