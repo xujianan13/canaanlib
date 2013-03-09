@@ -22,6 +22,9 @@ package com.canaan.lib.base.managers
 		private static var canInstantiate:Boolean;
 		private static var instance:ToolTipManager;
 		
+		public static var offsetX:int = 10;
+		public static var offsetY:int = 10;
+		
 		private var _enabled:Boolean = true;
 		private var _showDelay:Number = Styles.toolTipShowDelay;
 		private var _hideDelay:Number = Styles.toolTipHideDelay;
@@ -175,7 +178,7 @@ package com.canaan.lib.base.managers
 		
 		private function targetChanged():void {
 			if (previousTarget && currentTarget) {
-				previousTarget.sendEvent(UIEvent.TOOL_TIP_HIDE);
+				previousTarget.sendEvent(UIEvent.TOOL_TIP_CHANGED);
 			}
 			reset();
 			if (currentTarget) {
@@ -211,6 +214,7 @@ package com.canaan.lib.base.managers
 		private function reset():void {
 			TimerManager.getInstance().clear(showToolTip);
 			TimerManager.getInstance().clear(hideTip);
+			StageManager.getInstance().deleteHandler(MouseEvent.MOUSE_MOVE, moveToolTip);
 			if (currentToolTip) {
 				removeChild(currentToolTip as DisplayObject);
 				currentToolTip = null;
@@ -278,8 +282,8 @@ package com.canaan.lib.base.managers
 					yy = rect.top;
 					break;
 				default:
-					xx = stage.mouseX + 10; 
-					yy = stage.mouseY + 10;
+					moveToolTip();
+					StageManager.getInstance().registerHandler(MouseEvent.MOUSE_MOVE, moveToolTip);
 					break;
 			}
 			xx -= toolTipRect.left;
@@ -326,6 +330,32 @@ package com.canaan.lib.base.managers
 		
 		private function scrubFunction():void {
 			
+		}
+		
+		private function moveToolTip():void {
+			var stage:Stage = StageManager.getInstance().stage;
+			if (tipRight > stage.stageWidth) {
+				currentToolTip.x = mouseX - currentToolTip.width - offsetX;
+			} else {
+				currentToolTip.x = mouseX + offsetX;
+			}
+			if (tipTop < 0 || tipBottom > stage.stageHeight) {
+				currentToolTip.y = mouseY - currentToolTip.height - offsetY;
+			} else {
+				currentToolTip.y = mouseY + offsetY;
+			}
+		}
+		
+		private function get tipRight():Number {
+			return mouseX + currentToolTip.width + offsetX;
+		}
+		
+		private function get tipTop():Number {
+			return mouseY + offsetY;
+		}
+		
+		private function get tipBottom():Number {
+			return mouseY + currentToolTip.height + offsetY;
 		}
 	}
 }

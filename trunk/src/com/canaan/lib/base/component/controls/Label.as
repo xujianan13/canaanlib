@@ -30,7 +30,6 @@ package com.canaan.lib.base.component.controls
 		protected var _margin:Array;
 		protected var _langId:String;
 		protected var _langArgs:Array;
-		protected var _langText:String;
 		
 		public function Label(text:String = "", skin:String = null)
 		{
@@ -61,11 +60,11 @@ package com.canaan.lib.base.component.controls
 		
 		protected function changeText():void {
 			_textField.defaultTextFormat = _format;
-			_htmlMode ? _textField.htmlText = text : _textField.text = text;
+			_htmlMode ? _textField.htmlText = text : _textField.text = _text;
 		}
 		
 		public function get text():String {
-			return _langText || _text;
+			return _text;
 		}
 		
 		public function set text(value:String):void {
@@ -99,7 +98,7 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		protected function changeLangText():void {
-			_langText = _langId ? (langFunc != null ? langFunc(_langId, _langArgs) : _langId) : null;
+			_text = _langId ? (langFunc != null ? langFunc(_langId, _langArgs) : _langId) : "";
 			changeText();
 		}
 		
