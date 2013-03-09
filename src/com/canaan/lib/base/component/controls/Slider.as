@@ -151,7 +151,6 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		public function set value(num:Number):void {
-			num = Math.round(num / _tick) * _tick;
 			num = Math.min(_maxValue, Math.max(_minValue, num));
 			if (_value != num) {
 				_value = num;

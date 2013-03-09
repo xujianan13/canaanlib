@@ -10,7 +10,7 @@ package com.canaan.lib.base.utils
 				// 获取所有名称为name的节点集合
 				var xmlList:XMLList = root[name];
 				// 如果节点集合长度为1
-				if (xmlList.length() == 1) {
+				if (xmlList.length() == 1 && root.@array != "true") {
 					result[name] = XMLElementsToObject(child);
 				} else {
 					var array:Array = [];
@@ -44,7 +44,7 @@ package com.canaan.lib.base.utils
 				// 遍历该节点的所有子节点
 				for each (var child:XML in children) {
 					// 如果子节点的值等于集合的值说明该节点
-					if (child == children.toString()) {
+					if (child == children.toString() && xml.@array != "true") {
 						return child.toString();
 					}
 				}
