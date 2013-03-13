@@ -52,6 +52,10 @@ package com.canaan.lib.base.component.controls
 				if (selectedItem != null) {
 					selectedItem.selected = true;
 				}
+				if (_changeCallback != null) {
+					_changeCallback.applyWith([selectedValue]);
+				}
+				sendEvent(UIEvent.CHANGE);
 			}
 		}
 		
@@ -127,10 +131,6 @@ package com.canaan.lib.base.component.controls
 		
 		protected function itemClickHandler(item:IListItem):void {
 			selectedItem = item;
-			if (_changeCallback != null) {
-				_changeCallback.applyWith([selectedValue]);
-			}
-			sendEvent(UIEvent.CHANGE);
 		}
 		
 		public function set changeCallback(value:Method):void {

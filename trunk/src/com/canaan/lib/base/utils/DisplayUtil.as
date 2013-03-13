@@ -168,7 +168,6 @@ package com.canaan.lib.base.utils
 					if (filter is filterType) {
 						filters.splice(i, 1);
 					}
-					i--;
 				}
 				target.filters = filters;
 			}
