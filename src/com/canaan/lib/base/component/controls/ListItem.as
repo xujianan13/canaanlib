@@ -33,6 +33,7 @@ package com.canaan.lib.base.component.controls
 			removeEventListener(MouseEvent.MOUSE_MOVE, onMouseUp);
 			removeEventListener(MouseEvent.ROLL_OVER, onMouseOver);
 			removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
+			_mouseClickHandler = null;
 		}
 		
 		protected function onMouseClick(event:MouseEvent):void {

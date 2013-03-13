@@ -1,5 +1,7 @@
 package com.canaan.lib.base.component.controls
 {
+	import com.canaan.lib.base.utils.TextUtil;
+	
 	import flash.text.TextFieldAutoSize;
 
 	public class CheckBox extends Button
@@ -22,6 +24,7 @@ package com.canaan.lib.base.component.controls
 		
 		override protected function changeLabelSize():void {
 			_btnLabel.validateNow();
+			_btnLabel.height = TextUtil.getTextHeight(_btnLabel.format);
 			_btnLabel.x = bitmap.width + _labelMargin[0];
 			_btnLabel.y = (bitmap.height -_btnLabel.height) * 0.5 + _labelMargin[1];
 		}

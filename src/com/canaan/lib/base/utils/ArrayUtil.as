@@ -141,7 +141,6 @@ package com.canaan.lib.base.utils
 					if (i != length - 1) {
 						key += separator;
 					}
-					i++;
 				}
 				result[key] = object;
 			}
