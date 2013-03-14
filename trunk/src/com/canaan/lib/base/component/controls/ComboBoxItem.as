@@ -35,7 +35,7 @@ package com.canaan.lib.base.component.controls
 			_label.autoSize = TextFieldAutoSize.NONE;
 		}
 
-		override protected function refresh():void {
+		override public function refresh():void {
 			_label.text = _data.toString();
 		}
 		
