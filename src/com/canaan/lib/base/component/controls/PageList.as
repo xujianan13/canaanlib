@@ -9,7 +9,7 @@ package com.canaan.lib.base.component.controls
 			super(skin, row, column);
 		}
 		
-		override protected function refresh():void {
+		override public function refresh():void {
 			if (_data != null) {
 				var itemIndex:int;
 				var l:int = size;

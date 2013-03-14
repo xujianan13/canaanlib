@@ -28,7 +28,7 @@ package testPackage.component
 			layout = Layouts.HORIZONTAL;
 		}
 		
-		override protected function refresh():void {
+		override public function refresh():void {
 			button.label = _data.toString();
 		}
 	}

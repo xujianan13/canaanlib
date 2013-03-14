@@ -70,7 +70,7 @@ package com.canaan.lib.base.component.controls
 			refresh();
 		}
 		
-		protected function refresh():void {
+		public function refresh():void {
 			
 		}
 		

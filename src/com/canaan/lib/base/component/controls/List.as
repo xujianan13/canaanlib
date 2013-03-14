@@ -75,7 +75,7 @@ package com.canaan.lib.base.component.controls
 			}
 		}
 		
-		protected function refresh():void {
+		public function refresh():void {
 			if (_data != null) {
 				var l:int = size;
 				var item:ListItem;
