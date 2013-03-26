@@ -1,5 +1,6 @@
 package com.canaan.lib.base.display
 {
+	import com.canaan.lib.base.interfaces.IDispose;
 	import com.canaan.lib.base.managers.StageManager;
 	import com.canaan.lib.base.utils.DisplayUtil;
 	
@@ -7,7 +8,7 @@ package com.canaan.lib.base.display
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
-	public class BaseSprite extends Sprite
+	public class BaseSprite extends Sprite implements IDispose
 	{
 		protected var _resizeHandler:Function;
 		

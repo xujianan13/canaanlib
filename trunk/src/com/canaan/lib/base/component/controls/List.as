@@ -91,6 +91,7 @@ package com.canaan.lib.base.component.controls
 						if (_autoVisible) {
 							item.visible = false;
 						}
+						item.data = null;
 						item.selected = false;
 					}
 				}
@@ -146,7 +147,7 @@ package com.canaan.lib.base.component.controls
 		public function set autoVisible(value:Boolean):void {
 			if (_autoVisible != value) {
 				_autoVisible = value;
-				var l:int = size;
+				var l:int = _items.length;
 				var item:ListItem;
 				for (var i:int = 0; i < l; i++) {
 					item = _items[i];

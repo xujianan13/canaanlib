@@ -27,6 +27,7 @@ package com.canaan.lib.base.component.controls
 						if (_autoVisible) {
 							item.visible = false;
 						}
+						item.data = null;
 						item.selected = false;
 					}
 				}

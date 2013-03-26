@@ -43,8 +43,10 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		override protected function changeSize():void {
-			_textField.width = _width - scrollBar.width - Styles.textAreaTextOffsetX;
-			_textField.height = _height;
+			_textField.x = _margin[0];
+			_textField.y = _margin[1];
+			_textField.width = _width - scrollBar.width - Styles.textAreaTextOffsetX - _margin[0] - _margin[2];
+			_textField.height = _height - _margin[1] - _margin[3];
 			scrollBar.height = _height;
 			scrollBar.x = _width - scrollBar.width;
 		}

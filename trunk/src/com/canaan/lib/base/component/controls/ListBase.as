@@ -130,7 +130,9 @@ package com.canaan.lib.base.component.controls
 		//		}
 		
 		protected function itemClickHandler(item:IListItem):void {
-			selectedItem = item;
+			if (item.data != null) {
+				selectedItem = item;
+			}
 		}
 		
 		public function set changeCallback(value:Method):void {
