@@ -117,6 +117,7 @@ package com.canaan.lib.base.managers
 			} else if (oldValue && !newValue) {
 				target.removeEventListener(MouseEvent.MOUSE_OVER, toolTipMouseOverHandler);
 				target.removeEventListener(MouseEvent.MOUSE_OUT, toolTipMouseOutHandler);
+				checkIfTargetChanged(target);
 			}
 		}
 		

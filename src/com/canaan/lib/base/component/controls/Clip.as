@@ -23,6 +23,7 @@ package com.canaan.lib.base.component.controls
 		protected var _isPlaying:Boolean;
 		protected var _autoPlay:Boolean = true;
 		protected var _autoRemoved:Boolean;
+		protected var _autoDispose:Boolean;
 		
 		protected var tiles:Vector.<BitmapData>;
 		protected var from:int;
@@ -150,6 +151,9 @@ package com.canaan.lib.base.component.controls
 				stop();
 				DisplayUtil.removeChild(parent, this);
 			}
+			if (_autoDispose) {
+				dispose();
+			}
 		}
 		
 		public function fromTo(from:Object = null, to:Object = null, loop:Boolean = false, onComplete:Method = null):void {
@@ -216,6 +220,14 @@ package com.canaan.lib.base.component.controls
 		
 		public function get autoRemoved():Boolean {
 			return _autoRemoved;
+		}
+		
+		public function set autoDispose(value:Boolean):void {
+			_autoDispose = value;
+		}
+		
+		public function get autoDispose():Boolean {
+			return _autoDispose;
 		}
 		
 		public function get isPlaying():Boolean {

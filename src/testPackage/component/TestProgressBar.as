@@ -25,11 +25,10 @@ package testPackage.component
 		private function complete():void {
 			progressBar = new ProgressBar();
 			addChild(progressBar);
-			progressBar.label = "牛逼";
-			progressBar.width = 100;
 			progressBar.skin = "png.comp.progress";
 			progressBar.width = 200;
 			progressBar.scale9 = "5,5,5,5";
+			progressBar.value = 0.5;
 //			progressBar.height = 50;
 //			progressBar.value = 0.5;
 //			progressBar.label = "牛逼";
