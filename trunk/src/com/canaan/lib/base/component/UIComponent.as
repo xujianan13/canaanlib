@@ -42,7 +42,7 @@ package com.canaan.lib.base.component
 		
 		public function UIComponent()
 		{
-			_dispatcher = new CEventDispatcher();
+			_dispatcher = new CEventDispatcher(this);
 			tabEnabled = false;
 			tabChildren = false;
 			mouseChildren = false;

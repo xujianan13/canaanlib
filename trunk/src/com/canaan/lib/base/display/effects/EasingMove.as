@@ -12,14 +12,20 @@ package com.canaan.lib.base.display.effects
 	{
 		private var mTarget:DisplayObject;
 		private var mTween:Tween;
+		private var mOnComplete:Function;
+		private var mOnCompleteArgs:Array;
 		
 		public function EasingMove()
 		{
 		}
 		
-		public function start(target:DisplayObject, time:Number, startX:Number, startY:Number, endX:Number, endY:Number, transition:String = "linear"):void {
+		public function start(target:DisplayObject, time:Number, startX:Number, startY:Number,
+							  endX:Number, endY:Number, onComplete:Function = null, onCompleteArgs:Array = null,
+							  transition:String = "linear"):void {
 			stop();
 			mTarget = target;
+			mOnComplete = onComplete;
+			mOnCompleteArgs = onCompleteArgs;
 			easingMove(time, startX, startY, endX, endY, transition);
 		}
 		
@@ -30,6 +36,11 @@ package com.canaan.lib.base.display.effects
 			if (mTween) {
 				Tween.toPool(mTween);
 				mTween = null;
+			}
+			if (mOnComplete != null) {
+				mOnComplete.apply(null, mOnCompleteArgs);
+				mOnComplete = null;
+				mOnCompleteArgs = null;
 			}
 		}
 		

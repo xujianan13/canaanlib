@@ -8,7 +8,7 @@ package com.canaan.lib.base.events
 		
 		private static var eventPool:Vector.<CEvent> = new <CEvent>[];
 		
-		protected var _target:CEventDispatcher;
+		protected var _target:Object;
 		protected var _type:String;
 		protected var _data:Object;
 		
@@ -18,7 +18,7 @@ package com.canaan.lib.base.events
 			_data = data;
 		}
 		
-		public function get target():CEventDispatcher {
+		public function get target():Object {
 			return _target;
 		}
 		
@@ -34,7 +34,7 @@ package com.canaan.lib.base.events
 			return "[" + getQualifiedClassName(this).split("::").pop() + " type=\"" + _type + "\"]";
 		}
 		
-		internal function setTarget(target:CEventDispatcher):void {
+		internal function setTarget(target:Object):void {
 			_target = target;
 		}
 		

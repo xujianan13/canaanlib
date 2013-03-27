@@ -6,10 +6,12 @@ package com.canaan.lib.base.events
 
 	public class CEventDispatcher implements ICEventDispatcher
 	{
+		private var _target:Object;
 		private var eventListeners:Dictionary;
 		
-		public function CEventDispatcher()
+		public function CEventDispatcher(target:Object = null)
 		{
+			_target = target || null;
 		}
 		
 		public function addEventListener(type:String, listener:Function):void {
@@ -57,7 +59,7 @@ package com.canaan.lib.base.events
 			if (eventListeners == null || !(event.type in eventListeners)) {
 				return;
 			}
-			event.setTarget(this);
+			event.setTarget(_target);
 			invoke(event);
 		}
 		
@@ -73,7 +75,7 @@ package com.canaan.lib.base.events
 			var listeners:Vector.<Function> = eventListeners ? eventListeners[event.type] : null;
 			var numListeners:int = listeners == null ? 0 : listeners.length;
 			if (numListeners) {
-				event.setTarget(this);
+				event.setTarget(_target);
 				for each (var listener:Function in listeners) {
 					var numArgs:int = listener.length;
 					if (numArgs == 0) {

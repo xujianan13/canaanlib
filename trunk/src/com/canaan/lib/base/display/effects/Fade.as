@@ -12,14 +12,19 @@ package com.canaan.lib.base.display.effects
 	{
 		private var mTarget:DisplayObject;
 		private var mTween:Tween;
+		private var mOnComplete:Function;
+		private var mOnCompleteArgs:Array;
 		
 		public function Fade()
 		{
 		}
 		
-		public function start(target:DisplayObject, time:Number, startAlpha:Number = 0, endAlpha:Number = 1):void {
+		public function start(target:DisplayObject, time:Number, startAlpha:Number = 0, endAlpha:Number = 1,
+							  onComplete:Function = null, onCompleteArgs:Array = null):void {
 			stop();
 			mTarget = target;
+			mOnComplete = onComplete;
+			mOnCompleteArgs = onCompleteArgs;
 			fade(time, startAlpha, endAlpha);
 		}
 		
@@ -30,6 +35,11 @@ package com.canaan.lib.base.display.effects
 			if (mTween) {
 				Tween.toPool(mTween);
 				mTween = null;
+			}
+			if (mOnComplete != null) {
+				mOnComplete.apply(null, mOnCompleteArgs);
+				mOnComplete = null;
+				mOnCompleteArgs = null;
 			}
 		}
 		
