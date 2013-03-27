@@ -149,7 +149,7 @@ package com.canaan.lib.base.component.controls
 			sendEvent(UIEvent.ANIMATION_COMPLETE);
 			if (_autoRemoved) {
 				stop();
-				DisplayUtil.removeChild(parent, this);
+				remove();
 			}
 			if (_autoDispose) {
 				dispose();
