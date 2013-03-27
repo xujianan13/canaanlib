@@ -7,7 +7,6 @@ package com.canaan.lib.base.component.controls
 	import com.canaan.lib.base.events.UIEvent;
 	import com.canaan.lib.base.managers.ResourceManager;
 	import com.canaan.lib.base.managers.TimerManager;
-	import com.canaan.lib.base.utils.DisplayUtil;
 	
 	import flash.display.MovieClip;
 	import flash.events.Event;
@@ -122,7 +121,7 @@ package com.canaan.lib.base.component.controls
 			sendEvent(UIEvent.ANIMATION_COMPLETE);
 			if (_autoRemoved) {
 				stop();
-				DisplayUtil.removeChild(parent, this);
+				remove();
 			}
 			if (_autoDispose) {
 				dispose();
@@ -208,6 +207,7 @@ package com.canaan.lib.base.component.controls
 			if (_skin != value) {
 				_skin = value;
 				mc = ResourceManager.getInstance().getNewInstance(_skin);
+				mc.gotoAndStop(1);
 			}
 		}
 		
