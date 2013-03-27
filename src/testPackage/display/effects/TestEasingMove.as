@@ -27,7 +27,7 @@ package testPackage.display.effects
 		}
 		
 		private function start():void {
-			easingMove.start(image, 2, 0, 0, 200, 200, Transitions.EASE_OUT_ELASTIC);
+			easingMove.start(image, 2, 0, 0, 200, 200, null, null, Transitions.EASE_OUT_ELASTIC);
 		}
 	}
 }
