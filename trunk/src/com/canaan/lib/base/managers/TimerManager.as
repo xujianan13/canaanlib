@@ -1,8 +1,8 @@
 package com.canaan.lib.base.managers
 {
-	import flash.display.Shape;
-	import flash.events.Event;
+	import flash.events.TimerEvent;
 	import flash.utils.Dictionary;
+	import flash.utils.Timer;
 	import flash.utils.getTimer;
 
 	public class TimerManager
@@ -13,7 +13,7 @@ package com.canaan.lib.base.managers
 		private var _time:Number;
 		private var _count:int;
 		
-		private var shape:Shape;
+		private var timer:Timer;
 		private var handlers:Dictionary;
 		private var pool:Vector.<TimerHandler>;
 		private var currFrame:int;
@@ -25,8 +25,9 @@ package com.canaan.lib.base.managers
 			if (!canInstantiate) {
 				throw new Error("Can not instantiate, use getInstance() instead.");
 			}
-			shape = new Shape();
-			shape.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
+			timer = new Timer(10);
+			timer.addEventListener(TimerEvent.TIMER, timerHandler);
+			timer.start();
 			handlers = new Dictionary();
 			pool = new Vector.<TimerHandler>();
 			currTime = getTimer();
@@ -42,8 +43,8 @@ package com.canaan.lib.base.managers
 			return instance;
 		}
 		
-		private function enterFrameHandler(event:Event):void {
-			currFrame++;
+		private function timerHandler(event:TimerEvent):void {
+			currFrame = currTime / StageManager.getInstance().stage.frameRate;
 			lastTime = currTime;
 			currTime = getTimer();
 			var handler:TimerHandler;

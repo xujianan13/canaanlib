@@ -1,5 +1,7 @@
 package testPackage.managers
 {
+	import com.canaan.lib.base.core.Application;
+	import com.canaan.lib.base.core.Method;
 	import com.canaan.lib.base.managers.TimerManager;
 	import com.canaan.lib.base.utils.DateUtil;
 	
@@ -10,7 +12,10 @@ package testPackage.managers
 		public function TestTimerManager()
 		{
 			super();
-			
+			Application.initialize(this, new Method(callback))
+		}
+		
+		private function callback():void {
 			TimerManager.getInstance().time = new Date().time;
 			TimerManager.getInstance().doFrameLoop(48, test);
 //			TimerManager.getInstance().doFrameLoop(48, test);
