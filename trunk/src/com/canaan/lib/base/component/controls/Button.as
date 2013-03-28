@@ -82,11 +82,11 @@ package com.canaan.lib.base.component.controls
 				return;
 			}
 			if (event.type == MouseEvent.CLICK) {
-				if (_mouseClickHandler) {
-					_mouseClickHandler.apply();
-				}
 				if (_toggle) {
 					selected = !_selected;
+				}
+				if (_mouseClickHandler) {
+					_mouseClickHandler.apply();
 				}
 				return;
 			}
