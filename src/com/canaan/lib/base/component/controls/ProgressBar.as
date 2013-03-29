@@ -45,6 +45,7 @@ package com.canaan.lib.base.component.controls
 		override public function set height(value:Number):void {
 			super.height = value;
 			background.height = _height;
+			bar.height = _height;
 			_barLabel.y = (_height - _barLabel.height) * 0.5;
 		}
 		
