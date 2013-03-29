@@ -165,13 +165,10 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		public function set index(value:int):void {
-			_index != value;
 			value = Math.min(maxIndex, Math.max(0, value));
-			if (_index != value) {
-				_index = value;
-				if (tiles != null) {
-					_bitmap.bitmapData = tiles[_index];
-				}
+			_index = value;
+			if (tiles != null) {
+				_bitmap.bitmapData = tiles[_index];
 			}
 		}
 		

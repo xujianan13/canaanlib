@@ -210,8 +210,10 @@ package com.canaan.lib.base.animation
 					
 					if (isComplete && mNextTween != null)
 						mNextTween.start();
-					if (mOnComplete != null) mOnComplete.apply(null, mOnCompleteArgs);
+					var onCompleteClone:Function = mOnComplete;
+					var onCompleteArgsClone:Array = mOnCompleteArgs;
 					if (mInPool) toPool(this);
+					if (onCompleteClone != null) onCompleteClone.apply(null, onCompleteArgsClone);
 				}
 			}
 			
