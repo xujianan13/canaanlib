@@ -158,13 +158,11 @@ package com.canaan.lib.base.component.controls
 		
 		public function set index(value:int):void {
 			value = Math.min(maxIndex, Math.max(0, value));
-			if (_index != value) {
-				_index = value;
-				if (_mc != null) {
-					_mc.gotoAndStop(_index);
-					_width = _mc.width;
-					_height = _mc.height;
-				}
+			_index = value;
+			if (_mc != null) {
+				_mc.gotoAndStop(_index);
+				_width = _mc.width;
+				_height = _mc.height;
 			}
 		}
 		
