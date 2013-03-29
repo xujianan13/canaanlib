@@ -23,6 +23,7 @@ package com.canaan.lib.base.component.controls
 	{
 		public static var cache:Dictionary = new Dictionary(true);
 
+		protected var _source:BitmapData;
 		protected var _bitmap:Bitmap;
 		protected var _url:String;
 		protected var _scale9:Array;
@@ -81,15 +82,16 @@ package com.canaan.lib.base.component.controls
 				_width = _width || bmd.width;
 				_height = _height || bmd.height;
 			}
+			_source = bmd;
 			_bitmap.bitmapData = bmd;
 			callLater(changeSize);
 			sendEvent(UIEvent.COMPLETE);
 		}
 		
 		override protected function changeSize():void {
-			if (_bitmap.bitmapData != null) {
+			if (_source != null) {
 				if (_scale9 != null) {
-					_bitmap.bitmapData = DisplayUtil.scale9Bmd(_bitmap.bitmapData, _scale9, _width, _height);
+					_bitmap.bitmapData = DisplayUtil.scale9Bmd(_source, _scale9, _width, _height);
 				} else {
 					_bitmap.width = _width;
 					_bitmap.height = _height;
