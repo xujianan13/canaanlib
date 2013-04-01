@@ -16,6 +16,8 @@ package com.canaan.lib.base.component.controls
 	
 	public class Clip extends Image implements IAnimation
 	{
+		private static var clipCache:Vector.<Clip> = new Vector.<Clip>();
+		
 		protected var _tileX:int;
 		protected var _tileY:int;
 		protected var _index:int = -1;
@@ -167,7 +169,7 @@ package com.canaan.lib.base.component.controls
 		public function set index(value:int):void {
 			value = Math.min(maxIndex, Math.max(0, value));
 			_index = value;
-			if (tiles != null) {
+			if (tiles != null && _index < tiles.length) {
 				_bitmap.bitmapData = tiles[_index];
 			}
 		}
@@ -251,6 +253,16 @@ package com.canaan.lib.base.component.controls
 			stop();
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+		}
+		
+		public static function fromPool():Clip {
+			return clipCache.length != 0 ? clipCache.pop() : new Clip();
+		}
+		
+		public static function toPool(clip:Clip):void {
+			clip.stop();
+			clip.remove();
+			clipCache.push(clip);
 		}
 	}
 }
