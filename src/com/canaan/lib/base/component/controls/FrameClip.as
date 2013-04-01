@@ -13,6 +13,8 @@ package com.canaan.lib.base.component.controls
 	
 	public class FrameClip extends UIComponent implements IAnimation
 	{
+		private static var clipCache:Vector.<FrameClip> = new Vector.<FrameClip>();
+		
 		protected var _skin:String;
 		protected var _mc:MovieClip;
 		protected var _index:int;
@@ -242,6 +244,16 @@ package com.canaan.lib.base.component.controls
 			stop();
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+		}
+		
+		public static function fromPool():FrameClip {
+			return clipCache.length != 0 ? clipCache.pop() : new FrameClip();
+		}
+		
+		public static function toPool(frameClip:FrameClip):void {
+			frameClip.stop();
+			frameClip.remove();
+			clipCache.push(frameClip);
 		}
 	}
 }
