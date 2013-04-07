@@ -145,7 +145,7 @@ package com.canaan.lib.rpg.core.map
 			_bmpdThumbnail = Bitmap(loaderInfo.content).bitmapData;
 			var percentX:Number = _bmpdThumbnail.width / _mapVo.mapWidth;
 			var percentY:Number = _bmpdThumbnail.height / _mapVo.mapHeight;
-			thumbnailBuffer = new BitmapData(buffer.width * percentX, buffer.height * percentY, false, 0x000000);
+			thumbnailBuffer = new BitmapData(buffer.width * percentX, buffer.height * percentY, false, 0x00000000);
 			loaderInfo.removeEventListener(Event.COMPLETE, thumbnailComplete);
 			loaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 			loaderInfo.loader.unloadAndStop();
@@ -206,7 +206,7 @@ package com.canaan.lib.rpg.core.map
 			if (buffer != null) {
 				buffer.dispose();
 			}
-			buffer = new BitmapData(_mapVo.mapWidth + _mapVo.tileWidth, _mapVo.mapHeight + _mapVo.tileHeight, false);
+			buffer = new BitmapData(_mapVo.mapWidth + _mapVo.tileWidth, _mapVo.mapHeight + _mapVo.tileHeight, false, 0x00000000);
 			
 //			_drawBuffer.graphics.clear();
 //			_drawBuffer.graphics.beginBitmapFill(buffer);
