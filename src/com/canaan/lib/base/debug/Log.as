@@ -90,7 +90,7 @@ package com.canaan.lib.base.debug
 		}
 		
 		private function formatLogString(owner:String, logLevel:int, value:*):String {
-			var logString:String = "[LOG] " + DateUtil.formateDateFromSeconds(TimerManager.getInstance().time) + " ";
+			var logString:String = "[LOG] " + DateUtil.formateDateFromSeconds(TimerManager.getInstance().timeSecond) + " ";
 			logString += "[owner:\"" + owner + "\" ";
 			logString += "level:\"" + LEVEL_CONFIG[logLevel] + "\"] - ";
 			logString += value.toString();
