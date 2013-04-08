@@ -1,13 +1,12 @@
 package com.canaan.lib.rpg.core.objects
 {
 	import com.canaan.lib.rpg.core.CommonResources;
-	import com.canaan.lib.rpg.core.model.objects.NpcVo;
 	
 	public class NpcObject extends AbstractObject
 	{
-		public function NpcObject(vo:NpcVo)
+		public function NpcObject()
 		{
-			super(vo);
+			super();
 		}
 		
 		protected function initializeView():void {

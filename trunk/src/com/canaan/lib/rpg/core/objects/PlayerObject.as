@@ -2,14 +2,13 @@ package com.canaan.lib.rpg.core.objects
 {
 	import com.canaan.lib.rpg.core.CommonResources;
 	import com.canaan.lib.rpg.core.model.action.ActionVo;
-	import com.canaan.lib.rpg.core.model.objects.PlayerVo;
 	import com.canaan.lib.rpg.core.view.PlayerView;
 	
 	public class PlayerObject extends RoleObject
 	{
-		public function PlayerObject(vo:PlayerVo)
+		public function PlayerObject()
 		{
-			super(vo);
+			super();
 		}
 		
 		override protected function initializeView():void {

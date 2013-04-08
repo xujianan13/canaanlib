@@ -1,13 +1,12 @@
 package com.canaan.lib.rpg.core.objects
 {
 	import com.canaan.lib.rpg.core.CommonResources;
-	import com.canaan.lib.rpg.core.model.objects.MonsterVo;
 	
 	public class MonsterObject extends RoleObject
 	{
-		public function MonsterObject(vo:MonsterVo)
+		public function MonsterObject()
 		{
-			super(vo);
+			super();
 		}
 		
 		protected function initializeView():void {

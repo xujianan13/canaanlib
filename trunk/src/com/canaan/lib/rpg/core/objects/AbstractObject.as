@@ -2,7 +2,6 @@ package com.canaan.lib.rpg.core.objects
 {
 	import com.canaan.lib.base.events.CEventDispatcher;
 	import com.canaan.lib.base.interfaces.IRecyclable;
-	import com.canaan.lib.rpg.core.model.action.ActionVo;
 	import com.canaan.lib.rpg.core.model.objects.AbstractObjectVo;
 	import com.canaan.lib.rpg.core.view.AbstractView;
 	import com.canaan.lib.rpg.events.RPGEvent;
@@ -14,15 +13,10 @@ package com.canaan.lib.rpg.core.objects
 	{
 		protected var _view:AbstractView;
 		protected var _vo:AbstractObjectVo;
-		protected var _mapX:int;
-		protected var _mapY:int;
 		
-		public function AbstractObject(vo:AbstractObjectVo)
+		public function AbstractObject()
 		{
 			super();
-			_vo = vo;
-			_mapX = vo.mapX;
-			_mapY = vo.mapY;
 			initializeView();
 		}
 		
@@ -37,8 +31,6 @@ package com.canaan.lib.rpg.core.objects
 		public function reinitialize():void {
 			_view.reinitialize();
 			_vo = null;
-			_mapX = 0;
-			_mapY = 0;
 		}
 
 		override public function dispose():void {
@@ -49,23 +41,18 @@ package com.canaan.lib.rpg.core.objects
 		protected function initializeView():void {
 			_view = new AbstractView();
 		}
-
-		protected function updatePosition():void {
-			_vo.mapX = _mapX;
-			_vo.mapY = _mapY;
-		}
 		
 		public function move(x:Number, y:Number, speed:int = 4):void {
 			
 		}
 		
-		public function moveToMap(mapX:Number, mapY:Number):void {
-			_mapX = mapX;
-			_mapY = mapY;
-			updatePosition();
+		public function set vo(value:AbstractObjectVo):void {
+			if (_vo != value) {
+				_vo = value;
+			}
 		}
 		
-		public function get vo():ActionVo {
+		public function get vo():AbstractObjectVo {
 			return _vo;
 		}
 		
@@ -74,11 +61,11 @@ package com.canaan.lib.rpg.core.objects
 		}
 		
 		public function get mapX():int {
-			return _mapX;
+			return _vo.mapX;
 		}
 		
 		public function get mapY():int {
-			return _mapY;
+			return _vo.mapY;
 		}
 		
 		public function getIntersect(point:Point, parent:DisplayObjectContainer = null):Boolean {
