@@ -120,10 +120,10 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		protected function changeLabelSize():void {
-			_btnLabel.width = bitmap.width - _labelMargin[0] - _labelMargin[2];
+			_btnLabel.width = bitmap.width - Number(_labelMargin[0]) - Number(_labelMargin[2]);
 			_btnLabel.height = TextUtil.getTextHeight(_btnLabel.format);
-			_btnLabel.x = _labelMargin[0];
-			_btnLabel.y = (bitmap.height - _btnLabel.height) * 0.5 + _labelMargin[1] - _labelMargin[3];
+			_btnLabel.x = Number(_labelMargin[0]);
+			_btnLabel.y = (bitmap.height - _btnLabel.height) * 0.5 + Number(_labelMargin[1]) - Number(_labelMargin[3]);
 		}
 		
 		public function set skin(value:String):void {
