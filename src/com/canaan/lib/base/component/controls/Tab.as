@@ -75,6 +75,9 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		protected function changeLabels():void {
+			if (_data == null) {
+				return;
+			}
 			removeAllChildren();
 			_items.length = 0;
 			var item:Button;

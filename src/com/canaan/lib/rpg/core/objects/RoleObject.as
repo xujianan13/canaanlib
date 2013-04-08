@@ -2,7 +2,6 @@ package com.canaan.lib.rpg.core.objects
 {
 	import com.canaan.lib.base.core.Method;
 	import com.canaan.lib.rpg.core.model.action.ActionVo;
-	import com.canaan.lib.rpg.core.model.objects.RoleVo;
 	import com.canaan.lib.rpg.core.view.RoleView;
 	
 	public class RoleObject extends AbstractObject
@@ -10,9 +9,9 @@ package com.canaan.lib.rpg.core.objects
 		protected var _action:int = -1;
 		protected var _direction:int = -1;
 		
-		public function RoleObject(vo:RoleVo)
+		public function RoleObject()
 		{
-			super(vo);
+			super();
 		}
 		
 		override public function reinitialize():void {

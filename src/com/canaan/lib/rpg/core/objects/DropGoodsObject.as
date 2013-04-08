@@ -1,13 +1,12 @@
 package com.canaan.lib.rpg.core.objects
 {
 	import com.canaan.lib.rpg.core.CommonResources;
-	import com.canaan.lib.rpg.core.model.objects.DropGoodsVo;
 	
 	public class DropGoodsObject extends AbstractObject
 	{
-		public function DropGoodsObject(vo:DropGoodsVo)
+		public function DropGoodsObject()
 		{
-			super(vo);
+			super();
 		}
 		
 		protected function initializeView():void {

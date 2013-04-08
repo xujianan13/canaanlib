@@ -1,13 +1,12 @@
 package com.canaan.lib.rpg.core.objects
 {
 	import com.canaan.lib.rpg.core.CommonResources;
-	import com.canaan.lib.rpg.core.model.objects.PetVo;
 	
 	public class PetObject extends RoleObject
 	{
-		public function PetObject(vo:PetVo)
+		public function PetObject()
 		{
-			super(vo);
+			super();
 		}
 		
 		protected function initializeView():void {
