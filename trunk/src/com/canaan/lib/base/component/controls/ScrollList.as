@@ -50,19 +50,21 @@ package com.canaan.lib.base.component.controls
 				var item:ListItem;
 				for (var i:int = 0; i < l; i++) {
 					item = _items[i];
-					itemIndex = (layout == Layouts.HORIZONTAL ? _column : _row) * _currentPage + i;
-					if (itemIndex < _data.length) {
-						if (_autoVisible) {
-							item.visible = true;
+					if (item != null) {
+						itemIndex = (layout == Layouts.HORIZONTAL ? _column : _row) * _currentPage + i;
+						if (itemIndex < _data.length) {
+							if (_autoVisible) {
+								item.visible = true;
+							}
+							item.data = _data[itemIndex];
+							item.selected = _data[itemIndex] == _selectedValue;
+						} else {
+							if (_autoVisible) {
+								item.visible = false;
+							}
+							item.data = null;
+							item.selected = false;
 						}
-						item.data = _data[itemIndex];
-						item.selected = _data[itemIndex] == _selectedValue;
-					} else {
-						if (_autoVisible) {
-							item.visible = false;
-						}
-						item.data = null;
-						item.selected = false;
 					}
 				}
 				_scrollBar.visible = _data.length > size;
