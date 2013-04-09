@@ -32,8 +32,6 @@ package testPackage.component
 			addChild(panel);
 			
 			image = new Image("png.comp.btn_blue");
-			image.width = 500;
-			image.height = 500;
 			image.addEventListener(MouseEvent.CLICK, onClick);
 			image.showBorder();
 			panel.addChild(image);
