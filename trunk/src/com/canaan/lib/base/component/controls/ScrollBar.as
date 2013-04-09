@@ -21,7 +21,7 @@ package com.canaan.lib.base.component.controls
 		
 		protected var upButton:Button;
 		protected var downButton:Button;
-		protected var slider:Slider;
+		protected var _slider:Slider;
 		
 		public function ScrollBar(skin:String = null)
 		{
@@ -37,16 +37,16 @@ package com.canaan.lib.base.component.controls
 			addChild(upButton);
 			downButton = new Button();
 			addChild(downButton);
-			slider = new Slider();
-			addChild(slider);
+			_slider = new Slider();
+			addChild(_slider);
 		}
 		
 		override protected function initialize():void {
 			super.initialize();
 			upButton.addEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown);
 			downButton.addEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown);
-			slider.showLabel = false;
-			slider.dispatcher.addEventListener(UIEvent.CHANGE, onSliderChange);
+			_slider.showLabel = false;
+			_slider.dispatcher.addEventListener(UIEvent.CHANGE, onSliderChange);
 		}
 		
 		protected function onButtonMouseDown(event:MouseEvent):void {
@@ -72,10 +72,10 @@ package com.canaan.lib.base.component.controls
 		
 		override protected function changeSize():void {
 			super.changeSize();
-			if (slider.direction == Direction.HORIZONTAL) {
-				slider.width = width - upButton.width - downButton.width;
+			if (_slider.direction == Direction.HORIZONTAL) {
+				_slider.width = width - upButton.width - downButton.width;
 			} else {
-				slider.height = height - upButton.height - downButton.height;
+				_slider.height = height - upButton.height - downButton.height;
 			}
 			resetButtonPosition();
 		}
@@ -91,7 +91,7 @@ package com.canaan.lib.base.component.controls
 		public function set skin(value:String):void {
 			if (_skin != value) {
 				_skin = value;
-				slider.skin = _skin;
+				_slider.skin = _skin;
 				upButton.skin = _skin + UP_BUTTON_SKIN_SUFFIX;
 				downButton.skin = _skin + DOWN_BUTTON_SKIN_SUFFIX;
 				callLater(changeScrollBar);
@@ -103,51 +103,59 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		protected function changeScrollBar():void {
-			if (slider.direction == Direction.HORIZONTAL) {
-				slider.x = upButton.width;
+			if (_slider.direction == Direction.HORIZONTAL) {
+				_slider.x = upButton.width;
 			} else {
-				slider.y = upButton.height;
+				_slider.y = upButton.height;
 			}
 			resetButtonPosition();
 		}
 		
 		protected function resetButtonPosition():void {
-			if (slider.direction == Direction.HORIZONTAL) {
-				downButton.x = slider.x + slider.width;
+			if (_slider.direction == Direction.HORIZONTAL) {
+				downButton.x = _slider.x + _slider.width;
 			} else {
-				downButton.y = slider.y + slider.height;
+				downButton.y = _slider.y + _slider.height;
 			}
 		}
 		
 		public function setScroll(minValue:Number, maxValue:Number, value:Number):void {
-			slider.setSlider(minValue, maxValue, value);
+			_slider.setSlider(minValue, maxValue, value);
 			upButton.enabled = maxValue > 0;
 			downButton.enabled = maxValue > 0;
-			slider.button.visible = maxValue > 0;
+			_slider.button.visible = maxValue > 0;
+		}
+		
+		public function get sliderVisible():Boolean {
+			return _slider.button.visible;
+		}
+		
+		public function set sliderVisible(value:Boolean):void {
+			_slider.button.visible = value;
 		}
 		
 		public function set value(num:Number):void {
-			slider.value = num;
+			_slider.value = num;
 		}
 		
 		public function get value():Number {
-			return slider.value;
+			return _slider.value;
 		}
 		
 		public function set maxValue(value:Number):void {
-			slider.maxValue = value;
+			_slider.maxValue = value;
 		}
 		
 		public function get maxValue():Number {
-			return slider.maxValue;
+			return _slider.maxValue;
 		}
 		
 		public function set minValue(value:Number):void {
-			slider.minValue = value;
+			_slider.minValue = value;
 		}
 		
 		public function get minValue():Number {
-			return slider.minValue;
+			return _slider.minValue;
 		}
 		
 		public function set scrollSize(value:Number):void {
@@ -159,26 +167,30 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		public function set scale9(value:String):void {
-			slider.scale9 = value;
+			_slider.scale9 = value;
 		}
 		
 		public function get scale9():String {
-			return slider.scale9;
+			return _slider.scale9;
 		}
 		
 		public function set direction(value:String):void {
-			slider.direction = value;
+			_slider.direction = value;
 		}
 		
 		public function get direction():String {
-			return slider.direction;
+			return _slider.direction;
+		}
+		
+		public function get slider():Slider {
+			return _slider;
 		}
 		
 		override public function dispose():void {
 			super.dispose();
 			upButton.removeEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown);
 			downButton.removeEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown);
-			slider.dispatcher.removeEventListener(UIEvent.CHANGE, onSliderChange);
+			_slider.dispatcher.removeEventListener(UIEvent.CHANGE, onSliderChange);
 			onStageMouseUp();
 		}
 	}

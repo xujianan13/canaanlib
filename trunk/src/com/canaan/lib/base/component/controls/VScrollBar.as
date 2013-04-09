@@ -11,7 +11,7 @@ package com.canaan.lib.base.component.controls
 		
 		override protected function initialize():void {
 			super.initialize();
-			slider.direction = Direction.VERTICAL;
+			_slider.direction = Direction.VERTICAL;
 		}
 	}
 }

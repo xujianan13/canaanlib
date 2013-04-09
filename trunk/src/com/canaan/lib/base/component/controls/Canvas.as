@@ -62,6 +62,7 @@ package com.canaan.lib.base.component.controls
 				scrollSize = Math.max(0, _content.width - width);
 				_content.x = -scrollSize * percent;
 			}
+			changeSize();
 		}
 		
 		protected function onMouseWheel(event:MouseEvent):void {
@@ -92,12 +93,12 @@ package com.canaan.lib.base.component.controls
 				_scrollBar.x = _width;
 				_scrollBar.y = 0;
 				_scrollBar.height = _height;
-				_scrollBar.visible = _height < _content.height;
+				_scrollBar.sliderVisible = _height < _content.height;
 			} else {
 				_scrollBar.x = 0;
 				_scrollBar.y = _height;
 				_scrollBar.width = _width;
-				_scrollBar.visible = _width < _content.width;
+				_scrollBar.sliderVisible = _width < _content.width;
 			}
 			super.changeSize();
 		}

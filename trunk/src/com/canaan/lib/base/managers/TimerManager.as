@@ -45,7 +45,6 @@ package com.canaan.lib.base.managers
 		
 		private function timerHandler(event:TimerEvent):void {
 			currFrame = currTime / StageManager.getInstance().stage.frameRate;
-			lastTime = currTime;
 			currTime = getTimer();
 			var handler:TimerHandler;
 			var t:int;
@@ -130,6 +129,7 @@ package com.canaan.lib.base.managers
 		
 		private function timeStep():void {
 			_time += currTime - lastTime;
+			lastTime = currTime;
 		}
 	}
 }
