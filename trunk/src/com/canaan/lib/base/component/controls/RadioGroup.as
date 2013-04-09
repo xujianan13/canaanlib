@@ -53,6 +53,13 @@ package com.canaan.lib.base.component.controls
 			return _skin;
 		}
 		
+		override public function set data(value:Object):void {
+			if (_data != value) {
+				_data = value;
+				callLater(changeLabels);
+			}
+		}
+		
 		public function set labels(value:String):void {
 			if (_labels != value) {
 				_labels = value;
