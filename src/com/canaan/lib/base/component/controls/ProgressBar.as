@@ -68,8 +68,8 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		public function set value(value:Number):void {
+			value = Math.min(1, Math.max(0.0000001, value));
 			if (_value != value) {
-				value = Math.min(1, Math.max(0, value));
 				_value = value;
 				callLater(changeValue);
 			}
