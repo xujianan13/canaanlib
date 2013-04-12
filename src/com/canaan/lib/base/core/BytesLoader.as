@@ -1,0 +1,64 @@
+package com.canaan.lib.base.core
+{
+	import com.canaan.lib.base.debug.Log;
+	import com.canaan.lib.base.interfaces.IDispose;
+	
+	import flash.display.DisplayObject;
+	import flash.display.Loader;
+	import flash.display.LoaderInfo;
+	import flash.events.Event;
+	import flash.events.HTTPStatusEvent;
+	import flash.events.IOErrorEvent;
+	import flash.system.ApplicationDomain;
+	import flash.system.LoaderContext;
+	import flash.utils.ByteArray;
+
+	public class BytesLoader implements IDispose
+	{
+		private var loader:Loader;
+		private var loaderContext:LoaderContext;
+		private var completeHandler:Method;
+		private var autoDispose:Boolean;
+		
+		public function BytesLoader()
+		{
+			loader = new Loader();
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onComplete);
+			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onError);
+			loader.contentLoaderInfo.addEventListener(HTTPStatusEvent.HTTP_STATUS, onError);
+			
+			loaderContext = new LoaderContext(false, ApplicationDomain.currentDomain);
+		}
+		
+		public function load(bytes:ByteArray, completeHandler:Method, autoDispose:Boolean = false):void {
+			this.completeHandler = completeHandler;
+			this.autoDispose = autoDispose;
+			loader.unloadAndStop();
+			loader.loadBytes(bytes, loaderContext);
+		}
+		
+		private function onComplete(event:Event):void {
+			var content:DisplayObject = LoaderInfo(event.target).content;
+			loader.unloadAndStop();
+			if (completeHandler != null) {
+				completeHandler.applyWith([content]);
+			}
+			if (autoDispose) {
+				dispose();
+			}
+		}
+		
+		private function onError(event:Event):void {
+			Log.getInstance().error("BytesLoader Load Error.");
+		}
+		
+		public function dispose():void {
+			loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onComplete);
+			loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, onError);
+			loader.contentLoaderInfo.removeEventListener(HTTPStatusEvent.HTTP_STATUS, onError);
+			loader = null;
+			loaderContext = null;
+			completeHandler = null;
+		}
+	}
+}

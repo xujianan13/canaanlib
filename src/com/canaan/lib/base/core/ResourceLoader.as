@@ -70,6 +70,7 @@ package com.canaan.lib.base.core
 		}
 		
 		public function load(url:String, id:String, completeHandler:Method, progressHandler:Method):void {
+			loader.unloadAndStop();
 			_url = url;
 			_id = id;
 			_fileType = getFileType(url);
@@ -135,7 +136,7 @@ package com.canaan.lib.base.core
 				case FILE_TYPE_BINARY:
 					var bytes:ByteArray = urlLoader.data as ByteArray;
 					bytes.uncompress();
-					content = bytes.readObject();
+					content = bytes;
 					break;
 			}
 			endLoad(cache[_id] = content);
@@ -171,7 +172,7 @@ package com.canaan.lib.base.core
 				return FILE_TYPE_BINARY;
 			}
 			Log.getInstance().error("ResourceLoader getFileType Error:Could not find fileType \"" + url + "\"");
-			return FILE_TYPE_TEXT;
+			return FILE_TYPE_BINARY;
 		}
 		
 		public static function getResource(id:String):* {

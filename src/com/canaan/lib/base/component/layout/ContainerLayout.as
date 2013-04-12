@@ -3,6 +3,7 @@ package com.canaan.lib.base.component.layout
 	import com.canaan.lib.base.component.Layouts;
 	import com.canaan.lib.base.component.UIComponent;
 	
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	
 	public class ContainerLayout extends Layout
@@ -69,10 +70,10 @@ package com.canaan.lib.base.component.layout
 			if (_layout == Layouts.ABSOLUTE) {
 				return;
 			} else {
-				var child:UIComponent;
+				var child:DisplayObject;
 				var num:int;
 				for (var i:int = 0; i < _target.numChildren; i++) {
-					child = _target.getChildAt(i) as UIComponent;
+					child = _target.getChildAt(i) as DisplayObject;
 					if (child != null) {
 						if (_layout == Layouts.HORIZONTAL) {
 							child.x = num;

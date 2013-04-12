@@ -50,10 +50,12 @@ package com.canaan.lib.rpg.core.view
 					scaleX = 1;
 				}
 				if (_actionVo) {
-					var vector:Vector.<BitmapDataEx> = _actionVo.getVectorByAction(action);
-					bitmapDatas = vector;
-					interval = _actionVo.interval;
-					fromTo(null, null, loop, bitmapDatas);
+					var vector:Vector.<BitmapDataEx> = _actionVo.getVector(action);
+					if (vector != null) {
+						bitmapDatas = vector;
+						interval = _actionVo.interval;
+						fromTo(null, null, loop, bitmapDatas);
+					}
 				}
 			}
 		}
