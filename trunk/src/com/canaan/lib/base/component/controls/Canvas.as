@@ -1,6 +1,7 @@
 package com.canaan.lib.base.component.controls
 {
 	import com.canaan.lib.base.component.Direction;
+	import com.canaan.lib.base.component.Layouts;
 	import com.canaan.lib.base.component.Styles;
 	import com.canaan.lib.base.events.UIEvent;
 	
@@ -41,6 +42,7 @@ package com.canaan.lib.base.component.controls
 			_content.mask = _mask;
 			_scrollBar.dispatcher.addEventListener(UIEvent.CHANGE, onScrollBarChange);
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
+			layout = Layouts.VERTICAL;
 			direction = Direction.VERTICAL;
 		}
 		
@@ -62,7 +64,7 @@ package com.canaan.lib.base.component.controls
 				scrollSize = Math.max(0, _content.width - width);
 				_content.x = -scrollSize * percent;
 			}
-			changeSize();
+			callLater(changeSize);
 		}
 		
 		protected function onMouseWheel(event:MouseEvent):void {
@@ -84,6 +86,32 @@ package com.canaan.lib.base.component.controls
 		override public function removeAllChildren(dispose:Boolean = false):void {
 			_content.removeAllChildren(dispose);
 			callLater(changeSize);
+		}
+		
+		override public function get layout():String {
+			return _content.layout;
+		}
+		
+		override public function set layout(value:String):void {
+			_content.layout = value;
+		}
+		
+		override public function get gap():Number {
+			return _content.gap;
+		}
+		
+		override public function set gap(value:Number):void {
+			_content.gap = value;
+		}
+		
+		override public function get realWidth():Number {
+			validateNow();
+			return super.realWidth;
+		}
+		
+		override public function get realHeight():Number {
+			validateNow();
+			return super.realHeight;
 		}
 		
 		override protected function changeSize():void {

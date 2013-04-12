@@ -2,12 +2,12 @@ package com.canaan.lib.rpg.core.model.objects
 {
 	import com.canaan.lib.rpg.core.constants.ObjectCategory;
 
-	public class DropGoodsVo extends AbstractObjectVo
+	public class TransferPointVo extends AbstractObjectVo
 	{
-		public function DropGoodsVo()
+		public function TransferPointVo()
 		{
 			super();
-			category = ObjectCategory.DROP_GOODS;
+			category = ObjectCategory.TRANSFER_POINT;
 		}
 	}
 }
