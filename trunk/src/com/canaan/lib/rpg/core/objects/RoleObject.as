@@ -20,7 +20,7 @@ package com.canaan.lib.rpg.core.objects
 			_direction = -1;
 		}
 		
-		protected function initializeView():void {
+		override protected function initializeView():void {
 			_view = new RoleView();
 		}
 		
@@ -32,13 +32,13 @@ package com.canaan.lib.rpg.core.objects
 			roleView.updateSkin(actionVo);
 		}
 		
-		public function play(action:int, direction:int = -1, loop:Boolean = true, onComplete:Method = null):void {
+		public function playAction(action:int, direction:int = -1, loop:Boolean = true, onComplete:Method = null):void {
 			if (direction == -1) {
 				direction = _direction;
 			}
 			_action = action;
 			_direction = direction;
-			roleView.play(_action, _direction, loop, onComplete);
+			roleView.playAction(_action, _direction, loop, onComplete);
 		}
 	}
 }

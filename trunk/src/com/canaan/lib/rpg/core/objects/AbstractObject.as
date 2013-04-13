@@ -33,7 +33,7 @@ package com.canaan.lib.rpg.core.objects
 			_vo = null;
 		}
 
-		override public function dispose():void {
+		public function dispose():void {
 			_view.dispose();
 			_vo = null;
 		}

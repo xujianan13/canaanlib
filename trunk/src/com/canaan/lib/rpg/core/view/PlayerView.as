@@ -41,16 +41,16 @@ package com.canaan.lib.rpg.core.view
 			_wing.dispose();
 		}
 		
-		override public function play(action:int, direction:int=-1, loop:Boolean=true, onComplete:Method=null):void {
+		override public function playAction(action:int, direction:int=-1, loop:Boolean=true, onComplete:Method=null):void {
 			if (_mount.actionVo) {
-				_mount.play(action, direction, loop, onComplete);
+				_mount.playAction(action, direction, loop, onComplete);
 			}
-			super.play(action, direction, loop, onComplete);
+			super.playAction(action, direction, loop, onComplete);
 			if (_weapon.actionVo) {
-				_weapon.play(action, direction, loop, onComplete);
+				_weapon.playAction(action, direction, loop, onComplete);
 			}
 			if (_wing.actionVo) {
-				_wing.play(action, direction, loop, onComplete);
+				_wing.playAction(action, direction, loop, onComplete);
 			}
 		}
 		

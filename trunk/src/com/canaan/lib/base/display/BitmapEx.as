@@ -50,11 +50,13 @@ package com.canaan.lib.base.display
 		}
 		
 		public function set bitmapDataEx(value:BitmapDataEx):void {
-			_bitmapDataEx = value;
-			_offsetX = value.x;
-			_offsetY = value.y;
-			bitmapData = value.bitmapData;
-			updateMatrix();
+			if (value != null) {
+				_bitmapDataEx = value;
+				_offsetX = value.x;
+				_offsetY = value.y;
+				bitmapData = value.bitmapData;
+				updateMatrix();
+			}
 		}
 		
 		public function get pivotX():Number {

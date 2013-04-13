@@ -15,6 +15,7 @@ package com.canaan.lib.rpg.core.view
 		public function AbstractView()
 		{
 			super();
+			initialize();
 		}
 		
 		protected function initialize():void {

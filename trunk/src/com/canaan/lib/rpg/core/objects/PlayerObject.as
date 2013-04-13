@@ -17,7 +17,7 @@ package com.canaan.lib.rpg.core.objects
 		}
 		
 		protected function get playerView():PlayerView {
-			return _view as PlayerView();
+			return _view as PlayerView;
 		}
 
 		public function updateMount(actionVo:ActionVo):void {
