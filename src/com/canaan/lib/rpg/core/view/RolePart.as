@@ -34,7 +34,7 @@ package com.canaan.lib.rpg.core.view
 			return _actionVo;
 		}
 		
-		public function play(action:int, direction:int = -1, loop:Boolean = true, onComplete:Method = null):void {
+		public function playAction(action:int, direction:int = -1, loop:Boolean = true, onComplete:Method = null):void {
 			// 如果direction为-1则将direction设置为上次的值
 			if (direction == -1) {
 				direction = _direction;
@@ -43,25 +43,24 @@ package com.canaan.lib.rpg.core.view
 				_action = action;
 				_direction = direction;
 				// 如果方向为左侧 则将资源水平翻转
-				if (direction > RoleDirection.LEFT_DOWN) {
+				if (direction > RoleDirection.DOWN) {
 					scaleX = -1;
 					direction = RoleDirection.getCopyDirection(direction);
 				} else {
 					scaleX = 1;
 				}
 				if (_actionVo) {
-					var vector:Vector.<BitmapDataEx> = _actionVo.getVector(action);
+					var vector:Vector.<BitmapDataEx> = _actionVo.getVector(action, direction);
 					if (vector != null) {
 						bitmapDatas = vector;
-						interval = _actionVo.interval;
-						fromTo(null, null, loop, bitmapDatas);
+						fromTo(null, null, loop, onComplete);
 					}
 				}
 			}
 		}
 		
 		override protected function animationComplete():void {
-			_actionVo = -1;
+			_action = -1;
 			super.animationComplete();
 		}
 	}

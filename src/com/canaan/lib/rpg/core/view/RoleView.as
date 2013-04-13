@@ -23,9 +23,9 @@ package com.canaan.lib.rpg.core.view
 			skin.actionVo = actionVo;
 		}
 		
-		public function play(action:int, direction:int = -1, loop:Boolean = true, onComplete:Method = null):void {
+		public function playAction(action:int, direction:int = -1, loop:Boolean = true, onComplete:Method = null):void {
 			if (skin.actionVo) {
-				skin.play(action, direction, loop, onComplete);
+				skin.playAction(action, direction, loop, onComplete);
 			}
 		}
 	}

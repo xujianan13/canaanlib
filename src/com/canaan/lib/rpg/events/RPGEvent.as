@@ -22,7 +22,10 @@ package com.canaan.lib.rpg.events
 		}
 		
 		public static function toPool(event:RPGEvent):void {
-			eventPool.push(event.reset());
+			event._type = null;
+			event._data = null;
+			event._target = null;
+			eventPool.push(event);
 		}
 	}
 }
