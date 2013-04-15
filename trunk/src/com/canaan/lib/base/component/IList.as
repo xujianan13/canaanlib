@@ -2,7 +2,7 @@ package com.canaan.lib.base.component
 {
 	public interface IList
 	{
-		function get items():Array;
+		function get items():Vector.<IListItem>;
 		function set selectedItem(value:IListItem):void;
 		function get selectedItem():IListItem;
 		function set selectedIndex(value:int):void;

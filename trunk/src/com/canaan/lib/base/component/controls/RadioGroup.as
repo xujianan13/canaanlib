@@ -1,5 +1,6 @@
 package com.canaan.lib.base.component.controls
 {
+	import com.canaan.lib.base.component.IListItem;
 	import com.canaan.lib.base.component.Layouts;
 	import com.canaan.lib.base.core.Method;
 	
@@ -87,7 +88,7 @@ package com.canaan.lib.base.component.controls
 				item.data = _data[i];
 				item.selected = false;
 				item.mouseClickHandler = new Method(itemClickHandler, [item]);
-				_items[i] = addChild(item);
+				_items[i] = addChild(item) as IListItem;
 				if (_labelColors) {
 					item.labelColors = _labelColors;
 				}

@@ -1,5 +1,6 @@
 package com.canaan.lib.base.component.controls
 {
+	import com.canaan.lib.base.component.IListItem;
 	import com.canaan.lib.base.component.Layouts;
 	import com.canaan.lib.base.core.Method;
 	
@@ -101,7 +102,7 @@ package com.canaan.lib.base.component.controls
 				if (_labelBold) {
 					item.labelBold = _labelBold;
 				}
-				_items[i] = addChild(item);
+				_items[i] = addChild(item) as IListItem;
 			}
 			if (_data.length > 0) {
 				selectedValue = _selectedValue || _data[0];

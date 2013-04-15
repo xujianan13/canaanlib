@@ -1,6 +1,7 @@
 package com.canaan.lib.base.component.controls
 {
 	import com.canaan.lib.base.component.Direction;
+	import com.canaan.lib.base.component.IListItem;
 	import com.canaan.lib.base.component.Layouts;
 	import com.canaan.lib.base.component.layout.ScrollListLayout;
 	import com.canaan.lib.base.events.UIEvent;
@@ -28,7 +29,7 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		override protected function initialize():void {
-			_items = [];
+			_items = new Vector.<IListItem>();
 			layoutObject = new ScrollListLayout();
 			layoutObject.target = this;
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
@@ -47,20 +48,20 @@ package com.canaan.lib.base.component.controls
 			if (_data != null) {
 				var itemIndex:int;
 				var l:int = size;
-				var item:ListItem;
+				var item:IListItem;
 				for (var i:int = 0; i < l; i++) {
 					item = _items[i];
 					if (item != null) {
 						itemIndex = (layout == Layouts.HORIZONTAL ? _column : _row) * _currentPage + i;
 						if (itemIndex < _data.length) {
 							if (_autoVisible) {
-								item.visible = true;
+								DisplayObject(item).visible = true;
 							}
 							item.data = _data[itemIndex];
 							item.selected = _data[itemIndex] == _selectedValue;
 						} else {
 							if (_autoVisible) {
-								item.visible = false;
+								DisplayObject(item).visible = false;
 							}
 							item.data = null;
 							item.selected = false;
