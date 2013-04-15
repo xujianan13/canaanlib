@@ -24,7 +24,7 @@ package com.canaan.lib.base.component.layout
 			var ww:Number;
 			var hh:Number;
 			for (var i:int = 0; i < l; i++) {
-				item = list.items[i];
+				item = list.items[i] as DisplayObject;
 				ww = item.width;
 				hh = item.height;
 				if (_layout == Layouts.HORIZONTAL) {

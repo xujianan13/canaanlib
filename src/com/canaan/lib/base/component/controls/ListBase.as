@@ -11,7 +11,7 @@ package com.canaan.lib.base.component.controls
 	
 	public class ListBase extends Container implements IInitialItems, IList
 	{
-		protected var _items:Array = [];
+		protected var _items:Vector.<IListItem> = new Vector.<IListItem>();
 		protected var _selectedValue:Object;
 		//		protected var _selectedItem:IListItem;
 		protected var _changeCallback:Method;
@@ -36,7 +36,7 @@ package com.canaan.lib.base.component.controls
 			}
 		}
 		
-		public function get items():Array {
+		public function get items():Vector.<IListItem> {
 			return _items;
 		}
 		

@@ -1,8 +1,11 @@
 package com.canaan.lib.base.component.controls
 {
+	import com.canaan.lib.base.component.IListItem;
 	import com.canaan.lib.base.component.ViewCreater;
 	import com.canaan.lib.base.component.layout.ListLayout;
 	import com.canaan.lib.base.core.Method;
+	
+	import flash.display.DisplayObject;
 
 	public class List extends ListBase
 	{
@@ -78,18 +81,18 @@ package com.canaan.lib.base.component.controls
 		public function refresh():void {
 			if (_data != null) {
 				var l:int = size;
-				var item:ListItem;
+				var item:IListItem;
 				for (var i:int = 0; i < l; i++) {
 					item = _items[i];
 					if (i < _data.length) {
 						if (_autoVisible) {
-							item.visible = true;
+							DisplayObject(item).visible = true;
 						}
 						item.data = _data[i];
 						item.selected = _data[i] == _selectedValue;
 					} else {
 						if (_autoVisible) {
-							item.visible = false;
+							DisplayObject(item).visible = false;
 						}
 						item.data = null;
 						item.selected = false;
@@ -148,10 +151,10 @@ package com.canaan.lib.base.component.controls
 			if (_autoVisible != value) {
 				_autoVisible = value;
 				var l:int = _items.length;
-				var item:ListItem;
+				var item:IListItem;
 				for (var i:int = 0; i < l; i++) {
 					item = _items[i];
-					item.visible = !value || _data && i < _data.length;
+					DisplayObject(item).visible = !value || _data && i < _data.length;
 				}
 			}
 		}

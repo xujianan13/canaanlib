@@ -1,5 +1,9 @@
 package com.canaan.lib.base.component.controls
 {
+	import com.canaan.lib.base.component.IListItem;
+	
+	import flash.display.DisplayObject;
+
 	public class PageList extends List
 	{
 		protected var _currentPage:int;
@@ -13,20 +17,20 @@ package com.canaan.lib.base.component.controls
 			if (_data != null) {
 				var itemIndex:int;
 				var l:int = size;
-				var item:ListItem;
+				var item:IListItem;
 				for (var i:int = 0; i < l; i++) {
 					item = _items[i];
 					if (item != null) {
 						itemIndex = _currentPage * size + i;
 						if (itemIndex < _data.length) {
 							if (_autoVisible) {
-								item.visible = true;
+								DisplayObject(item).visible = true;
 							}
 							item.data = _data[itemIndex];
 							item.selected = _data[itemIndex] == _selectedValue;
 						} else {
 							if (_autoVisible) {
-								item.visible = false;
+								DisplayObject(item).visible = false;
 							}
 							item.data = null;
 							item.selected = false;
