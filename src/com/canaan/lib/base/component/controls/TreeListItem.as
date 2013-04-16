@@ -10,6 +10,7 @@ package com.canaan.lib.base.component.controls
 		protected var _parentItem:TreeListItem;
 		protected var _childItems:Vector.<TreeListItem>;
 		protected var _opend:Boolean;
+		protected var _paddingLeft:int;
 		
 		protected var containerChildren:Container;
 		
@@ -70,8 +71,21 @@ package com.canaan.lib.base.component.controls
 		
 		public function set level(value:int):void {
 			_level = value;
+			callLater(updatePaddingLeft);
+		}
+		
+		public function get paddingLeft():int {
+			return _paddingLeft;
+		}
+		
+		public function set paddingLeft(value:int):void {
+			_paddingLeft = value;
+			callLater(updatePaddingLeft);
+		}
+		
+		protected function updatePaddingLeft():void {
 			if (_level != 0) {
-				x = Styles.treeItemPaddingLeft;
+				x = _paddingLeft;
 			}
 		}
 		
