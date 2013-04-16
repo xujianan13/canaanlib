@@ -1,6 +1,7 @@
 package com.canaan.lib.base.component.controls
 {
 	import com.canaan.lib.base.component.IListItem;
+	import com.canaan.lib.base.component.Styles;
 	import com.canaan.lib.base.component.ViewCreater;
 	import com.canaan.lib.base.component.layout.TreeLayout;
 	import com.canaan.lib.base.core.Method;
@@ -11,12 +12,18 @@ package com.canaan.lib.base.component.controls
 	{
 		protected var _skin:String;
 		protected var _maxLevel:int;
+		protected var _itemPaddingLeft:int;
 		
 		protected var allItems:Vector.<TreeListItem> = new Vector.<TreeListItem>();
 		
 		public function Tree(skin:String)
 		{
 			this.skin = skin;
+		}
+		
+		override protected function preinitialize():void {
+			super.preinitialize();
+			_itemPaddingLeft = Styles.treeItemPaddingLeft;
 		}
 		
 		override protected function initialize():void {
@@ -80,6 +87,17 @@ package com.canaan.lib.base.component.controls
 			if (_data != value) {
 				_data = value;
 				callLater(refresh);
+			}
+		}
+		
+		public function get itemPaddingLeft():int {
+			return _itemPaddingLeft;
+		}
+		
+		public function set itemPaddingLeft(value:int):void {
+			_itemPaddingLeft = value;
+			for each (var item:TreeListItem in allItems) {
+				item.paddingLeft = _itemPaddingLeft;
 			}
 		}
 		
@@ -193,6 +211,7 @@ package com.canaan.lib.base.component.controls
 			item.mouseClickHandler = new Method(itemClickHandler);
 			item.level = level;
 			item.data = itemData;
+			item.paddingLeft = _itemPaddingLeft;
 			if (parentItem != null) {
 				item.parentItem = parentItem;
 			}
