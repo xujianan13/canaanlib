@@ -53,7 +53,7 @@ package com.canaan.lib.base.component.controls
 					selectedItem.selected = true;
 				}
 				if (_changeCallback != null) {
-					_changeCallback.applyWith([selectedValue]);
+					_changeCallback.applyWith([_selectedValue]);
 				}
 				sendEvent(UIEvent.CHANGE);
 			}
