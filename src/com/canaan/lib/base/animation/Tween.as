@@ -130,6 +130,13 @@ package com.canaan.lib.base.animation
 			animate("scaleY", factor);
 		}
 		
+		/** Animates the 'width' and 'height' properties of an object simultaneously. */
+		public function sizeTo(width:Number, height:Number):void
+		{
+			animate("width", width);
+			animate("height", height);
+		}
+		
 		/** Animates the 'x' and 'y' properties of an object simultaneously. */
 		public function moveTo(x:Number, y:Number):void
 		{
@@ -141,6 +148,12 @@ package com.canaan.lib.base.animation
 		public function fadeTo(alpha:Number):void
 		{
 			animate("alpha", alpha);
+		}
+		
+		/** Animates the 'rotation' property of an object to a certain target value. */ 
+		public function rotate(rotation:Number):void
+		{
+			animate("rotation", rotation);
 		}
 		
 		/** @inheritDoc */

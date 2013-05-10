@@ -4,9 +4,9 @@ package com.canaan.lib.base.managers
 	import com.canaan.lib.base.debug.Log;
 	import com.canaan.lib.base.events.CEventDispatcher;
 	import com.canaan.lib.base.events.SocketEvent;
+	import com.canaan.lib.base.net.ServerRequest;
+	import com.canaan.lib.base.net.ServerResult;
 	import com.canaan.lib.base.net.SocketClient;
-	import com.canaan.lib.base.net.SocketRequest;
-	import com.canaan.lib.base.net.SocketResult;
 	import com.canaan.lib.base.utils.ObjectUtil;
 	
 	import flash.events.Event;
@@ -31,16 +31,16 @@ package com.canaan.lib.base.managers
 		
 		private var sockets:Dictionary = new Dictionary();
 		private var methodsDict:Dictionary = new Dictionary();
-		private var socketRequest:SocketRequest;
-		private var socketResult:SocketResult;
+		private var request:ServerRequest;
+		private var result:ServerResult;
 		
 		public function SocketManager()
 		{
 			if (!canInstantiate) {
 				throw new Error("Can not instantiate, use getInstance() instead.");
 			}
-			socketRequest = new SocketRequest();
-			socketResult = new SocketResult();
+			request = new ServerRequest();
+			result = new ServerResult();
 		}
 		
 		public static function getInstance():SocketManager {
@@ -52,7 +52,7 @@ package com.canaan.lib.base.managers
 			return instance;
 		}
 		
-		public function connect(socketName:String, host:String, port:int):void {
+		public function connect(host:String, port:int, socketName:String = "default"):void {
 			var socketItem:SocketItem = sockets[socketName];
 			if (!socketItem) {
 				socketItem = new SocketItem(socketName);
@@ -72,15 +72,15 @@ package com.canaan.lib.base.managers
 			}
 		}
 		
-		public function send(socketName:String, cmd:int, data:Object = null):void {
+		public function send(cmd:int, data:Object = null, socketName:String = "default"):void {
 			var socketItem:SocketItem = sockets[socketName];
 			if (socketItem) {
-				// reset socketRequest
-				socketRequest.reset(cmd, data);
+				// reset serverRequest
+				request.reset(cmd, data);
 				
 				// serialization the request
 				var bytes:ByteArray = ObjectUtil.gBytes;
-				bytes = ObjectUtil.objectToBytes(socketRequest, true, bytes);
+				bytes = ObjectUtil.objectToBytes(request, true, bytes);
 				
 				// get bytes's length
 				var length:int = bytes.length;
@@ -117,11 +117,16 @@ package com.canaan.lib.base.managers
 		}
 		
 		public function handler(data:Object):void {
-			socketResult.setData(data);
-			var methods:Methods = methodsDict[socketResult.cmd];
-			if (methods) {
-				methods.applyWith([socketResult]);
+			result.setData(data);
+			if (!result.success) {
+				dispatch(SocketEvent.SERVER_ERROR, result);
+				return;
 			}
+			var methods:Methods = methodsDict[result.cmd];
+			if (methods) {
+				methods.applyWith([result]);
+			}
+			dispatch(SocketEvent.COMPLETE, result);
 		}
 		
 		private function addEvents(client:SocketClient):void {

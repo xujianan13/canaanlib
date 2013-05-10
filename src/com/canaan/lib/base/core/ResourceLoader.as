@@ -175,11 +175,19 @@ package com.canaan.lib.base.core
 			return FILE_TYPE_BINARY;
 		}
 		
+		public static function hasResuorce(id:String):Boolean {
+			return cache.hasOwnProperty(id);
+		}
+		
 		public static function getResource(id:String):* {
 			return cache[id];
 		}
 		
-		public static function clearCache():void {
+		public static function clearCache(id:String):void {
+			delete cache[id];
+		}
+		
+		public static function clearAllCache():void {
 			ObjectUtil.dispose(cache);
 		}
 	}

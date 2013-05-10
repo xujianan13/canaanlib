@@ -39,8 +39,8 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		public function set url(value:String):void {
-			removeCache();
 			if (_url != value) {
+				removeCache();
 				_url = value;
 				callLater(changeUrl);
 			}
@@ -54,6 +54,8 @@ package com.canaan.lib.base.component.controls
 			if (_url) {
 				if (ResourceManager.getInstance().hasClass(_url)) {
 					setBitmapData(ResourceManager.getInstance().getBitmapData(_url));
+				} else if (ResourceManager.getInstance().hasContent(_url)) {
+					setBitmapData(ResourceManager.getInstance().getContent(_url));
 				} else {
 					var fullUrl:String = ResourceManager.formatUrl(_url);
 					var obj:* = cache[_url];

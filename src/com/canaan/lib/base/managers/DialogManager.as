@@ -6,6 +6,7 @@ package com.canaan.lib.base.managers
 	import com.canaan.lib.base.utils.ArrayUtil;
 	import com.canaan.lib.base.utils.DisplayUtil;
 	
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
@@ -14,7 +15,7 @@ package com.canaan.lib.base.managers
 		private static var canInstantiate:Boolean;
 		private static var instance:DialogManager;
 		
-		private var modalMask:Sprite;
+		private var modalMask:Shape;
 		private var dialogs:Vector.<Dialog> = new Vector.<Dialog>();
 		private var modals:Vector.<Dialog> = new Vector.<Dialog>();
 		
@@ -23,7 +24,7 @@ package com.canaan.lib.base.managers
 			if (!canInstantiate) {
 				throw new Error("Can not instantiate, use getInstance() instead.");
 			}
-			modalMask = new Sprite();
+			modalMask = new Shape();
 			modalMask.graphics.beginFill(Styles.dialogModalColor, Styles.dialogModalAlpha);
 			modalMask.graphics.drawRect(0, 0, 1, 1);
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);

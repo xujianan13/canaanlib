@@ -1,11 +1,11 @@
 package com.canaan.lib.base.net
 {
-	public class SocketRequest
+	public class ServerRequest
 	{
 		private var _cmd:int;
 		private var _data:Object;
 		
-		public function SocketRequest(cmd:int = 0, data:Object = null)
+		public function ServerRequest(cmd:int = 0, data:Object = null)
 		{
 			reset(cmd, data);
 		}

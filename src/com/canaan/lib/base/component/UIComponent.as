@@ -172,10 +172,12 @@ package com.canaan.lib.base.component
 		}
 		
 		public function validateNow():void {
-			if (methods.length > 0) {
-				onValidate(null);
+			if (methods != null) {
+				if (methods.length > 0) {
+					onValidate(null);
+				}
+				validateChildren();
 			}
-			validateChildren();
 		}
 		
 		protected function validateChildren():void {

@@ -88,7 +88,7 @@ package com.canaan.lib.base.managers
 			var content:*;
 			while (loadList.length > 0) {
 				resourceItem = loadList.shift();
-				content = ResourceLoader.getResource(resourceItem.url);
+				content = ResourceLoader.getResource(resourceItem.id);
 				if (content != null) {
 					endLoad(resourceItem, content);
 				} else {
@@ -191,8 +191,16 @@ package com.canaan.lib.base.managers
 			return null;
 		}
 		
+		public function hasContent(id:String):Boolean {
+			return ResourceLoader.hasResuorce(id);
+		}
+		
 		public function getContent(id:String):* {
 			return ResourceLoader.getResource(id);
+		}
+		
+		public function removeContent(id:String):void {
+			ResourceLoader.clearCache(id);
 		}
 		
 		public function getNewInstance(name:String):* {

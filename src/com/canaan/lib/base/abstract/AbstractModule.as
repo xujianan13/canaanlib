@@ -8,6 +8,7 @@ package com.canaan.lib.base.abstract
 	public class AbstractModule extends CEventDispatcher implements IModule
 	{
 		protected var _sceneName:String;
+		protected var _initialized:Boolean;
 		
 		public function AbstractModule()
 		{
@@ -16,12 +17,30 @@ package com.canaan.lib.base.abstract
 		
 		public function addedToScene(sceneName:String):void {
 			_sceneName = sceneName;
+			if (!_initialized) {
+				initialize();
+				_initialized = true;
+			}
+			show();
 			dispatch(ModuleEvent.ADDED_TO_SCENE);
 		}
 		
 		public function removeFromScene():void {
 			_sceneName = null;
+			remove();
 			dispatch(ModuleEvent.REMOVE_FROM_SCENE);
+		}
+		
+		protected function initialize():void {
+			
+		}
+		
+		protected function show():void {
+			
+		}
+		
+		protected function remove():void {
+			
 		}
 		
 		private function dispatch(type:String):void {
@@ -40,6 +59,10 @@ package com.canaan.lib.base.abstract
 		
 		public function get sceneName():String {
 			return _sceneName;
+		}
+		
+		public function get initialized():Boolean {
+			return _initialized;
 		}
 	}
 }

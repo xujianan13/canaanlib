@@ -11,6 +11,7 @@ package com.canaan.lib.base.utils
 	import flash.display.StageDisplayState;
 	import flash.filters.BitmapFilter;
 	import flash.filters.ColorMatrixFilter;
+	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -270,6 +271,35 @@ package com.canaan.lib.base.utils
 		
 		public static function getVisualRect(bitmapData:BitmapData):Rectangle {
 			return bitmapData.getColorBoundsRect(0xFF000000, 0, false);
+		}
+		
+		/**
+		 * 设置亮度
+		 * @param displayObject
+		 * @param value
+		 * 
+		 */		
+		public static function setBrightness(displayObject:DisplayObject, value:Number):void {
+			var colorTransform:ColorTransform = displayObject.transform.colorTransform;
+			var filters:Array = displayObject.filters;
+			if (value >= 0) {
+				colorTransform.redMultiplier = 1 - value;
+				colorTransform.greenMultiplier = 1 - value;
+				colorTransform.blueMultiplier = 1 - value;
+				colorTransform.redOffset = 255 * value;
+				colorTransform.greenOffset = 255 * value;
+				colorTransform.blueOffset = 255 * value;
+			} else {
+				value = Math.abs(value);
+				colorTransform.redMultiplier = 1 - value;
+				colorTransform.greenMultiplier = 1 - value;
+				colorTransform.blueMultiplier = 1 - value;
+				colorTransform.redOffset = 0;
+				colorTransform.greenOffset = 0;
+				colorTransform.blueOffset = 0;
+			}
+			displayObject.transform.colorTransform = colorTransform;
+			displayObject.filters = filters;
 		}
 	}
 }

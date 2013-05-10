@@ -41,11 +41,11 @@ package com.canaan.lib.rpg.core.model.map
 		}
 		
 		public function getTileKey(tileX:int, tileY:int):String {
-			return tileY + "_" + tileX;
+			return id + "_" + tileY + "_" + tileX;
 		}
 		
 		public function getTilePath(tileX:int, tileY:int):String {
-			var fileName:String = getTileKey(tileX, tileY) + ".jpg";
+			var fileName:String = tileY + "_" + tileX + ".jpg";
 			return Resources.dirRpg + "map/tiles/" + id + "/" + fileName;
 		}
 	}

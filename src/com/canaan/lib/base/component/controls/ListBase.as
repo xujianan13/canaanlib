@@ -146,6 +146,7 @@ package com.canaan.lib.base.component.controls
 		}
 		
 		public function forEach(func:Function, value:Object = null):void {
+			validateNow();
 			var iListItem:IListItem;
 			for (var i:int = 0; i < _items.length; i++) {
 				iListItem = _items[i];

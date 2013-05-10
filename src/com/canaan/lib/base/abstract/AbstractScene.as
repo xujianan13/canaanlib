@@ -2,6 +2,7 @@ package com.canaan.lib.base.abstract
 {
 	import com.canaan.lib.base.events.CEventDispatcher;
 	import com.canaan.lib.base.events.SceneEvent;
+	import com.canaan.lib.base.interfaces.IModule;
 	import com.canaan.lib.base.interfaces.IScene;
 	import com.canaan.lib.base.managers.SceneManager;
 	
@@ -43,6 +44,14 @@ package com.canaan.lib.base.abstract
 		
 		public function set sceneName(value:String):void {
 			_sceneName = value;
+		}
+		
+		public function showModule(module:IModule):void {
+			module.addedToScene(_sceneName);
+		}
+		
+		public function removeModule(module:IModule):void {
+			module.removeFromScene();
 		}
 	}
 }

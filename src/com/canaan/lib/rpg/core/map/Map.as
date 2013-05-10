@@ -59,6 +59,11 @@ package com.canaan.lib.rpg.core.map
 		protected var drawTiles:Dictionary;
 		
 		/**
+		 * 缩略图是否已经加载完毕
+		 */		
+		protected var thumbnailLoaded:Boolean;
+		
+		/**
 		 * 地图数据
 		 */
 		protected var _mapVo:MapVo;
@@ -91,6 +96,9 @@ package com.canaan.lib.rpg.core.map
 		 */
 		public function initialize(mapVo:MapVo):void {
 			_mapVo = mapVo;
+			if (buffer != null) {
+				buffer.dispose();
+			}
 			resize();
 			loadThumbnail();
 		}
@@ -103,12 +111,16 @@ package com.canaan.lib.rpg.core.map
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, thumbnailComplete);
 			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 			loader.load(new URLRequest(_mapVo.thumbnailPath));
+			thumbnailLoaded = false;
 		}
 		
 		/**
 		 * 加载地图切片
 		 */
 		protected function loadTiles():void {
+			if (!thumbnailLoaded) {
+				return;
+			}
 //			_drawBuffer.cacheAsBitmap = false;
 			var point:Point;
 			var tilePath:String;
@@ -125,7 +137,7 @@ package com.canaan.lib.rpg.core.map
 					}
 				} else {
 					loader = DLoader.fromPool();
-					loader.data = point;
+					loader.data = {mapVo:_mapVo, point:point};
 					loader.contentLoaderInfo.addEventListener(Event.COMPLETE, tileComplete);
 					loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 					loader.load(new URLRequest(tilePath));
@@ -150,6 +162,7 @@ package com.canaan.lib.rpg.core.map
 			loaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 			loaderInfo.loader.unloadAndStop();
 			loaderInfo = null;
+			thumbnailLoaded = true;
 			update(-1, -1, true);
 		}
 		
@@ -162,12 +175,13 @@ package com.canaan.lib.rpg.core.map
 			loaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
 			
 			var loader:DLoader = loaderInfo.loader as DLoader;
-			var point:Point = loader.data as Point;
-			var key:String = _mapVo.getTileKey(point.x, point.y);
-			var tilePath:String = _mapVo.getTilePath(point.x, point.y);
+			var point:Point = loader.data.point as Point;
+			var mapVo:MapVo = loader.data.mapVo as MapVo;
+			var key:String = mapVo.getTileKey(point.x, point.y);
+			var tilePath:String = mapVo.getTilePath(point.x, point.y);
 			cache[tilePath] = Bitmap(loaderInfo.content).bitmapData;
 			if (drawTiles[key]) {
-				buffer.copyPixels(cache[tilePath], cache[tilePath].rect, new Point(int((point.x - currentStartX) * _mapVo.tileWidth), int((point.y - currentStartY) * _mapVo.tileHeight)));
+				buffer.copyPixels(cache[tilePath], cache[tilePath].rect, new Point(int((point.x - currentStartX) * mapVo.tileWidth), int((point.y - currentStartY) * mapVo.tileHeight)));
 				delete drawTiles[key];
 //				if (drawTiles.length == 0) {
 //					_drawBuffer.cacheAsBitmap = true;

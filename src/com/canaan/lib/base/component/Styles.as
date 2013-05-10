@@ -14,7 +14,7 @@ package com.canaan.lib.base.component
 		public static var toolTipScrubDelay:Number = 100;
 
 		//------------- Text default setting --------------
-		public static var fontName:String = "宋体,Arial";
+		public static var fontName:String = "Arial";
 		public static var fontSize:int = 12;
 		
 		//------------- Label default setting -------------
