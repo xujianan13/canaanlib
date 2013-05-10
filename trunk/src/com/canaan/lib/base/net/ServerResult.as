@@ -1,10 +1,10 @@
 package com.canaan.lib.base.net
 {
-	public class SocketResult
+	public class ServerResult
 	{
 		private var _data:Object;
 		
-		public function SocketResult(data:Object = null)
+		public function ServerResult(data:Object = null)
 		{
 			setData(data);
 		}

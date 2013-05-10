@@ -33,7 +33,6 @@ package com.canaan.lib.base.component.controls
 			} else {
 				close();
 			}
-			updateChildItems();
 			if (_mouseClickHandler != null) {
 				_mouseClickHandler.applyWith([this]);
 			}
@@ -45,6 +44,7 @@ package com.canaan.lib.base.component.controls
 				_opend = true;
 				containerChildren.y = height;
 				addChild(containerChildren);
+				updateChildItems();
 			}
 		}
 		
@@ -52,6 +52,7 @@ package com.canaan.lib.base.component.controls
 			if (hasChildrenItems && _opend) {
 				_opend = false;
 				removeChild(containerChildren);
+				updateChildItems();
 			}
 		}
 		

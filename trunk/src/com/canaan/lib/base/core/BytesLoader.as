@@ -1,7 +1,6 @@
 package com.canaan.lib.base.core
 {
 	import com.canaan.lib.base.debug.Log;
-	import com.canaan.lib.base.interfaces.IDispose;
 	
 	import flash.display.DisplayObject;
 	import flash.display.Loader;
@@ -13,7 +12,7 @@ package com.canaan.lib.base.core
 	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
 
-	public class BytesLoader implements IDispose
+	public class BytesLoader
 	{
 		private var loader:Loader;
 		private var loaderContext:LoaderContext;

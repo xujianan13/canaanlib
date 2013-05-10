@@ -19,6 +19,7 @@ package com.canaan.lib.base.core
 		public static function initialize(app:Sprite, callback:Method):void {
 			Application.app = app;
 			Application.callback = callback;
+			StageManager.getInstance().initialize(app.stage);
 			loadConfig();
 		}
 		
@@ -32,8 +33,6 @@ package com.canaan.lib.base.core
 			// initialize config
 			config = new XML(ResourceManager.getInstance().getContent(configPath));
 			initializeConfig();
-			// initialize stage
-			StageManager.getInstance().initialize(app.stage);
 			// excute callback
 			callback.apply();
 		}

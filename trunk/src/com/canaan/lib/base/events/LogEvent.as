@@ -16,6 +16,10 @@ package com.canaan.lib.base.events
 			_logString = logString;
 		}
 		
+		public function get value():String {
+			return _data.toString();
+		}
+		
 		public function get owner():String {
 			return _owner;
 		}

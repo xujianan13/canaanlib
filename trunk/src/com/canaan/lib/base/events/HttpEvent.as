@@ -3,26 +3,23 @@ package com.canaan.lib.base.events
 	import com.canaan.lib.base.net.ServerRequest;
 	import com.canaan.lib.base.net.ServerResult;
 
-	public class SocketEvent extends CEvent
+	public class HttpEvent extends CEvent
 	{
-		public static const CONNECT:String = "connect";
-		public static const CLOSE:String = "close";
 		public static const IO_ERROR:String = "ioError";
 		public static const SECURITY_ERROR:String = "securityError";
-		public static const START_CONNECT:String = "startConnect";
 		public static const SEND:String = "send";
 		public static const RECEIVED:String = "received";
 		public static const COMPLETE:String = "complete";
 		public static const SERVER_ERROR:String = "serverError";
 		
-		private static var eventPool:Vector.<SocketEvent> = new <SocketEvent>[];
+		private static var eventPool:Vector.<HttpEvent> = new <HttpEvent>[];
 		
-		public function SocketEvent(type:String, data:Object=null)
+		public function HttpEvent(type:String, data:Object=null)
 		{
 			super(type, data);
 		}
 		
-		public function get socketName():String {
+		public function get hostName():String {
 			return _data.toString();
 		}
 		
@@ -34,15 +31,15 @@ package com.canaan.lib.base.events
 			return _data as ServerResult;
 		}
 		
-		public static function fromPool(type:String, data:Object = null):SocketEvent {
+		public static function fromPool(type:String, data:Object = null):HttpEvent {
 			if (eventPool.length != 0) {
 				return eventPool.pop().reset(type, data);
 			} else {
-				return new SocketEvent(type, data);
+				return new HttpEvent(type, data);
 			}
 		}
 		
-		public static function toPool(event:SocketEvent):void {
+		public static function toPool(event:HttpEvent):void {
 			eventPool.push(event.reset());
 		}
 	}

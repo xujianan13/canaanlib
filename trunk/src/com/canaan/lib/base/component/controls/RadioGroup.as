@@ -77,7 +77,7 @@ package com.canaan.lib.base.component.controls
 			if (_data == null) {
 				return;
 			}
-			removeAllChildren();
+			removeAllChildren(true);
 			_items.length = 0;
 			var item:RadioButton;
 			var l:int = _data.length;

@@ -1,12 +1,10 @@
 package com.canaan.lib.base.abstract
 {
 	import com.canaan.lib.base.events.CEventDispatcher;
-	import com.canaan.lib.base.interfaces.IDispose;
 	import com.canaan.lib.base.interfaces.IModel;
-	import com.canaan.lib.base.managers.SocketManager;
-	import com.canaan.lib.base.net.SocketResult;
+	import com.canaan.lib.base.net.ServerResult;
 	
-	public class AbstractModel extends CEventDispatcher implements IModel, IDispose
+	public class AbstractModel extends CEventDispatcher implements IModel
 	{
 		protected var _initialized:Boolean;
 		protected var _commands:Array;
@@ -20,7 +18,7 @@ package com.canaan.lib.base.abstract
 			_commands = listCommandInterests();
 			if (_commands != null && _commands.length != 0) {
 				for each (var command:int in _commands) {
-					SocketManager.getInstance().registerHandler(command, handleCommand);
+					registerHandler(command);
 				}
 			}
 		}
@@ -29,13 +27,21 @@ package com.canaan.lib.base.abstract
 			return null;
 		}
 		
-		protected function handleCommand(result:SocketResult):void {
+		protected function handleCommand(result:ServerResult):void {
+			
+		}
+		
+		protected function registerHandler(command:int):void {
+			
+		}
+		
+		protected function deleteHandler(command:int):void {
 			
 		}
 
 		public function dispose():void {
 			for each (var command:int in _commands) {
-				SocketManager.getInstance().deleteHandler(command, handleCommand);
+				deleteHandler(command);
 			}
 			_initialized = false;
 		}

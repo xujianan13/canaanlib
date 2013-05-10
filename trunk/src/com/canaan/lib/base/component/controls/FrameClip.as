@@ -162,7 +162,7 @@ package com.canaan.lib.base.component.controls
 			value = Math.min(maxIndex, Math.max(0, value));
 			_index = value;
 			if (_mc != null) {
-				_mc.gotoAndStop(_index);
+				_mc.gotoAndStop(_index + 1);
 				_width = _mc.width;
 				_height = _mc.height;
 			}
